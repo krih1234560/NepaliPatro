@@ -1,15 +1,3 @@
-I'll provide you with a complete, well-structured `README.md` file that you can save and use for your project. Here's the full content:
-
----
-
-## 📄 Download README.md
-
-**Option 1: Copy the content below and save as `README.md`**
-
-**Option 2:** I've included a download button in the preview - just copy the content below.
-
----
-
 # नेपाली पात्रो · Nepali Patro
 
 [![PWA](https://img.shields.io/badge/PWA-Enabled-5A0FC8?style=for-the-badge&logo=pwa)](https://www.nepalipatro.com.np/)
@@ -424,7 +412,7 @@ SOFTWARE.
 
 ## 📞 Contact & Support
 
-- **Website:** [https://www.nepalipatro.app/](https://www.nepalipatro.app/)
+- **Website:** [https://www.nepalipatro.com.np/](https://www.nepalipatro.com.np/)
 - **Email:** support@nepalipatro.com.np
 - **GitHub Issues:** [Report a bug](https://github.com/yourusername/nepali-patro/issues)
 

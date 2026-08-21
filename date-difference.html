@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="ne">
 <head>
+
+  <!-- PWA Meta Tags -->
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Nepali Patro">
+<meta name="theme-color" content="#123b6d">
+<meta name="mobile-web-app-capable" content="yes">
+<!-- PWA Meta Tags -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>मिति अन्तर · Date Difference Tool</title>
@@ -559,6 +569,7 @@
         <li class="dropdown">
           <a href="#">Tools</a>
           <ul class="dropdown-menu">
+            <li><a href="kundali-generator.html">जन्म कुण्डली</a></li>
             <li><a href="exchange-rate.html">Currency Exchange Rate</a></li>
             <li><a href="nepali_fuel_rates.html">इन्धन मूल्य</a></li>
           </ul>
@@ -1106,5 +1117,8 @@
     calculateADDiff();
   })();
 </script>
+<!-- PWA Installation Script -->
+<script src="/pwa-install.js"></script>
+
 </body>
 </html>
