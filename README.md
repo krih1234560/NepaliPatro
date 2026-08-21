@@ -1,8 +1,8 @@
 # नेपाली पात्रो · Nepali Patro
 
-[![PWA](https://img.shields.io/badge/PWA-Enabled-5A0FC8?style=for-the-badge&logo=pwa)](https://www.nepalipatro.com.np/)
+[![PWA](https://img.shields.io/badge/PWA-Enabled-5A0FC8?style=for-the-badge&logo=pwa)](https://www.nepalipatro.app/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
-[![Made with ❤️](https://img.shields.io/badge/Made%20with-❤️-red?style=for-the-badge)](https://www.nepalipatro.com.np/)
+[![Made with ❤️](https://img.shields.io/badge/Made%20with-❤️-red?style=for-the-badge)](https://www.nepalipatro.app/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](http://makeapullrequest.com)
 
 > **नेपाली पात्रो** — A complete Nepali calendar and utility platform with 15+ tools including calendar, date converter, horoscope, weather, gold/silver rates, fuel prices, and kundali generator.
@@ -77,7 +77,7 @@ Whether you need to check today's Nepali date, convert between BS and AD, read y
 
 ## 🚀 Live Demo
 
-🌐 **Live URL:** [https://www.nepalipatro.com.np/](https://www.nepalipatro.com.np/)
+🌐 **Live URL:** [https://www.nepalipatro.com.np/](https://www.nepalipatro.app/)
 
 ---
 
@@ -412,8 +412,8 @@ SOFTWARE.
 
 ## 📞 Contact & Support
 
-- **Website:** [https://www.nepalipatro.com.np/](https://www.nepalipatro.com.np/)
-- **Email:** support@nepalipatro.com.np
+- **Website:** [https://www.nepalipatro.com.np/](https://www.nepalipatro.app/)
+- **Email:** support@nepalipatro.app
 - **GitHub Issues:** [Report a bug](https://github.com/yourusername/nepali-patro/issues)
 
 ---
