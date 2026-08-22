@@ -1,3 +1,7 @@
+import webPush from 'web-push';
+// or
+//const webPush = await import('web-push');
+
 export default {
   async fetch(request, env, ctx) {
     // write a key-value pair
