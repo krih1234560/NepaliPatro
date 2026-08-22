@@ -52,7 +52,7 @@ export default {
         const { title, body, icon, data } = await request.json();
 
         webPush.setVapidDetails(
-          'mailto:your-email@example.com', // <-- replace with your email or URL
+          'mailto:https://nepalipatro.krishc155.workers.dev/', // <-- replace with your email or URL
           env.VAPID_PUBLIC_KEY,
           env.VAPID_PRIVATE_KEY
         );
