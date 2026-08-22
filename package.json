@@ -1,8 +1,7 @@
-const result = await webPush.sendNotification(subscription, payload, {
-  vapidDetails: {
-    subject: 'https://nepalipatro.krishc155.workers.dev/',   // <-- Use your actual email
-    publicKey: env.VAPID_PUBLIC_KEY,
-    privateKey: env.VAPID_PRIVATE_KEY,
-  },
-  TTL: 86400,
-});
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "dependencies": {
+    "web-push": "^3.6.0"
+  }
+}
