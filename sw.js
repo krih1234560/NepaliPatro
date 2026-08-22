@@ -97,3 +97,54 @@ self.addEventListener('fetch', event => {
       })
   );
 });
+
+
+// ===== PUSH NOTIFICATION =====
+self.addEventListener('push', (event) => {
+  let data = {};
+  if (event.data) {
+    try {
+      data = event.data.json();
+    } catch (e) {
+      data = { title: 'नेपाली पात्रो', body: event.data.text() };
+    }
+  }
+
+  const options = {
+    body: data.body || 'नयाँ अपडेट',
+    icon: data.icon || '/icons/icon-192.png',
+    badge: '/icons/icon-72.png',
+    data: data.data || {},
+    vibrate: [200, 100, 200],
+    requireInteraction: true,
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(data.title || 'नेपाली पात्रो', options)
+  );
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+
+  let url = '/';
+  if (event.notification.data && event.notification.data.url) {
+    url = event.notification.data.url;
+  }
+
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true })
+      .then((clientList) => {
+        // If a window client is already open, focus it
+        for (const client of clientList) {
+          if (client.url === url && 'focus' in client) {
+            return client.focus();
+          }
+        }
+        // Otherwise, open a new window
+        if (clients.openWindow) {
+          return clients.openWindow(url);
+        }
+      })
+  );
+});
