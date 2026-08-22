@@ -1,3 +1,5 @@
+// src/index.ts
+
 import webPush from 'web-push';
 
 export interface Env {
@@ -19,11 +21,12 @@ export default {
         'Access-Control-Allow-Headers': 'Content-Type',
       };
 
+      // Handle CORS preflight
       if (request.method === 'OPTIONS') {
         return new Response(null, { headers: corsHeaders });
       }
 
-      // ---------- Subscribe ----------
+      // ---- POST /subscribe ----
       if (path === '/subscribe' && request.method === 'POST') {
         const subscription = await request.json();
         const endpoint = (subscription as any).endpoint;
@@ -33,7 +36,7 @@ export default {
         });
       }
 
-      // ---------- Unsubscribe ----------
+      // ---- DELETE /subscribe ----
       if (path === '/subscribe' && request.method === 'DELETE') {
         const { endpoint } = await request.json();
         await env.PUSH_SUBSCRIPTIONS.delete(endpoint);
@@ -42,7 +45,7 @@ export default {
         });
       }
 
-      // ---------- Notify ----------
+      // ---- POST /notify ----
       if (path === '/notify' && request.method === 'POST') {
         const authHeader = request.headers.get('Authorization');
         if (authHeader !== `Bearer ${env.NOTIFY_SECRET}`) {
@@ -52,11 +55,12 @@ export default {
         const { title, body, icon, data } = await request.json();
 
         webPush.setVapidDetails(
-          'mailto:https://nepalipatro.krishc155.workers.dev/', // <-- replace with your email or URL
+          'https://nepalipatro.krishc155.workers.dev',  // or your email
           env.VAPID_PUBLIC_KEY,
           env.VAPID_PRIVATE_KEY
         );
 
+        // Get all subscriptions from KV
         const list = await env.PUSH_SUBSCRIPTIONS.list();
         const subscriptions: PushSubscription[] = [];
         for (const key of list.keys) {
@@ -89,7 +93,8 @@ export default {
         });
       }
 
-      return new Response('Not found', { status: 404 });
+      // ---- Root route ----
+      return new Response('Push Worker is running. Use /subscribe or /notify.', { status: 200 });
 
     } catch (err: any) {
       console.error('Worker error:', err);
