@@ -10,7 +10,7 @@
   // Add this to your wrangler.jsonc
   "kv_namespaces": [
     {
-      "binding": "push_subscriptions",
+      "binding": "PUSH_SUBSCRIPTIONS",
       "id": "45c55db2c73d4ac186ae3f5ddbd8f0ec",
       
       // Optional: preview_id used when running `wrangler dev` for local dev
