@@ -1,0 +1,7 @@
+name = "push-worker"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+[[kv_namespaces]]
+binding = "push_subscriptions"
+id = "45c55db2c73d4ac186ae3f5ddbd8f0ec"
