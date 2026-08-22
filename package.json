@@ -1,8 +1,0 @@
-const result = await webPush.sendNotification(subscription, payload, {
-  vapidDetails: {
-    subject: 'mailto:krishc155@gmail.com',
-    publicKey: env.VAPID_PUBLIC_KEY,
-    privateKey: env.VAPID_PRIVATE_KEY,
-  },
-  TTL: 86400,
-});
