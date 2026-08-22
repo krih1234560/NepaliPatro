@@ -77,7 +77,7 @@ Whether you need to check today's Nepali date, convert between BS and AD, read y
 
 ## 🚀 Live Demo
 
-🌐 **Live URL:** [https://www.nepalipatro.com.np/](https://www.nepalipatro.app/)
+🌐 **Live URL:** [https://www.nepalipatro.app/](https://www.nepalipatro.app/)
 
 ---
 
@@ -412,7 +412,7 @@ SOFTWARE.
 
 ## 📞 Contact & Support
 
-- **Website:** [https://www.nepalipatro.com.np/](https://www.nepalipatro.app/)
+- **Website:** [https://www.nepalipatro.app/](https://www.nepalipatro.app/)
 - **Email:** support@nepalipatro.app
 - **GitHub Issues:** [Report a bug](https://github.com/yourusername/nepali-patro/issues)
 
