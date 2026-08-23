@@ -656,6 +656,14 @@
             <li><a href="nepali_fuel_rates.html">इन्धन मूल्य</a></li>
           </ul>
         </li>
+        <button id="onesignal-subscribe-btn">Subscribe to Notifications</button>
+<script>
+  document.getElementById("onesignal-subscribe-btn").addEventListener("click", function() {
+    OneSignal.push(function() {
+      OneSignal.showSlidedownPrompt();
+    });
+  });
+</script>
       </ul>
 
       <div class="year-selector">
