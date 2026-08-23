@@ -596,6 +596,7 @@
 
     /* for notification button */
 /* In your existing styles or a new <style> block */
+/* BEFORE */
 #push-subscribe-btn {
   transition: background 0.3s, color 0.3s;
 }
@@ -608,6 +609,22 @@
 #push-subscribe-btn[data-subscribed="false"] {
   background: #f4aa2a !important;
   color: #123b6d !important;
+}
+
+/* AFTER */
+#push-subscribe-btn,
+#push-unsubscribe-btn {
+  transition: background 0.3s, color 0.3s;
+}
+
+#push-subscribe-btn {
+  background: #c62828 !important;
+  color: #fff !important;
+}
+
+#push-unsubscribe-btn {
+  background: #2e7d32 !important;
+  color: #fff !important;
 }
     
   </style>
@@ -672,7 +689,12 @@
             <li><a href="nepali_fuel_rates.html">इन्धन मूल्य</a></li>
           </ul>
         </li>
-        <button id="push-subscribe-btn" class="action-btn">🔔 Enable Notifications</button>
+        <!-- BEFORE -->
+<button id="push-subscribe-btn" class="action-btn">🔔 Enable Notifications</button>
+
+<!-- AFTER -->
+<button id="push-subscribe-btn" class="action-btn">🔔 Enable Notifications</button>
+<button id="push-unsubscribe-btn" class="action-btn" style="display:none;">🔕 Disable Notifications</button>
       </ul>
 
       <div class="year-selector">
