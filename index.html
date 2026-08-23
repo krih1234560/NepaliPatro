@@ -593,23 +593,6 @@
       .main-layout { grid-template-columns: 1fr; }
       .right-sidebar { order: 2; }
     }
-
-/* Push notification button states */
-#push-subscribe-btn {
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-#push-subscribe-btn.push-state-unsubscribed {
-  background-color: #c62828; /* red */
-  color: #fff;
-}
-
-#push-subscribe-btn.push-state-subscribed {
-  background-color: #2e7d32; /* green */
-  color: #fff;
-}
-
-
     
   </style>
 <!-- OneSignal setting notification -->
@@ -673,11 +656,6 @@
             <li><a href="nepali_fuel_rates.html">इन्धन मूल्य</a></li>
           </ul>
         </li>
-<!-- Enable button (visible by default) -->
-<button id="push-subscribe-btn" class="action-btn">🔔 Enable Notifications</button>
-
-<!-- Disable button (hidden by default) -->
-<button id="push-unsubscribe-btn" class="action-btn" style="display: none;">🔕 Disable Notifications</button>
       </ul>
 
       <div class="year-selector">
@@ -1346,150 +1324,5 @@
 <!-- PWA Installation Script -->
 <script src="/pwa-install.js"></script>
 
-  
-
-<!-- Notification button setting-->
-<!-- FINAL SCRIPT: Module with import, toggle UI, and notifications -->
-  <script type="module">
-    // 1. Import your festival data from notification.js
-    import { festivalNotifications } from './notification.js';
-
-    // 2. DOM references
-    const subscribeBtn = document.getElementById('push-subscribe-btn');
-    const unsubscribeBtn = document.getElementById('push-unsubscribe-btn');
-
-    // ---------- Helper: Toggle UI ----------
-    function setUIState(isSubscribed) {
-      if (isSubscribed) {
-        subscribeBtn.style.display = 'none';
-        unsubscribeBtn.style.display = 'inline-block';
-      } else {
-        subscribeBtn.style.display = 'inline-block';
-        unsubscribeBtn.style.display = 'none';
-      }
-    }
-
-    // ---------- Helper: Send a random festival notification ----------
-    async function sendFestivalNotification() {
-      try {
-        // Wait for Service Worker to be ready
-        const registration = await navigator.serviceWorker.ready;
-
-        // Pick a random festival from your list
-        const randomIndex = Math.floor(Math.random() * festivalNotifications.length);
-        const fest = festivalNotifications[randomIndex];
-
-        // (Optional) If you want to show TODAY's festival instead, uncomment this:
-        // const today = new Date().toISOString().slice(0, 10);
-        // const todays = festivalNotifications.filter(f => f.adDate === today);
-        // const chosen = todays.length > 0 ? todays[0] : fest;
-
-        // Show the notification
-        registration.showNotification(fest.title, {
-          body: fest.message,
-          icon: '/favicon.ico', // Replace with your actual icon path
-          data: { url: fest.url },
-          requireInteraction: true,
-        });
-
-        console.log(`✅ Notification sent: ${fest.title}`);
-      } catch (error) {
-        console.warn('Could not send festival notification:', error);
-      }
-    }
-
-    // ---------- Enable Notifications ----------
-    async function enableNotifications() {
-      try {
-        // Use OneSignal SDK
-        if (window.OneSignal && OneSignal.User) {
-          await OneSignal.User.PushSubscription.optIn();
-          setUIState(true);
-
-          // >>> SEND THE FESTIVAL NOTIFICATION RIGHT AFTER SUBSCRIBING <<<
-          await sendFestivalNotification();
-
-          console.log('✅ Subscribed successfully via OneSignal');
-          return;
-        }
-
-        // Fallback: Native browser API (if OneSignal fails)
-        const permission = await Notification.requestPermission();
-        if (permission !== 'granted') {
-          alert('Please allow notifications to subscribe.');
-          return;
-        }
-        setUIState(true);
-        await sendFestivalNotification();
-        console.log('✅ Subscribed (native fallback)');
-      } catch (error) {
-        console.error('Enable error:', error);
-        alert('Failed to enable notifications. Check console.');
-      }
-    }
-
-    // ---------- Disable Notifications ----------
-    async function disableNotifications() {
-      try {
-        if (window.OneSignal && OneSignal.User) {
-          await OneSignal.User.PushSubscription.optOut();
-          setUIState(false);
-          console.log('❌ Unsubscribed successfully');
-          return;
-        }
-
-        // Native fallback
-        const registration = await navigator.serviceWorker.ready;
-        const subscription = await registration.pushManager.getSubscription();
-        if (subscription) {
-          await subscription.unsubscribe();
-          setUIState(false);
-          console.log('❌ Unsubscribed (native)');
-        } else {
-          setUIState(false);
-        }
-      } catch (error) {
-        console.error('Disable error:', error);
-        alert('Failed to disable notifications.');
-      }
-    }
-
-    // ---------- Check current status on page load ----------
-    async function checkCurrentStatus() {
-      try {
-        if (window.OneSignal && OneSignal.User) {
-          const isOptedIn = await OneSignal.User.PushSubscription.optedIn;
-          setUIState(isOptedIn);
-          console.log(`Status: ${isOptedIn ? 'Subscribed ✅' : 'Not subscribed ❌'}`);
-          return;
-        }
-
-        // Native fallback check
-        if (Notification.permission === 'granted') {
-          const registration = await navigator.serviceWorker.ready;
-          const subscription = await registration.pushManager.getSubscription();
-          setUIState(!!subscription);
-        } else {
-          setUIState(false);
-        }
-      } catch (error) {
-        console.warn('Status check failed:', error);
-        setUIState(false);
-      }
-    }
-
-    // ---------- Attach event listeners ----------
-    subscribeBtn.addEventListener('click', enableNotifications);
-    unsubscribeBtn.addEventListener('click', disableNotifications);
-
-    // ---------- Run on page load ----------
-    await checkCurrentStatus();
-
-    // Expose the send function globally for console testing (optional)
-    window.sendFestivalNotification = sendFestivalNotification;
-    console.log('🎯 Ready! Click "Enable Notifications" to subscribe and get a festival alert.');
-  </script>
-
-  <script src="/push-subscription.js" defer></script>
 </body>
 </html>
