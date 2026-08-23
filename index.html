@@ -655,47 +655,7 @@
             <li><a href="exchange-rate.html">Currency Exchange Rate</a></li>
             <li><a href="nepali_fuel_rates.html">इन्धन मूल्य</a></li>
           </ul>
-        </li>
-
-<button id="onesignal-toggle-btn">🔔 Subscribe</button>
-
-  <script>
-    window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(function(OneSignal) {
-      const btn = document.getElementById("onesignal-toggle-btn");
-
-      function updateUI(isSubscribed) {
-        btn.textContent = isSubscribed 
-          ? "🔕 Unsubscribe" 
-          : "🔔 Subscribe";
-        btn.style.background = isSubscribed ? "#e53935" : "#43a047";
-        btn.style.color = "white";
-      }
-
-      // Initial check
-      OneSignal.getSubscription()
-        .then(updateUI)
-        .catch(() => updateUI(false));
-
-      // Toggle
-      btn.addEventListener("click", function() {
-        OneSignal.getSubscription()
-          .then(function(isSubscribed) {
-            return OneSignal.setSubscription(!isSubscribed);
-          })
-          .then(function() {
-            return OneSignal.getSubscription();
-          })
-          .then(updateUI)
-          .catch(function(err) {
-            console.error(err);
-            alert("Toggle failed. Please try again.");
-          });
-      });
-    });
-  </script>
-
-        
+        </li>   
       </ul>
 
       <div class="year-selector">
