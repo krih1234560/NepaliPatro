@@ -1373,34 +1373,37 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // ---------- Enable Notifications ----------
-  async function enableNotifications() {
-    try {
-      // Use OneSignal if available (recommended)
-      if (window.OneSignal && OneSignal.User) {
-        await OneSignal.User.PushSubscription.optIn();
-        setUIState(true);
-        console.log('✅ Subscribed successfully via OneSignal');
-        return;
-      }
-
-      // Fallback: Native browser Push API (requires VAPID key)
-      const permission = await Notification.requestPermission();
-      if (permission !== 'granted') {
-        alert('Please allow notifications to subscribe.');
-        return;
-      }
-
-      const registration = await navigator.serviceWorker.ready;
-      // Native push requires a VAPID key – since we don't have one here,
-      // we just simulate success. Replace with your actual subscribe() call if needed.
+// ---------- Enable Notifications ----------
+async function enableNotifications() {
+  try {
+    if (window.OneSignal && OneSignal.User) {
+      await OneSignal.User.PushSubscription.optIn();
       setUIState(true);
-      console.log('✅ Subscribed (native fallback – simulated)');
-    } catch (error) {
-      console.error('Enable error:', error);
-      alert('Failed to enable notifications. Check console for details.');
+
+      // >>>>>>>>> PUT THE CODE RIGHT HERE <<<<<<<<<<
+      // This will automatically pop up a notification after they subscribe
+      if (typeof sendTestNotification === 'function') {
+        sendTestNotification();
+      }
+
+      console.log('✅ Subscribed successfully via OneSignal');
+      return;
     }
+
+    // Fallback: Native browser Push API
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') {
+      alert('Please allow notifications to subscribe.');
+      return;
+    }
+    const registration = await navigator.serviceWorker.ready;
+    setUIState(true);
+    console.log('✅ Subscribed (native fallback)');
+  } catch (error) {
+    console.error('Enable error:', error);
+    alert('Failed to enable notifications.');
   }
+}
 
   // ---------- Disable Notifications ----------
   async function disableNotifications() {
