@@ -593,38 +593,21 @@
       .main-layout { grid-template-columns: 1fr; }
       .right-sidebar { order: 2; }
     }
-
-    /* for notification button */
 /* In your existing styles or a new <style> block */
 /* BEFORE */
+/* Push notification button states */
 #push-subscribe-btn {
-  transition: background 0.3s, color 0.3s;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-#push-subscribe-btn[data-subscribed="true"] {
-  background: #c62828 !important;
-  color: #fff !important;
+#push-subscribe-btn.push-state-unsubscribed {
+  background-color: #c62828; /* red */
+  color: #fff;
 }
 
-#push-subscribe-btn[data-subscribed="false"] {
-  background: #f4aa2a !important;
-  color: #123b6d !important;
-}
-
-/* AFTER */
-#push-subscribe-btn,
-#push-unsubscribe-btn {
-  transition: background 0.3s, color 0.3s;
-}
-
-#push-subscribe-btn {
-  background: #c62828 !important;
-  color: #fff !important;
-}
-
-#push-unsubscribe-btn {
-  background: #2e7d32 !important;
-  color: #fff !important;
+#push-subscribe-btn.push-state-subscribed {
+  background-color: #2e7d32; /* green */
+  color: #fff;
 }
     
   </style>
@@ -691,10 +674,6 @@
         </li>
         <!-- BEFORE -->
 <button id="push-subscribe-btn" class="action-btn">🔔 Enable Notifications</button>
-
-<!-- AFTER -->
-<button id="push-subscribe-btn" class="action-btn">🔔 Enable Notifications</button>
-<button id="push-unsubscribe-btn" class="action-btn" style="display:none;">🔕 Disable Notifications</button>
       </ul>
 
       <div class="year-selector">
