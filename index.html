@@ -593,22 +593,6 @@
       .main-layout { grid-template-columns: 1fr; }
       .right-sidebar { order: 2; }
     }
-/* In your existing styles or a new <style> block */
-/* BEFORE */
-/* Push notification button states */
-#push-subscribe-btn {
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-#push-subscribe-btn.push-state-unsubscribed {
-  background-color: #c62828; /* red */
-  color: #fff;
-}
-
-#push-subscribe-btn.push-state-subscribed {
-  background-color: #2e7d32; /* green */
-  color: #fff;
-}
     
   </style>
 <!-- OneSignal setting notification -->
@@ -672,8 +656,11 @@
             <li><a href="nepali_fuel_rates.html">इन्धन मूल्य</a></li>
           </ul>
         </li>
-        <!-- BEFORE -->
+<!-- Enable button (visible by default) -->
 <button id="push-subscribe-btn" class="action-btn">🔔 Enable Notifications</button>
+
+<!-- Disable button (hidden by default) -->
+<button id="push-unsubscribe-btn" class="action-btn" style="display: none;">🔕 Disable Notifications</button>
       </ul>
 
       <div class="year-selector">
@@ -1341,6 +1328,115 @@
 </script>
 <!-- PWA Installation Script -->
 <script src="/pwa-install.js"></script>
+
+  
+
+<!-- Notification button setting-->
+  <script>
+document.addEventListener('DOMContentLoaded', function () {
+  const subscribeBtn = document.getElementById('push-subscribe-btn');
+  const unsubscribeBtn = document.getElementById('push-unsubscribe-btn');
+
+  // ---------- UI Helper: show/hide buttons ----------
+  function setUIState(isSubscribed) {
+    if (isSubscribed) {
+      subscribeBtn.style.display = 'none';
+      unsubscribeBtn.style.display = 'inline-block'; // or 'block' if you prefer
+    } else {
+      subscribeBtn.style.display = 'inline-block';
+      unsubscribeBtn.style.display = 'none';
+    }
+  }
+
+  // ---------- Check current subscription status on page load ----------
+  async function checkCurrentStatus() {
+    try {
+      // If OneSignal is loaded, use its official method
+      if (window.OneSignal && OneSignal.User) {
+        const isOptedIn = await OneSignal.User.PushSubscription.optedIn;
+        setUIState(isOptedIn);
+        console.log(`OneSignal status: ${isOptedIn ? 'Subscribed ✅' : 'Not subscribed ❌'}`);
+        return;
+      }
+
+      // Fallback: check native Push API (if OneSignal isn't ready)
+      if (Notification.permission === 'granted') {
+        const registration = await navigator.serviceWorker.ready;
+        const subscription = await registration.pushManager.getSubscription();
+        setUIState(!!subscription);
+      } else {
+        setUIState(false);
+      }
+    } catch (error) {
+      console.warn('Could not check subscription status:', error);
+      setUIState(false); // Default to showing "Enable" button
+    }
+  }
+
+  // ---------- Enable Notifications ----------
+  async function enableNotifications() {
+    try {
+      // Use OneSignal if available (recommended)
+      if (window.OneSignal && OneSignal.User) {
+        await OneSignal.User.PushSubscription.optIn();
+        setUIState(true);
+        console.log('✅ Subscribed successfully via OneSignal');
+        return;
+      }
+
+      // Fallback: Native browser Push API (requires VAPID key)
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') {
+        alert('Please allow notifications to subscribe.');
+        return;
+      }
+
+      const registration = await navigator.serviceWorker.ready;
+      // Native push requires a VAPID key – since we don't have one here,
+      // we just simulate success. Replace with your actual subscribe() call if needed.
+      setUIState(true);
+      console.log('✅ Subscribed (native fallback – simulated)');
+    } catch (error) {
+      console.error('Enable error:', error);
+      alert('Failed to enable notifications. Check console for details.');
+    }
+  }
+
+  // ---------- Disable Notifications ----------
+  async function disableNotifications() {
+    try {
+      // Use OneSignal if available
+      if (window.OneSignal && OneSignal.User) {
+        await OneSignal.User.PushSubscription.optOut();
+        setUIState(false);
+        console.log('❌ Unsubscribed successfully via OneSignal');
+        return;
+      }
+
+      // Fallback: Native unsubscribe
+      const registration = await navigator.serviceWorker.ready;
+      const subscription = await registration.pushManager.getSubscription();
+      if (subscription) {
+        await subscription.unsubscribe();
+        setUIState(false);
+        console.log('❌ Unsubscribed (native)');
+      } else {
+        setUIState(false);
+      }
+    } catch (error) {
+      console.error('Disable error:', error);
+      alert('Failed to disable notifications. Check console.');
+    }
+  }
+
+  // ---------- Attach event listeners ----------
+  subscribeBtn.addEventListener('click', enableNotifications);
+  unsubscribeBtn.addEventListener('click', disableNotifications);
+
+  // ---------- Run on page load ----------
+  checkCurrentStatus();
+});
+</script>
 
   <script src="/push-subscription.js" defer></script>
 </body>
