@@ -593,6 +593,23 @@
       .main-layout { grid-template-columns: 1fr; }
       .right-sidebar { order: 2; }
     }
+
+/* Push notification button states */
+#push-subscribe-btn {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#push-subscribe-btn.push-state-unsubscribed {
+  background-color: #c62828; /* red */
+  color: #fff;
+}
+
+#push-subscribe-btn.push-state-subscribed {
+  background-color: #2e7d32; /* green */
+  color: #fff;
+}
+
+
     
   </style>
 <!-- OneSignal setting notification -->
