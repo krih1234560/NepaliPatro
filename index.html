@@ -593,6 +593,23 @@
       .main-layout { grid-template-columns: 1fr; }
       .right-sidebar { order: 2; }
     }
+
+    /* for notification button */
+/* In your existing styles or a new <style> block */
+#push-subscribe-btn {
+  transition: background 0.3s, color 0.3s;
+}
+
+#push-subscribe-btn[data-subscribed="true"] {
+  background: #c62828 !important;
+  color: #fff !important;
+}
+
+#push-subscribe-btn[data-subscribed="false"] {
+  background: #f4aa2a !important;
+  color: #123b6d !important;
+}
+    
   </style>
 <!-- OneSignal setting notification -->
 
