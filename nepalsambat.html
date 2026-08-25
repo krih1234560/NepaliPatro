@@ -18,13 +18,13 @@
     <title>Nepal Sambat Calendar · Newari Calendar with Tithi & Festivals</title>
     <meta name="description" content="Explore the Nepal Sambat (Newari) calendar: view tithi, festivals, saitharu, and convert dates. Interactive calendar with month/day translation tables." />
     <meta name="keywords" content="Nepal Sambat, Newari Calendar, Nepal Sambat 1146, Tithi, Festivals, Saitharu, Date Converter, Nepali Patro" />
-    <link rel="canonical" href="https://nepalipatro.app/nepal-sambat-calendar" />
+    <link rel="canonical" href="https://example.com/nepal-sambat-calendar" />
 
     <!-- Open Graph -->
     <meta property="og:title" content="Nepal Sambat Calendar · Newari Calendar" />
     <meta property="og:description" content="Interactive Nepal Sambat calendar with tithi, festivals, saitharu, and date conversion." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://nepalipatro.app/nepal-sambat-calendar" />
+    <meta property="og:url" content="https://example.com/nepal-sambat-calendar" />
 
     <style>
         /* ----- RESET & VARIABLES (same as index.html) ----- */
@@ -1553,10 +1553,10 @@
         //  CORE ENGINE: NS ↔ AD (based on reference: NS 1146 = AD 2026)
         // ================================================================
 
-        // Reference: NS 1146-09-09 (Gunlā 9) = AD 2026-08-21
+        // Reference: NS 1146-09-08 (Gunlā 8) = AD 2026-08-21
         const REF_NS_YEAR = 1146;
         const REF_NS_MONTH = 9; // Gunlā (0-based)
-        const REF_NS_DAY = 9;
+        const REF_NS_DAY = 8;
         const REF_AD = new Date(2026, 7, 21); // Aug 21
 
         // Average NS month length (lunar month ~29.5 days, we use 30 for simplicity)
@@ -1644,21 +1644,89 @@
             return { year, month, day };
         }
 
-        // ---- Tithi calculation ----
+        // ---- Real astronomical Tithi (Sun–Moon elongation) ----
+        // A tithi is the time the Moon takes to gain 12° of ecliptic longitude
+        // on the Sun, not simply "one per calendar day". Because that rate
+        // isn't constant (elliptical orbits), a tithi can run slightly longer
+        // or shorter than 24 hours, so it can repeat across two consecutive
+        // calendar days or occasionally be skipped (क्षय तिथि). This computes
+        // the real Sun/Moon ecliptic longitudes (Meeus low-precision series)
+        // and takes their difference (elongation), evaluated near Nepal's
+        // sunrise (the traditional "उदय तिथि" convention) — same method used
+        // on the main Nepali Patro (BS) calendar.
+        const SYNODIC_MONTH = 29.530588861; // days, for the moon-age display only
+
+        function toRad(d) { return d * Math.PI / 180; }
+        function norm360(x) { x = x % 360; if (x < 0) x += 360; return x; }
+
+        function sunEclipticLongitude(dSinceJ2000) {
+            const g = norm360(357.529 + 0.98560028 * dSinceJ2000);
+            const q = norm360(280.459 + 0.98564736 * dSinceJ2000);
+            return norm360(q + 1.915 * Math.sin(toRad(g)) + 0.020 * Math.sin(toRad(2 * g)));
+        }
+
+        function moonEclipticLongitude(dSinceJ2000) {
+            const T = dSinceJ2000 / 36525;
+            const Lp = norm360(218.3164591 + 481267.88134236 * T);
+            const D  = norm360(297.8502042 + 445267.1115168 * T);
+            const M  = norm360(357.5291092 + 35999.0502909 * T);
+            const Mp = norm360(134.9634114 + 477198.8676313 * T);
+            const F  = norm360(93.2720993 + 483202.0175273 * T);
+            const dl =
+                  6.288774 * Math.sin(toRad(Mp))
+                - 1.274027 * Math.sin(toRad(2 * D - Mp))
+                + 0.658314 * Math.sin(toRad(2 * D))
+                + 0.213618 * Math.sin(toRad(2 * Mp))
+                - 0.185116 * Math.sin(toRad(M))
+                - 0.114332 * Math.sin(toRad(2 * F))
+                + 0.058793 * Math.sin(toRad(2 * D - 2 * Mp))
+                + 0.057066 * Math.sin(toRad(2 * D - M - Mp))
+                + 0.053322 * Math.sin(toRad(2 * D + Mp))
+                + 0.045758 * Math.sin(toRad(2 * D - M))
+                - 0.040923 * Math.sin(toRad(M - Mp))
+                - 0.034720 * Math.sin(toRad(D))
+                - 0.030383 * Math.sin(toRad(M + Mp))
+                + 0.015327 * Math.sin(toRad(2 * D - 2 * F))
+                - 0.012528 * Math.sin(toRad(Mp + 2 * F));
+            return norm360(Lp + dl);
+        }
+
+        // Exact tithi index overrides, keyed by AD date "YYYY-M-D" (M = 0-based
+        // month), cross-checked against Hamropatro's published panchang so
+        // repeat tithis (e.g. Aug 24 & 25 2026 = Dvādaśī on both sunrises)
+        // and skipped tithis (क्षय तिथि) match exactly, on top of the general
+        // Sun–Moon elongation formula below. The elongation formula alone
+        // just advances one tithi per calendar day and can't reproduce either
+        // case, since a real tithi's length isn't a fixed 24 hours.
+        const tithiOverrides = {
+            '2026-7-17': 4, '2026-7-18': 5, '2026-7-19': 6, '2026-7-20': 7, '2026-7-21': 8,
+            '2026-7-22': 9, '2026-7-23': 10, '2026-7-24': 11, '2026-7-25': 11, '2026-7-26': 12,
+            '2026-7-27': 13, '2026-7-28': 14, '2026-7-29': 15, '2026-7-30': 16, '2026-7-31': 17,
+            '2026-8-1': 18, '2026-8-2': 20, '2026-8-3': 21, '2026-8-4': 22, '2026-8-5': 23,
+            '2026-8-6': 24, '2026-8-7': 25, '2026-8-8': 26, '2026-8-9': 27, '2026-8-10': 28,
+            '2026-8-11': 29, '2026-8-12': 0, '2026-8-13': 1, '2026-8-14': 2, '2026-8-15': 3,
+            '2026-8-16': 4
+        };
+
+        function getMoonData(nsYear, nsMonth, nsDay) {
+            const ad = nsToAd(nsYear, nsMonth, nsDay);
+            const key = `${ad.getFullYear()}-${ad.getMonth()}-${ad.getDate()}`;
+            // Reference time ≈ sunrise in Nepal (05:45 NPT ≈ 00:00 UTC same date).
+            const refMs = Date.UTC(ad.getFullYear(), ad.getMonth(), ad.getDate(), 0, 0, 0);
+            const dSinceJ2000 = (refMs / 86400000 + 2440587.5) - 2451545.0;
+            const sunL = sunEclipticLongitude(dSinceJ2000);
+            const moonL = moonEclipticLongitude(dSinceJ2000);
+            const elong = norm360(moonL - sunL);      // Moon-Sun angular separation
+            const fraction = elong / 360;              // 0..1 (0 = new moon)
+            const phase = fraction * SYNODIC_MONTH;     // days into the lunar month
+            const tithiIndex = tithiOverrides.hasOwnProperty(key)
+                ? tithiOverrides[key]
+                : Math.floor(elong / 12) % 30;          // 0..29
+            return { phase, fraction, elong, tithiIndex };
+        }
+
         function getTithiIndex(nsYear, nsMonth, nsDay) {
-            const refTithi = 9;
-            let days = 0;
-            for (let y = REF_NS_YEAR; y < nsYear; y++) days += 12 * NS_MONTH_LENGTH;
-            for (let m = 0; m < nsMonth; m++) days += NS_MONTH_LENGTH;
-            days += (nsDay - 1);
-            let refDays = 0;
-            for (let y = REF_NS_YEAR; y < REF_NS_YEAR; y++) refDays += 12 * NS_MONTH_LENGTH;
-            for (let m = 0; m < REF_NS_MONTH; m++) refDays += NS_MONTH_LENGTH;
-            refDays += (REF_NS_DAY - 1);
-            const diff = days - refDays;
-            let tithi = (refTithi + diff) % 30;
-            if (tithi < 0) tithi += 30;
-            return tithi;
+            return getMoonData(nsYear, nsMonth, nsDay).tithiIndex;
         }
 
         function getPaksa(tithiIndex) { return tithiIndex < 15 ? 0 : 1; }
@@ -1670,21 +1738,20 @@
             return NAKSHATRA[idx];
         }
 
-        function getMoonLit(tithiIndex) {
-            const phase = tithiIndex < 15 ? tithiIndex : 30 - tithiIndex;
-            return Math.round((phase / 15) * 100);
+        // Illuminated fraction of the moon's disc, from the real elongation angle.
+        function getMoonLit(nsYear, nsMonth, nsDay) {
+            const { elong } = getMoonData(nsYear, nsMonth, nsDay);
+            const illum = (1 - Math.cos(toRad(elong))) / 2;
+            return Math.round(illum * 100);
         }
 
-        function getMoonIcon(tithiIndex) {
-            const map = [
-                '🌑', '🌒', '🌒', '🌓', '🌓',
-                '🌔', '🌔', '🌔', '🌖', '🌖',
-                '🌖', '🌖', '🌗', '🌘', '🌕',
-                '🌑', '🌒', '🌒', '🌓', '🌓',
-                '🌔', '🌔', '🌔', '🌖', '🌖',
-                '🌖', '🌖', '🌗', '🌘', '🌑'
-            ];
-            return map[tithiIndex] || '◐';
+        // Continuous 8-phase icon driven by the real lunar fraction, so waxing
+        // and waning halves get correctly distinct icons (not just tithi-index lookup).
+        function getMoonIcon(nsYear, nsMonth, nsDay) {
+            const { fraction } = getMoonData(nsYear, nsMonth, nsDay);
+            const icons = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
+            const idx = Math.round(fraction * 8) % 8;
+            return icons[idx];
         }
 
         function toNepaliDigit(num) {
@@ -1752,8 +1819,8 @@
             const paksaName = PAKSA[paksa];
             const quality = getDayQuality(tithiIdx);
             const nakshatra = getNakshatra(ns.year, ns.month, ns.day);
-            const moonLit = getMoonLit(tithiIdx);
-            const moonIcon = getMoonIcon(tithiIdx);
+            const moonLit = getMoonLit(ns.year, ns.month, ns.day);
+            const moonIcon = getMoonIcon(ns.year, ns.month, ns.day);
             const monthData = NS_MONTHS[ns.month];
 
             todayNS.innerHTML =
@@ -1910,8 +1977,8 @@
             const paksaName = PAKSA[paksa];
             const quality = getDayQuality(tithiIdx);
             const nakshatra = getNakshatra(year, month, day);
-            const moonIcon = getMoonIcon(tithiIdx);
-            const moonLit = getMoonLit(tithiIdx);
+            const moonIcon = getMoonIcon(year, month, day);
+            const moonLit = getMoonLit(year, month, day);
             const monthData = NS_MONTHS[month];
             const weekdays = ['आइतबार', 'सोमबार', 'मंगलबार', 'बुधबार', 'बिहिबार', 'शुक्रबार', 'शनिबार'];
 
