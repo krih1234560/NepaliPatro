@@ -460,3 +460,65 @@ If you find this project useful, please consider:
 ---
 
 **Made with ❤️ in Nepal 🇳🇵**
+
+---
+
+## 🔎 SEO & Search Engine Indexing
+
+This project includes the basic files needed to help search engines discover and crawl the public pages:
+
+- **`robots.txt`** — permits normal crawling and points crawlers to the XML sitemap.
+- **`sitemap.xml`** — lists the public, indexable pages of the site.
+- The sitemap uses the production domain: **https://www.nepalipatro.app/**
+- Keep the sitemap at the website root so it is available at:
+  `https://www.nepalipatro.app/sitemap.xml`
+- Keep `robots.txt` at the website root so it is available at:
+  `https://www.nepalipatro.app/robots.txt`
+
+### Google Search Console
+
+After deploying these files:
+
+1. Add and verify `https://www.nepalipatro.app/` in Google Search Console.
+2. Submit `https://www.nepalipatro.app/sitemap.xml` under **Sitemaps**.
+3. Use **URL Inspection** to request indexing for important pages after deployment.
+4. Make sure the production site returns HTTP `200` for public pages and that the canonical URLs use the same production domain.
+5. Update `sitemap.xml` whenever a new public, indexable page is added.
+
+### SEO implementation notes
+
+The app already contains useful page-specific titles and descriptions on many pages. Before production deployment, the following should also be kept consistent:
+
+- Use `https://www.nepalipatro.app/` as the canonical domain across every public HTML page.
+- Replace any placeholder canonical URLs such as `example.com` with the production domain.
+- Add a canonical link to public pages that do not currently have one.
+- Keep `index, follow` on pages intended for search indexing and use `noindex` only for pages that should not appear in search results.
+- Keep the sitemap limited to canonical, public URLs.
+- Ensure important navigation links are crawlable with normal HTML links.
+- Avoid creating duplicate indexable URLs for the same content through query parameters or alternate paths.
+
+### Current public page inventory
+
+The sitemap covers these public application routes:
+
+| Page | Path |
+| --- | --- |
+| Nepali Calendar | `/` |
+| Age Calculator | `/age-calculator.html` |
+| Date Difference | `/date-difference.html` |
+| BS–AD Date Converter | `/dateconverter.html` |
+| Event Reminder | `/event-remainder.html` |
+| Exchange Rates | `/exchange-rate.html` |
+| Festivals | `/festivals.html` |
+| Gold & Silver Rates | `/goldsilver.html` |
+| Holidays | `/holidays.html` |
+| Kundali Generator | `/kundali-generator.html` |
+| Nepal Fuel Rates | `/nepali_fuel_rates.html` |
+| Nepal Sambat Calendar | `/nepalsambat.html` |
+| Rashifal / Horoscope | `/rashifal.html` |
+| Nepali Unicode Converter | `/unicode.html` |
+| Nepal Weather | `/weather.html` |
+
+`offline.html` is intentionally excluded from the sitemap because it is an offline/fallback experience rather than a primary search landing page.
+
+> **Important:** `robots.txt` and `sitemap.xml` improve crawl discovery, but they do not guarantee Google rankings. Ranking also depends on content quality, technical performance, internal linking, mobile usability, structured data where appropriate, backlinks, and Google's indexing systems.
