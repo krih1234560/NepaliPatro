@@ -1487,5 +1487,17 @@
 <!-- PWA Installation Script -->
 <script src="/pwa-install.js"></script>
 
+  <!--for offline page uses-->
+  <!-- Service Worker Registration -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('[SW] Registered with scope:', reg.scope))
+        .catch(err => console.error('[SW] Registration failed:', err));
+    });
+  }
+</script>
+  
 </body>
 </html>
