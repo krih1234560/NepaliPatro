@@ -20,8 +20,8 @@ const ASSETS_TO_CACHE = [
   '/nepali_fuel_rates.html',
   '/manifest.json',
   '/offline.html',
-  '/event-remainder',
-  '/quiz-scheduler'
+  '/event-remainder.html',
+  '/quiz-scheduler.html'
 ];
 
 // Install event - cache core assets
