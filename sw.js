@@ -1,6 +1,6 @@
 // sw.js - Service Worker for Nepali Patro PWA
 
-const CACHE_NAME = 'nepali-patro-v3';
+const CACHE_NAME = 'nepali-patro-v4';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -93,11 +93,25 @@ self.addEventListener('fetch', event => {
             }
             return networkResponse;
           })
-          .catch(() => {
-            // If offline, serve offline page for HTML requests
-            if (request.headers.get('Accept').includes('text/html')) {
-              return caches.match('/offline.html');
+          .catch(async () => {
+            // Guard against a missing/null Accept header, which would
+            // otherwise throw here and crash the whole fetch handler.
+            const acceptHeader = request.headers.get('Accept') || '';
+            const wantsHtml = request.mode === 'navigate' || acceptHeader.includes('text/html');
+
+            if (wantsHtml) {
+              const offlinePage = await caches.match('/offline.html');
+              if (offlinePage) {
+                return offlinePage;
+              }
+              // Fallback if offline.html itself somehow isn't cached,
+              // so we NEVER resolve to undefined (that causes ERR_FAILED).
+              return new Response(
+                '<h1>You are offline</h1><p>Please reconnect to the internet.</p>',
+                { status: 503, headers: { 'Content-Type': 'text/html' } }
+              );
             }
+
             // For other resources, return a simple error response
             return new Response('Offline - Please check your connection', {
               status: 503,
