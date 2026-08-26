@@ -1,10 +1,9 @@
 // sw.js - Service Worker for Nepali Patro PWA
 
-const CACHE_NAME = 'nepali-patro-v2';
+const CACHE_NAME = 'nepali-patro-v3';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
-  '/calendar-2083.html',
   '/nepalsambat.html',
   '/unicode.html',
   '/dateconverter.html',
@@ -30,7 +29,16 @@ self.addEventListener('install', event => {
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('[SW] Caching assets');
-        return cache.addAll(ASSETS_TO_CACHE);
+        // Cache each asset individually instead of addAll(), so one
+        // missing/renamed file in the future can't silently break
+        // caching for every other page.
+        return Promise.allSettled(
+          ASSETS_TO_CACHE.map(url =>
+            cache.add(url).catch(err => {
+              console.warn('[SW] Failed to cache', url, err);
+            })
+          )
+        );
       })
       .then(() => self.skipWaiting())
   );
