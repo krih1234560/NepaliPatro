@@ -253,7 +253,10 @@
                 margin-top: 4px;
             }
             .menu-wrapper.open {
-                display: flex;
+              display: flex;
+              max-height: calc(100vh - 72px);
+              overflow-y: auto;
+              -webkit-overflow-scrolling: touch;
             }
 
             .menu {

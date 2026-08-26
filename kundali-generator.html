@@ -231,6 +231,9 @@
       }
       .menu-wrapper.open {
         display: flex;
+        max-height: calc(100vh - 72px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
       .menu {
         flex-direction: column;
