@@ -677,8 +677,8 @@
         </div>
 
         <div class="disclaimer">
-            * विनिमय दरहरू नेपाल राष्ट्र बैंकको आधिकारिक API बाट लिइएको हो।
-            दरहरू दैनिक अपडेट हुन्छन्। · Rates sourced from Nepal Rastra Bank official API. Updated daily.
+            * यी दरहरू लाइभ अन्तर्राष्ट्रिय बजार दर (open.er-api.com) बाट NPR मा रूपान्तरण गरी अनुमानित किन्ने/बेच्ने दर हो, नेपाल राष्ट्र बैंकको आधिकारिक दर होइन।
+            · Rates are approximate, derived from a live foreign-exchange API (open.er-api.com) and converted to NPR — not an official Nepal Rastra Bank quote.
         </div>
     </div>
 
@@ -894,7 +894,65 @@
                 `;
             }
 
-            // ─── Fetch rates with proxy ──────────────────────────────
+            // ─── Currency list we display (iso3, display name, unit) ──
+            // "unit" matches how NRB itself quotes some currencies
+            // (e.g. per 100 JPY / 100 INR / 100 KRW) so the table reads
+            // the same way Nepali users are used to seeing it.
+            const CURRENCY_LIST = [
+                { iso3: 'USD', name: 'US Dollar', unit: 1 },
+                { iso3: 'EUR', name: 'Euro', unit: 1 },
+                { iso3: 'GBP', name: 'British Pound', unit: 1 },
+                { iso3: 'AUD', name: 'Australian Dollar', unit: 1 },
+                { iso3: 'CAD', name: 'Canadian Dollar', unit: 1 },
+                { iso3: 'SGD', name: 'Singapore Dollar', unit: 1 },
+                { iso3: 'CHF', name: 'Swiss Franc', unit: 1 },
+                { iso3: 'JPY', name: 'Japanese Yen', unit: 100 },
+                { iso3: 'CNY', name: 'Chinese Yuan', unit: 1 },
+                { iso3: 'HKD', name: 'Hong Kong Dollar', unit: 1 },
+                { iso3: 'SAR', name: 'Saudi Riyal', unit: 1 },
+                { iso3: 'QAR', name: 'Qatari Riyal', unit: 1 },
+                { iso3: 'AED', name: 'UAE Dirham', unit: 1 },
+                { iso3: 'KWD', name: 'Kuwaiti Dinar', unit: 1 },
+                { iso3: 'THB', name: 'Thai Baht', unit: 1 },
+                { iso3: 'MYR', name: 'Malaysian Ringgit', unit: 1 },
+                { iso3: 'KRW', name: 'South Korean Won', unit: 100 },
+                { iso3: 'INR', name: 'Indian Rupee', unit: 100 }
+            ];
+
+            // ─── Fetch rates from a live, CORS-friendly foreign API ───
+            // NRB's own API is not reliably reachable from the browser
+            // (no CORS headers). A first attempt to use open.er-api.com
+            // also turned out to have CORS disabled for browser requests,
+            // so it silently failed every time and the page always fell
+            // back to the demo snapshot.
+            //
+            // Instead we use fawazahmed0/currency-api, which is served
+            // directly off the jsDelivr CDN (jsDelivr sends proper
+            // Access-Control-Allow-Origin headers on every file, so it
+            // works from any browser with no key and no rate limit) and
+            // has a Cloudflare Pages mirror as a fallback. It's updated
+            // daily. Since it only gives one mid-market rate per currency
+            // (not a bank's separate buy/sell), we derive a small buy/sell
+            // spread around the mid rate — this is an approximation, not
+            // an official NRB quote.
+            const PRIMARY_URL = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json';
+            const FALLBACK_URL = 'https://latest.currency-api.pages.dev/v1/currencies/usd.json';
+
+            async function fetchLiveUsdRates() {
+                for (const url of [PRIMARY_URL, FALLBACK_URL]) {
+                    try {
+                        const response = await fetch(url, { method: 'GET', cache: 'no-store' });
+                        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                        const data = await response.json();
+                        if (!data?.usd) throw new Error('अमान्य वा खाली API प्रतिक्रिया');
+                        return data;
+                    } catch (err) {
+                        console.warn('Exchange rate source failed:', url, err);
+                    }
+                }
+                return null;
+            }
+
             async function fetchRates(showStatus = true) {
                 if (showStatus) {
                     statusMsg.innerHTML = '<span class="spinner"></span> लोड हुँदै...';
@@ -902,55 +960,38 @@
                     showSkeleton();
                 }
 
-                // NRB's API is not reliably CORS-enabled for browser-side requests.
-                // Try a few known public read-only endpoints first, then fall back
-                // to the bundled snapshot so the page never stays blank.
+                try {
+                    const data = await fetchLiveUsdRates();
+                    if (!data) throw new Error('दुबै स्रोत असफल भए');
 
-                const apiUrls = [
-                    'https://www.nrb.org.np/api/forex/v1/rates?per_page=100',
-                    'https://www.nrb.org.np/api/forex/v1/rates?per_page=100&page=1'
-                ];
+                    const usdRates = data.usd; // e.g. { eur: 0.86, npr: 141.2, ... }
+                    const usdToNpr = usdRates.npr;
+                    if (!usdToNpr) throw new Error('NPR दर भेटिएन');
 
-                let success = false;
-                let lastError = null;
+                    const rates = CURRENCY_LIST
+                        .map(c => {
+                            const usdToCur = usdRates[c.iso3.toLowerCase()]; // CUR per 1 USD
+                            if (!usdToCur) return null;
+                            const nprPerUnit = (usdToNpr / usdToCur) * c.unit;
+                            // ~0.4% spread around mid-rate as a rough buy/sell band
+                            const spread = nprPerUnit * 0.004;
+                            return {
+                                currency: { iso3: c.iso3, name: c.name, unit: c.unit },
+                                buy: nprPerUnit - spread,
+                                sell: nprPerUnit + spread
+                            };
+                        })
+                        .filter(Boolean);
 
-                for (const apiUrl of apiUrls) {
-                    try {
-                        const response = await fetch(apiUrl, {
-                            method: 'GET',
-                            headers: { 'Accept': 'application/json' },
-                            cache: 'no-store'
-                        });
+                    if (!rates.length) throw new Error('कुनै मुद्रा दर भेटिएन');
 
-                        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const publishedOn = data.date ? `${data.date}T00:00:00+05:45` : new Date().toISOString();
 
-                        const data = await response.json();
-
-                        // Current NRB response shape:
-                        // { status: { code: 200 }, data: { payload: [...] } }
-                        const payloads = data?.data?.payload || [];
-                        const payload = Array.isArray(payloads) ? payloads[0] : payloads;
-                        const rates = payload?.rates || [];
-
-                        if (data?.status?.code === 200 && rates.length) {
-                            renderRates(payload, false);
-                            statusMsg.innerHTML =
-                                '<span class="pulse-dot"></span> ✅ सफलतापूर्वक लोड भयो';
-                            success = true;
-                            break;
-                        }
-
-                        throw new Error('अमान्य वा खाली NRB API प्रतिक्रिया');
-                    } catch (err) {
-                        lastError = err;
-                        console.warn('NRB API failed:', apiUrl, err);
-                    }
-                }
-
-                if (!success) {
-                    // GitHub Pages/browser CORS can prevent direct NRB access.
-                    // Keep the page usable rather than leaving an endless loader.
-                    console.warn('NRB API unavailable from browser:', lastError);
+                    renderRates({ date: publishedOn, rates }, false);
+                    statusMsg.innerHTML =
+                        '<span class="pulse-dot"></span> ✅ लाइभ दर लोड भयो';
+                } catch (err) {
+                    console.warn('Live exchange rate API failed:', err);
                     renderRates(DEMO_RATES, true);
                     statusMsg.innerHTML =
                         '<span style="color:#856404;">⚠️ API पहुँच भएन — पछिल्लो उपलब्ध दर देखाइएको छ</span>';
