@@ -1,9 +1,10 @@
 // sw.js - Service Worker for Nepali Patro PWA
 
-const CACHE_NAME = 'nepali-patro-v4';
+const CACHE_NAME = 'nepali-patro-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
+  '/calendar-2083.html',
   '/nepalsambat.html',
   '/unicode.html',
   '/dateconverter.html',
@@ -19,8 +20,8 @@ const ASSETS_TO_CACHE = [
   '/nepali_fuel_rates.html',
   '/manifest.json',
   '/offline.html',
-  '/event-remainder.html',
-  '/quiz-scheduler.html'
+  '/event-remainder',
+  '/quiz-scheduler'
 ];
 
 // Install event - cache core assets
@@ -29,16 +30,7 @@ self.addEventListener('install', event => {
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('[SW] Caching assets');
-        // Cache each asset individually instead of addAll(), so one
-        // missing/renamed file in the future can't silently break
-        // caching for every other page.
-        return Promise.allSettled(
-          ASSETS_TO_CACHE.map(url =>
-            cache.add(url).catch(err => {
-              console.warn('[SW] Failed to cache', url, err);
-            })
-          )
-        );
+        return cache.addAll(ASSETS_TO_CACHE);
       })
       .then(() => self.skipWaiting())
   );
@@ -93,25 +85,11 @@ self.addEventListener('fetch', event => {
             }
             return networkResponse;
           })
-          .catch(async () => {
-            // Guard against a missing/null Accept header, which would
-            // otherwise throw here and crash the whole fetch handler.
-            const acceptHeader = request.headers.get('Accept') || '';
-            const wantsHtml = request.mode === 'navigate' || acceptHeader.includes('text/html');
-
-            if (wantsHtml) {
-              const offlinePage = await caches.match('/offline.html');
-              if (offlinePage) {
-                return offlinePage;
-              }
-              // Fallback if offline.html itself somehow isn't cached,
-              // so we NEVER resolve to undefined (that causes ERR_FAILED).
-              return new Response(
-                '<h1>You are offline</h1><p>Please reconnect to the internet.</p>',
-                { status: 503, headers: { 'Content-Type': 'text/html' } }
-              );
+          .catch(() => {
+            // If offline, serve offline page for HTML requests
+            if (request.headers.get('Accept').includes('text/html')) {
+              return caches.match('/offline.html');
             }
-
             // For other resources, return a simple error response
             return new Response('Offline - Please check your connection', {
               status: 503,
