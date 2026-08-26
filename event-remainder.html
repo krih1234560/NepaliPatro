@@ -283,11 +283,16 @@
                 background: transparent;
             }
             .dropdown:hover .dropdown-menu,
-            .dropdown:focus-within .dropdown-menu {
+            .dropdown:focus-within .dropdown-menu,
+            .dropdown.open .dropdown-menu {
                 display: block;
             }
             .dropdown>a:after {
                 content: "▾";
+                transition: transform 0.2s;
+            }
+            .dropdown.open>a:after {
+                transform: rotate(180deg);
             }
             .year-selector {
                 display: none;
@@ -1075,14 +1080,39 @@
             // ---------- hamburger toggle ----------
             const hamburgerBtn = document.getElementById('hamburgerBtn');
             const menuWrapper = document.getElementById('menuWrapper');
+            const dropdowns = document.querySelectorAll('.dropdown');
+
             if (hamburgerBtn && menuWrapper) {
                 hamburgerBtn.addEventListener('click', function() {
                     menuWrapper.classList.toggle('open');
+                    // collapse any open submenus whenever the main menu toggles
+                    dropdowns.forEach(function(dd) { dd.classList.remove('open'); });
                 });
-                // close on link click (mobile)
+
+                // ---------- dropdown toggles (tap to open/close on mobile) ----------
+                dropdowns.forEach(function(dd) {
+                    const toggle = dd.querySelector(':scope > a');
+                    if (!toggle) return;
+                    toggle.addEventListener('click', function(e) {
+                        // Only intercept on mobile (hamburger visible); on desktop, hover handles it
+                        if (window.getComputedStyle(hamburgerBtn).display !== 'none') {
+                            e.preventDefault();
+                            const isOpen = dd.classList.contains('open');
+                            dropdowns.forEach(function(other) { other.classList.remove('open'); });
+                            if (!isOpen) dd.classList.add('open');
+                        }
+                    });
+                });
+
+                // close whole menu when a REAL navigation link is tapped
+                // (submenu items + top-level links that aren't dropdown toggles)
                 menuWrapper.querySelectorAll('a').forEach(function(link) {
+                    const isDropdownToggle = link.parentElement.classList.contains('dropdown') &&
+                        link === link.parentElement.querySelector(':scope > a');
+                    if (isDropdownToggle) return;
                     link.addEventListener('click', function() {
                         menuWrapper.classList.remove('open');
+                        dropdowns.forEach(function(dd) { dd.classList.remove('open'); });
                     });
                 });
             }
