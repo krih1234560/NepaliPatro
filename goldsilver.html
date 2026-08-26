@@ -702,7 +702,7 @@
         </div>
 
         <div class="disclaimer">
-            * दरहरू FENEGOSIDA (Federation of Nepal Gold and Silver Dealers' Association) को आधिकारिक दैनिक दरमा आधारित छन्।
+            * दरहरू अन्तर्राष्ट्रिय सुन/चाँदी स्पट मूल्य (XAU/XAG) लाई लाइभ USD-NPR दरमा रूपान्तरण गरी निकालिएको हो, यो FENEGOSIDA को आधिकारिक स्थानीय डिलर दर होइन (स्थानीय भन्सार/मार्जिनका कारण फरक हुन सक्छ)।
             स्रोत: Exchange-API (fawazahmed0/exchange-api) · दरहरू दैनिक अपडेट हुन्छन्।
         </div>
     </div>
@@ -889,43 +889,28 @@
             }
 
             // ─── Extract gold/silver rates from API data ──────────────
+            // The feed's base is USD, so data.usd.xau is "troy ounces of
+            // gold per 1 USD" (a tiny number, e.g. 0.0002) and data.usd.npr
+            // is "NPR per 1 USD". A previous version of this code treated
+            // the XAU/XAG figures as if they were already an NPR-per-ounce
+            // price, which is inverted and produced a near-zero, garbage
+            // number instead of a real rate. The correct conversion is:
+            //   USD per troy ounce = 1 / xauRate
+            //   NPR per troy ounce = (1 / xauRate) * usdToNpr
             function extractRates(data) {
-                // Try to get XAU and XAG from the data
-                const rates = data.npr || data.data?.npr || data;
+                const rates = data.usd || data;
 
-                // The API might have xau and xag directly
-                let xauRate = rates.xau;
-                let xagRate = rates.xag;
+                const xauRate = rates.xau; // troy oz of gold per 1 USD
+                const xagRate = rates.xag; // troy oz of silver per 1 USD
+                const usdToNpr = rates.npr; // NPR per 1 USD
 
-                // If not, try to get from the nested structure
-                if (xauRate === undefined && rates.rates) {
-                    const r = rates.rates;
-                    xauRate = r.xau || r.XAU;
-                    xagRate = r.xag || r.XAG;
+                if (!xauRate || !xagRate || !usdToNpr) {
+                    throw new Error('XAU/XAG/NPR rates not found in API response');
                 }
 
-                // If still not found, try alternative keys
-                if (xauRate === undefined) {
-                    // Some APIs use different keys
-                    const keys = Object.keys(rates);
-                    for (const k of keys) {
-                        if (k.toLowerCase().includes('xau') || k.toLowerCase().includes('gold')) {
-                            xauRate = rates[k];
-                        }
-                        if (k.toLowerCase().includes('xag') || k.toLowerCase().includes('silver')) {
-                            xagRate = rates[k];
-                        }
-                    }
-                }
-
-                if (xauRate === undefined || xagRate === undefined) {
-                    throw new Error('XAU/XAG rates not found in API response');
-                }
-
-                // The rate from the API is NPR per 1 XAU (troy ounce)
-                // So xauRate = NPR per troy ounce of gold
-                const goldPerOunce = xauRate;
-                const silverPerOunce = xagRate;
+                // NPR per troy ounce
+                const goldPerOunce = usdToNpr / xauRate;
+                const silverPerOunce = usdToNpr / xagRate;
 
                 // Calculate per tola and per 10g
                 const goldPerTola = goldPerOunce / TOLA_PER_OUNCE;
@@ -953,10 +938,12 @@
                     ratesContent.style.display = 'none';
                 }
 
-                // List of API endpoints to try (in order)
+                // List of API endpoints to try (in order). usd.json carries
+                // xau (gold), xag (silver), and npr all in the same
+                // response, so one request gives us everything we need.
                 const endpoints = [
-                    'https://latest.currency-api.pages.dev/v1/currencies/npr.json',
-                    'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/npr.json'
+                    'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json',
+                    'https://latest.currency-api.pages.dev/v1/currencies/usd.json'
                 ];
 
                 let success = false;
