@@ -898,6 +898,9 @@
             <button class="tab-btn" data-tab="monthly">
                 <span class="icon">🗓️</span> मासिक
             </button>
+            <button class="tab-btn" data-tab="yearly">
+                <span class="icon">🌙</span> वार्षिक
+            </button>
         </div>
 
         <!-- Controls with BS Date Pickers -->
@@ -932,6 +935,11 @@
                 <select id="bsMonthYear"></select>
                 <label for="bsMonthMonth">महिना:</label>
                 <select id="bsMonthMonth"></select>
+            </div>
+            <!-- Yearly Controls: BS Year only -->
+            <div class="control-group" id="yearlyControls" style="display:none;">
+                <label for="bsYearYear">वर्ष:</label>
+                <select id="bsYearYear"></select>
             </div>
             <!-- Language Toggle -->
             <div class="control-group">
@@ -1148,7 +1156,7 @@
             //  POPULATE BS DATE DROPDOWNS
             // ============================================================
             function populateYearSelects(selectedYear) {
-                const selects = ['bsDayYear', 'bsWeekYear', 'bsMonthYear'];
+                const selects = ['bsDayYear', 'bsWeekYear', 'bsMonthYear', 'bsYearYear'];
                 selects.forEach(id => {
                     const sel = document.getElementById(id);
                     if (!sel) return;
@@ -1229,95 +1237,263 @@
             ];
 
             // ============================================================
-            //  RASHIFAL DATA GENERATORS
+            //  DETERMINISTIC SEEDING (so daily/weekly/monthly/yearly and
+            //  every date actually differ, instead of always repeating the
+            //  same lines for a sign)
             // ============================================================
-            function generateDaily(seed, sign, bsDate) {
-                const luckyNumbers = [
-                    [1, 4, 7],
-                    [2, 5, 9],
-                    [3, 6, 8],
-                    [1, 5, 9],
-                    [2, 6, 7],
-                    [3, 4, 8],
-                    [1, 3, 9],
-                    [2, 4, 7],
-                    [3, 5, 8],
-                    [1, 6, 9],
-                    [2, 3, 7],
-                    [4, 5, 8]
-                ];
-                const colors = ['रातो', 'पहेंलो', 'हरियो', 'नीलो', 'सेतो', 'कालो', 'गुलाबी', 'सुन्तले', 'बैजनी', 'खैरो', 'सुनौलो', 'चाँदी'];
-                const remedies = [
-                    'सूर्यलाई अर्घ्य दिनुहोस्', 'तुलसीको पूजा गर्नुहोस्', 'गणेशको प्रार्थना गर्नुहोस्',
-                    'दान दिनुहोस्', 'शिवलाई जल चढाउनुहोस्', 'दीप बाल्नुहोस्',
-                    'मन्त्र जप गर्नुहोस्', 'सत्य बोल्नुहोस्', 'पानी दान गर्नुहोस्', 'फल फूल चढाउनुहोस्'
-                ];
-                const health = ['राम्रो', 'ध्यान दिनुहोस्', 'थकान हट्ने', 'सजग रहनुहोस्', 'उत्साहित', 'आराम गर्नुहोस्', 'तन्दुरुस्त'];
-                const career = ['नयाँ अवसर', 'सफलता', 'मेहनत फलदायी', 'पदोन्नति', 'व्यापारमा लाभ', 'सावधानी', 'साझेदारी', 'लगानी'];
-                const relationships = ['प्रेममा मिठास', 'परिवारसँग समय', 'नयाँ सम्बन्ध', 'समझदारी', 'साथीभाइ', 'सहयोग', 'संवाद'];
-                const finance = ['आम्दानी राम्रो', 'खर्च नियन्त्रण', 'बचत गर्नुहोस्', 'लगानी लाभदायी', 'आर्थिक स्थिरता', 'कर्जा तिर्नुहोस्', 'बजेट बनाउनुहोस्'];
+            function hashString(str) {
+                let h = 2166136261;
+                for (let i = 0; i < str.length; i++) {
+                    h ^= str.charCodeAt(i);
+                    h = Math.imul(h, 16777619);
+                }
+                return h >>> 0;
+            }
+            // mulberry32 PRNG - fast, deterministic, good enough spread for content variety
+            function mulberry32(seed) {
+                let a = seed >>> 0;
+                return function () {
+                    a |= 0; a = (a + 0x6D2B79F5) | 0;
+                    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+                    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+                    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+                };
+            }
+            function makeRng(parts) {
+                return mulberry32(hashString(parts.join('|')));
+            }
+            function pick(rng, arr) {
+                return arr[Math.floor(rng() * arr.length)];
+            }
+            function pickIndex(rng, len) {
+                return Math.floor(rng() * len);
+            }
 
-                const idx = seed % 7;
-                const idx2 = (seed * 2) % 5;
-                const idx3 = (seed * 3) % 6;
-                const idx4 = (seed * 4) % 5;
+            // All 3-number combinations from 1-9 (84 unique sets) generated
+            // programmatically instead of hand-listing a handful.
+            const LUCKY_NUMBER_SETS = (() => {
+                const sets = [];
+                for (let a = 1; a <= 9; a++)
+                    for (let b = a + 1; b <= 9; b++)
+                        for (let c = b + 1; c <= 9; c++)
+                            sets.push([a, b, c]);
+                return sets;
+            })();
+
+            // ============================================================
+            //  LARGE SHARED PHRASE BANKS
+            //  (combined multiplicatively per sign/period/date below, so the
+            //  effective number of distinct outputs runs into the millions —
+            //  far more than any hand-written list of "thousands" could give,
+            //  while every phrase itself stays natural, curated Nepali text.)
+            // ============================================================
+            const COLORS = [
+                'रातो', 'पहेंलो', 'हरियो', 'नीलो', 'सेतो', 'कालो', 'गुलाबी', 'सुन्तले',
+                'बैजनी', 'खैरो', 'सुनौलो', 'चाँदी', 'आकाशे नीलो', 'गाढा हरियो', 'मैरून',
+                'बदामी', 'फिरोजी', 'हल्का गुलाबी', 'हल्का पहेंलो', 'धुम्र रंग', 'कैरी रंग',
+                'जामुनी', 'तामा रंग', 'हल्का हरियो'
+            ];
+
+            const REMEDIES = [
+                'सूर्यलाई अर्घ्य दिनुहोस्', 'तुलसीको पूजा गर्नुहोस्', 'गणेशको प्रार्थना गर्नुहोस्',
+                'गरिबलाई दान दिनुहोस्', 'शिवलाई जल चढाउनुहोस्', 'साँझ दीप बाल्नुहोस्',
+                'गायत्री मन्त्र जप गर्नुहोस्', 'सधैं सत्य बोल्नुहोस्', 'प्यासीलाई पानी दान गर्नुहोस्',
+                'फलफूल चढाउनुहोस्', 'हनुमान चालीसा पाठ गर्नुहोस्', 'विष्णु सहस्रनाम पाठ गर्नुहोस्',
+                'दुर्गा सप्तशती पाठ गर्नुहोस्', 'कालो कुकुरलाई रोटी खुवाउनुहोस्', 'गाईलाई घाँस खुवाउनुहोस्',
+                'ब्राह्मणलाई भोजन गराउनुहोस्', 'मन्दिरमा घण्ट बजाउनुहोस्', 'रुद्राक्ष धारण गर्नुहोस्',
+                'पितृको सम्झना गर्नुहोस्', 'आफ्नो कोठा सफा राख्नुहोस्', 'सकारात्मक सोच राख्नुहोस्',
+                'योग र ध्यान गर्नुहोस्', 'आमा-बुबाको आशीर्वाद लिनुहोस्', 'साना बालबालिकालाई मिठाई खुवाउनुहोस्',
+                'काला तिलको दान गर्नुहोस्', 'पीपलको रुखमा पानी हाल्नुहोस्', 'शनि मन्दिर दर्शन गर्नुहोस्',
+                'लक्ष्मी पूजा गर्नुहोस्', 'सरस्वती वन्दना गर्नुहोस्', 'नयाँ काम सुरु गर्नुअघि गणेश स्मरण गर्नुहोस्',
+                'मौन व्रत बस्नुहोस्', 'एक दिन उपवास बस्नुहोस्', 'आफन्तसँग समय बिताउनुहोस्',
+                'क्षमा माग्नुहोस् र क्षमा दिनुहोस्', 'नयाँ वस्त्र दान गर्नुहोस्', 'जरुरतमन्दलाई सहयोग गर्नुहोस्',
+                'घरको मुख्यढोकामा स्वस्तिक बनाउनुहोस्', 'चन्दनको टीका लगाउनुहोस्', 'बत्ति र अगरबत्ती बाल्नुहोस्',
+                'भगवद्गीता पाठ गर्नुहोस्'
+            ];
+
+            const HEALTH_PHRASES = [
+                'स्वास्थ्य सामान्यतया राम्रो रहनेछ', 'सानो थकान महसुस हुन सक्छ, आराम गर्नुहोस्',
+                'उर्जा र उत्साहले भरिपूर्ण रहनुहुनेछ', 'पाचन सम्बन्धी सामान्य समस्या हुन सक्छ',
+                'नियमित व्यायामले फाइदा पुर्‍याउनेछ', 'मानसिक तनाव कम गर्न ध्यान गर्नुहोस्',
+                'निद्रा राम्रो हुनेछ', 'सानो चोटपटकबाट सावधान रहनुहोस्',
+                'रोग प्रतिरोधात्मक क्षमता बलियो हुनेछ', 'आँखा वा टाउको दुखाइ हुन सक्छ',
+                'समग्रमा स्वास्थ्य स्थिर रहनेछ', 'भोजनमा ध्यान दिनु आवश्यक छ',
+                'मानसिक शान्ति महसुस हुनेछ', 'हल्का ज्वरो वा रुघाखोकीको सम्भावना छ',
+                'शारीरिक फूर्ति बढ्नेछ', 'पानी धेरै पिउनुहोस्, स्वास्थ्यमा सुधार आउनेछ',
+                'योगाभ्यासले मानसिक स्थिरता दिनेछ', 'पुरानो स्वास्थ्य समस्यामा सुधार आउन सक्छ',
+                'जीउ दुखाइ हुन सक्छ, ध्यान दिनुहोस्', 'समयमै आराम गर्नु फाइदाजनक हुनेछ',
+                'सन्तुलित आहारले स्वास्थ्य सुधार्नेछ', 'यात्रा गर्दा स्वास्थ्यमा ध्यान दिनुहोस्',
+                'मन प्रफुल्लित रहनेछ', 'हल्का व्यायामले शरीर चुस्त रहनेछ',
+                'रक्तचाप नियन्त्रणमा राख्नुहोस्', 'स्वास्थ्य जाँच गराउनु उचित हुनेछ',
+                'कामको चापले थकान हुन सक्छ', 'सकारात्मक ऊर्जाले स्वास्थ्य लाभ हुनेछ',
+                'औषधि सेवनमा नियमितता राख्नुहोस्', 'समग्र स्वास्थ्य सन्तोषजनक रहनेछ'
+            ];
+
+            const CAREER_PHRASES = [
+                'नयाँ अवसरहरू आउने सम्भावना छ', 'मेहनतको उचित प्रतिफल पाउनुहुनेछ',
+                'पदोन्नतिको सम्भावना बढेको छ', 'व्यापारमा लाभ हुने संकेत छ',
+                'साझेदारीबाट फाइदा हुनेछ', 'लगानी गर्नु उपयुक्त समय हो',
+                'कार्यक्षेत्रमा सावधानी अपनाउनु राम्रो हुनेछ', 'सहकर्मीसँग सहकार्य राम्रो हुनेछ',
+                'नयाँ योजना सफल हुनेछ', 'जागिरमा परिवर्तन हुन सक्छ',
+                'वरिष्ठहरूबाट प्रशंसा पाउनुहुनेछ', 'आर्थिक जोखिमबाट टाढा रहनुहोस्',
+                'व्यवसायमा विस्तार गर्ने अवसर मिल्नेछ', 'रचनात्मक कामले पहिचान बनाउनेछ',
+                'टोली कार्यमा सफलता मिल्नेछ', 'विदेश सम्बन्धी काममा प्रगति हुनेछ',
+                'प्रतिस्पर्धामा सफलता हात लाग्नेछ', 'नयाँ सीप सिक्ने अवसर मिल्नेछ',
+                'काममा अवरोध आए पनि समाधान भेटिनेछ', 'आत्मविश्वासका साथ काम अघि बढ्नेछ',
+                'महत्वपूर्ण निर्णय लिनुपर्ने अवस्था आउनेछ', 'व्यापारिक यात्रा फलदायी हुनेछ',
+                'आफ्नो योग्यताको कदर हुनेछ', 'नेतृत्वदायी भूमिका पाउने सम्भावना छ',
+                'कार्यस्थलमा सम्मान बढ्नेछ', 'समयमै काम सम्पन्न गर्न सक्नुहुनेछ',
+                'नयाँ व्यापारिक सम्पर्क बन्नेछ', 'पुरानो लगानीबाट प्रतिफल आउनेछ',
+                'करियरमा स्थिरता आउनेछ', 'उच्च अधिकारीसँग भेटघाट लाभदायक हुनेछ'
+            ];
+
+            const RELATIONSHIP_PHRASES = [
+                'प्रेम सम्बन्धमा मिठास बढ्नेछ', 'परिवारसँग रमाइलो समय बिताउनुहुनेछ',
+                'नयाँ साथीहरूसँग परिचय हुनेछ', 'जीवनसाथीसँग सुमधुर सम्बन्ध रहनेछ',
+                'गलतफहमी हटेर सम्बन्ध सुधार्नेछ', 'साथीभाइको सहयोग पाउनुहुनेछ',
+                'पारिवारिक कार्यक्रममा सहभागी हुनुहुनेछ', 'नयाँ सम्बन्ध सुरु हुने सम्भावना छ',
+                'आफन्तसँग भेटघाट हुनेछ', 'साझेदारमा विश्वास बढ्नेछ',
+                'सामाजिक कार्यक्रममा सक्रिय हुनुहुनेछ', 'पुराना मित्रसँग सम्पर्क हुनेछ',
+                'घरायसी वातावरण खुशीयाली रहनेछ', 'आफ्ना कुरा खुलेर राख्न सक्नुहुनेछ',
+                'सम्बन्धमा धैर्यता आवश्यक हुनेछ', 'प्रियजनको साथ पाउनुहुनेछ',
+                'विवाह सम्बन्धी कुराकानी अघि बढ्न सक्छ', 'सन्तानसँग समय बिताउनु लाभदायक हुनेछ',
+                'सामाजिक प्रतिष्ठा बढ्नेछ', 'भावनात्मक समर्थन पाउनुहुनेछ',
+                'आपसी समझदारी बढ्नेछ', 'नातेदारसँग सहयोगी व्यवहार रहनेछ',
+                'साथीको सल्लाह उपयोगी हुनेछ', 'रिसाहा स्वभावबाट जोगिनुहोस्',
+                'संवादले सम्बन्ध सुदृढ हुनेछ', 'मायालु व्यवहारले घर आनन्दमय रहनेछ',
+                'टाढाका आफन्तको खबर आउनेछ', 'समूहमा तपाईंको भूमिका महत्वपूर्ण हुनेछ',
+                'सामाजिक सम्मान बढ्नेछ', 'आत्मीय क्षणहरू बाँड्नुहुनेछ'
+            ];
+
+            const FINANCE_PHRASES = [
+                'आम्दानीमा वृद्धि हुने सम्भावना छ', 'खर्चमा नियन्त्रण राख्नु आवश्यक छ',
+                'बचत गर्ने राम्रो समय हो', 'लगानीबाट राम्रो प्रतिफल मिल्नेछ',
+                'आर्थिक स्थिरता कायम रहनेछ', 'पुरानो ऋण चुक्ता गर्न सक्नुहुनेछ',
+                'बजेट योजना बनाउनु उपयुक्त हुनेछ', 'अनपेक्षित खर्च आउन सक्छ',
+                'सम्पत्ति सम्बन्धी काममा प्रगति हुनेछ', 'व्यापारमा नाफा हुने संकेत छ',
+                'आर्थिक निर्णयमा सावधानी अपनाउनुहोस्', 'नयाँ आम्दानीको स्रोत खुल्नेछ',
+                'पैसा उधारो दिँदा सावधान रहनुहोस्', 'शेयर वा लगानीबाट लाभ हुन सक्छ',
+                'घर वा जग्गा खरिद बिक्रीमा प्रगति हुनेछ', 'आर्थिक योजना सफल हुनेछ',
+                'साझेदारीबाट आर्थिक लाभ मिल्नेछ', 'जोखिमपूर्ण लगानीबाट जोगिनुहोस्',
+                'पारिवारिक सम्पत्तिमा वृद्धि हुनेछ', 'आकस्मिक कोष तयार गर्नु राम्रो हुनेछ',
+                'आर्थिक अवस्था सुदृढ हुँदै जानेछ', 'साना खर्चलाई नियन्त्रणमा राख्नुहोस्',
+                'बैंक सम्बन्धी काम सहज हुनेछ', 'लामो समयको लगानी लाभदायक हुनेछ',
+                'आर्थिक सल्लाहकारको राय लिनु उपयोगी हुनेछ', 'करजस्ता दायित्व समयमै तिर्नुहोस्',
+                'उपहार वा भेटीबाट आर्थिक लाभ हुन सक्छ', 'वित्तीय अनुशासन कायम राख्नुहोस्',
+                'सम्पत्ति व्यवस्थापनमा ध्यान दिनुहोस्', 'आर्थिक सुरक्षा बलियो हुनेछ'
+            ];
+
+            const MOODS = [
+                'उत्साहजनक', 'सकारात्मक', 'चुनौतीपूर्ण तर फलदायी', 'शान्त', 'व्यस्त',
+                'फलदायी', 'रोमाञ्चक', 'स्थिर', 'परिवर्तनशील', 'भाग्यशाली'
+            ];
+
+            const PERIOD_LABEL = {
+                daily: { ne: 'आज', span: 'दिन' },
+                weekly: { ne: 'यो हप्ता', span: 'हप्ता' },
+                monthly: { ne: 'यो महिना', span: 'महिना' },
+                yearly: { ne: 'यो वर्ष', span: 'वर्ष' }
+            };
+
+            const INTRO_TEMPLATES = {
+                daily: [
+                    '{sign} राशिका जातकहरूको लागि आजको दिन {mood} रहनेछ।',
+                    'आज {sign} राशिका जातकहरूलाई {mood} दिनको संकेत देखिन्छ।',
+                    '{sign} राशिका जातकहरूको लागि आज विशेष महत्व राख्ने दिन हुनेछ, समग्रमा {mood}।'
+                ],
+                weekly: [
+                    '{sign} राशिका जातकहरूको लागि यो हप्ता {mood} रहनेछ।',
+                    'यस हप्ता {sign} राशिका जातकहरूलाई {mood} संकेत छ।',
+                    '{sign} राशिका जातकहरूको लागि यो साता समग्रमा {mood} हुनेछ।'
+                ],
+                monthly: [
+                    '{sign} राशिका जातकहरूको लागि यो महिना {mood} रहनेछ।',
+                    'यस महिना {sign} राशिका जातकहरूलाई {mood} संकेत छ।',
+                    '{sign} राशिका जातकहरूको लागि यो महिना समग्रमा {mood} हुनेछ।'
+                ],
+                yearly: [
+                    '{sign} राशिका जातकहरूको लागि यो वर्ष {mood} रहनेछ।',
+                    'यस वर्ष {sign} राशिका जातकहरूलाई {mood} संकेत छ।',
+                    '{sign} राशिका जातकहरूको लागि यो वर्ष समग्रमा {mood} हुनेछ, नयाँ सुरुवातहरूको सम्भावना बोकेर।'
+                ]
+            };
+
+            function buildResult(period, sign, rng) {
+                const luckySet = pick(rng, LUCKY_NUMBER_SETS);
+                const color = pick(rng, COLORS);
+                const remedy = pick(rng, REMEDIES);
+                const health = pick(rng, HEALTH_PHRASES);
+                const career = pick(rng, CAREER_PHRASES);
+                const relationships = pick(rng, RELATIONSHIP_PHRASES);
+                const finance = pick(rng, FINANCE_PHRASES);
+                const mood = pick(rng, MOODS);
+                const intro = pick(rng, INTRO_TEMPLATES[period])
+                    .replace('{sign}', sign.name)
+                    .replace('{mood}', mood);
+                const periodWord = PERIOD_LABEL[period].ne;
+
+                const titleMap = {
+                    daily: `${sign.name} को दैनिक राशिफल`,
+                    weekly: `${sign.name} को साप्ताहिक राशिफल`,
+                    monthly: `${sign.name} को मासिक राशिफल`,
+                    yearly: `${sign.name} को वार्षिक राशिफल`
+                };
+
+                const description =
+                    `${intro} करियरका हिसाबले ${career} भने सम्बन्धका हिसाबले ${relationships}। ` +
+                    `आर्थिक हिसाबले ${finance}। स्वास्थ्यको दृष्टिले ${health}। ` +
+                    `${periodWord} ${remedy} भने थप शुभ हुनेछ। शुभ रंग ${color} रहनेछ।`;
 
                 return {
-                    title: `${sign.name} को दैनिक राशिफल`,
-                    luckyNumber: luckyNumbers[seed % luckyNumbers.length].join(', '),
-                    luckyColor: colors[(seed * 3) % colors.length],
-                    remedy: remedies[(seed * 2) % remedies.length],
-                    health: health[idx % health.length],
-                    career: career[(idx + 1) % career.length],
-                    relationships: relationships[(idx + 2) % relationships.length],
-                    finance: finance[(idx + 3) % finance.length],
-                    description: `${sign.name} राशिका जातिहरूको आजको दिन उत्साहजनक रहनेछ। ${career[(idx + 1) % career.length]} को अवसर आउन सक्छ। ${relationships[(idx + 2) % relationships.length]} मा सुधार हुनेछ। ${finance[(idx + 3) % finance.length]} रहनेछ। ${health[idx % health.length]} स्वास्थ्य रहनेछ। शुभ रंग ${colors[(seed * 3) % colors.length]} हो।`
+                    title: titleMap[period],
+                    luckyNumber: luckySet.join(', '),
+                    luckyColor: color,
+                    remedy,
+                    health,
+                    career,
+                    relationships,
+                    finance,
+                    description
                 };
             }
 
-            function generateWeekly(seed, sign, bsDate) {
-                const idx = seed % 7;
-                const idx2 = (seed * 2) % 5;
-                return {
-                    title: `${sign.name} को साप्ताहिक राशिफल`,
-                    luckyNumber: `${(seed + 3) % 9 + 1}, ${(seed + 6) % 9 + 1}, ${(seed + 9) % 9 + 1}`,
-                    luckyColor: ['रातो', 'पहेंलो', 'हरियो', 'नीलो', 'सेतो', 'गुलाबी', 'सुन्तले', 'बैजनी', 'खैरो'][(seed * 4) % 9],
-                    remedy: ['शनिवार व्रत', 'सूर्यास्त पूजा', 'गायत्री मन्त्र', 'हनुमान चालीसा', 'विष्णु सहस्रनाम', 'शिवलिंग पूजा', 'तुलसी वृक्ष', 'बज्रपात', 'त्रिशूल पूजा'][(seed * 3) % 9],
-                    health: ['स्वस्थ रहनेछ', 'योगा फाइदाजनक', 'हल्का व्यायाम', 'ध्यान गर्नुहोस्', 'रोग प्रतिरोधक', 'तन्दुरुस्त', 'सजग रहनुहोस्'],
-                    career: ['काममा प्रगति', 'व्यवसाय विस्तार', 'नयाँ परियोजना', 'सफलता मिल्नेछ', 'अवसर आउनेछ', 'मेहनत राम्रो', 'पदोन्नति संभव'],
-                    relationships: ['पारिवारिक सुख', 'प्रेम जीवन राम्रो', 'साथीहरूको साथ', 'सम्बन्ध सुधार', 'नयाँ सम्बन्ध', 'सहयोगी वातावरण', 'संवाद राम्रो'],
-                    finance: ['आय बढ्ने', 'बचत हुने', 'लगानी लाभदायी', 'आर्थिक स्थिरता', 'कर्जा कम', 'बजेट सन्तुलित', 'व्यापार लाभ'],
-                    description: `${sign.name} राशिका जातिहरूको यो साता निकै महत्वपूर्ण छ। ${['काममा नयाँ अवसर', 'व्यवसायमा वृद्धि', 'शिक्षामा प्रगति', 'यात्रा संभव', 'सम्बन्धमा मिठास', 'आर्थिक लाभ', 'स्वास्थ्य सुधार'][idx]} हुनेछ। साताको अन्त्यतिर ${['सफलता', 'लाभ', 'शुभ समाचार', 'सहयोग', 'नयाँ थालनी', 'पुरस्कार', 'सम्मान'][idx2]} प्राप्त हुनेछ।`
-                };
+            // ============================================================
+            //  RASHIFAL DATA GENERATORS
+            //  Each generator builds a seed from the sign + period + the
+            //  actual selected BS date, so every day / week / month / year
+            //  and every sign produces genuinely different content instead
+            //  of repeating the same lines.
+            // ============================================================
+            function generateDaily(sign, bsDate) {
+                const rng = makeRng(['daily', sign.id, bsDate.year, bsDate.month, bsDate.day]);
+                return buildResult('daily', sign, rng);
             }
 
-            function generateMonthly(seed, sign, bsDate) {
-                const idx = seed % 7;
-                const idx2 = (seed * 2) % 5;
-                const idx3 = (seed * 3) % 7;
-                return {
-                    title: `${sign.name} को मासिक राशिफल`,
-                    luckyNumber: `${(seed + 1) % 9 + 1}, ${(seed + 4) % 9 + 1}, ${(seed + 7) % 9 + 1}`,
-                    luckyColor: ['सुनौलो', 'चाँदी', 'रातो', 'हरियो', 'नीलो', 'बैजनी', 'सुन्तले', 'गुलाबी', 'सेतो'][(seed * 5) % 9],
-                    remedy: ['महिनाभरि सत्य बोल्ने', 'हरेक सोमबार व्रत', 'गुरु पूजा', 'विष्णु आराधना', 'शिव पूजा', 'दुर्गा सप्तशती', 'हनुमान पूजा', 'गणेश पूजा', 'सूर्य पूजा'][(seed * 3) % 9],
-                    health: ['सम्पूर्ण स्वस्थ', 'ध्यान र योग', 'आहार नियन्त्रण', 'नियमित व्यायाम', 'सजग रहनुहोस्', 'तन्दुरुस्ती', 'रोग प्रतिरोध'],
-                    career: ['वर्षको उत्कृष्ट महिना', 'पदोन्नति हुने', 'व्यवसाय फस्टाउने', 'नयाँ जागिर', 'साझेदारी फाइदाजनक', 'लगानी फलदायी', 'सफलता प्राप्त'],
-                    relationships: ['पारिवारिक आनन्द', 'प्रेम जीवन मीठो', 'नयाँ सम्बन्ध', 'साथीभाइको साथ', 'विवाह संभव', 'सम्बन्ध सुदृढ', 'संवाद राम्रो'],
-                    finance: ['अर्थिक स्थिरता', 'आम्दानी बढ्ने', 'बचत बढ्ने', 'लगानी लाभदायी', 'कर्जा तिर्ने', 'व्यापार लाभ', 'सम्पत्ति वृद्धि'],
-                    description: `${sign.name} राशिका जातिहरूको यो महिना निकै शुभ रहनेछ। ${['काम', 'व्यवसाय', 'शिक्षा', 'प्रेम', 'स्वास्थ्य', 'अर्थ', 'परिवार'][idx]} क्षेत्रमा उल्लेखनीय प्रगति हुनेछ। महिनाको मध्यतिर ${['शुभ समाचार', 'सफलता', 'पुरस्कार', 'नयाँ थालनी', 'सहयोग', 'सम्मान', 'यात्रा'][idx2]} प्राप्त हुनेछ। महिनाको अन्त्यतिर ${['आर्थिक लाभ', 'सम्बन्ध सुधार', 'स्वास्थ्य लाभ', 'नयाँ अवसर', 'यात्रा संभव', 'सफलता', 'सम्मान'][idx3]} हुनेछ।`
-                };
+            function generateWeekly(sign, bsDate) {
+                const rng = makeRng(['weekly', sign.id, bsDate.year, bsDate.month, bsDate.week]);
+                return buildResult('weekly', sign, rng);
+            }
+
+            function generateMonthly(sign, bsDate) {
+                const rng = makeRng(['monthly', sign.id, bsDate.year, bsDate.month]);
+                return buildResult('monthly', sign, rng);
+            }
+
+            function generateYearly(sign, bsDate) {
+                const rng = makeRng(['yearly', sign.id, bsDate.year]);
+                return buildResult('yearly', sign, rng);
             }
 
             // ============================================================
             //  MAIN APP
             // ============================================================
             const rashifalData = {};
-            zodiacSigns.forEach((sign, idx) => {
-                const seed = idx + 1;
+            zodiacSigns.forEach((sign) => {
                 rashifalData[sign.id] = {
-                    daily: (bsDate) => generateDaily(seed, sign, bsDate),
-                    weekly: (bsDate) => generateWeekly(seed, sign, bsDate),
-                    monthly: (bsDate) => generateMonthly(seed, sign, bsDate)
+                    daily: (bsDate) => generateDaily(sign, bsDate),
+                    weekly: (bsDate) => generateWeekly(sign, bsDate),
+                    monthly: (bsDate) => generateMonthly(sign, bsDate),
+                    yearly: (bsDate) => generateYearly(sign, bsDate)
                 };
             });
 
@@ -1329,6 +1505,7 @@
             const dailyControls = document.getElementById('dailyControls');
             const weeklyControls = document.getElementById('weeklyControls');
             const monthlyControls = document.getElementById('monthlyControls');
+            const yearlyControls = document.getElementById('yearlyControls');
             const languageToggle = document.getElementById('languageToggle');
 
             let currentTab = 'daily';
@@ -1353,6 +1530,7 @@
                 document.getElementById('bsWeekMonth').value = month;
                 document.getElementById('bsMonthYear').value = year;
                 document.getElementById('bsMonthMonth').value = month;
+                document.getElementById('bsYearYear').value = year;
 
                 document.getElementById('bsDayYear').addEventListener('change', updateDayOptions);
                 document.getElementById('bsDayMonth').addEventListener('change', updateDayOptions);
@@ -1406,12 +1584,16 @@
                     bsDate = { year: y, month: m, week: w };
                     const mName = currentLanguage === 'ne' ? monthNamesNe[m] : monthNamesEn[m];
                     dateLabel = `${y} ${mName} को ${currentLanguage === 'ne' ? 'हप्ता' : 'week'} ${w}`;
-                } else {
+                } else if (currentTab === 'monthly') {
                     const y = parseInt(document.getElementById('bsMonthYear').value, 10);
                     const m = parseInt(document.getElementById('bsMonthMonth').value, 10);
                     bsDate = { year: y, month: m };
                     const mName = currentLanguage === 'ne' ? monthNamesNe[m] : monthNamesEn[m];
                     dateLabel = `${y} ${mName}`;
+                } else {
+                    const y = parseInt(document.getElementById('bsYearYear').value, 10);
+                    bsDate = { year: y };
+                    dateLabel = `${y}`;
                 }
 
                 const generator = rashifalData[currentSign]?.[currentTab];
@@ -1514,6 +1696,7 @@
                 dailyControls.style.display = tab === 'daily' ? 'flex' : 'none';
                 weeklyControls.style.display = tab === 'weekly' ? 'flex' : 'none';
                 monthlyControls.style.display = tab === 'monthly' ? 'flex' : 'none';
+                yearlyControls.style.display = tab === 'yearly' ? 'flex' : 'none';
 
                 loader.style.display = 'block';
                 rashifalContent.style.display = 'none';
@@ -1532,7 +1715,8 @@
             const allControls = [
                 'bsDayYear', 'bsDayMonth', 'bsDayDay',
                 'bsWeekYear', 'bsWeekMonth', 'bsWeekNum',
-                'bsMonthYear', 'bsMonthMonth'
+                'bsMonthYear', 'bsMonthMonth',
+                'bsYearYear'
             ];
             allControls.forEach(id => {
                 const el = document.getElementById(id);
@@ -1544,6 +1728,8 @@
                             id)) {
                             renderRashifal();
                         } else if (currentTab === 'monthly' && ['bsMonthYear', 'bsMonthMonth'].includes(id)) {
+                            renderRashifal();
+                        } else if (currentTab === 'yearly' && id === 'bsYearYear') {
                             renderRashifal();
                         }
                     });
@@ -1585,6 +1771,7 @@
                 document.getElementById('bsWeekMonth').value = bsToday.month;
                 document.getElementById('bsMonthYear').value = bsToday.year;
                 document.getElementById('bsMonthMonth').value = bsToday.month;
+                document.getElementById('bsYearYear').value = bsToday.year;
                 currentSign = 'mesha';
                 document.querySelectorAll('.zodiac-btn').forEach(b => {
                     b.classList.toggle('active', b.dataset.sign === 'mesha');
