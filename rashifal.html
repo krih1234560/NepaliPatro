@@ -507,32 +507,6 @@
             min-width: 80px;
         }
 
-        .today-btn {
-            padding: 0.5rem 1rem;
-            border: 1px solid #c62828;
-            border-radius: 10px;
-            background: #fff;
-            color: #c62828;
-            font-size: 0.95rem;
-            font-weight: 700;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
-
-        .today-btn:hover {
-            background: #c62828;
-            color: #fff;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(198, 40, 40, 0.2);
-        }
-
-        .today-btn:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.15);
-        }
-
         /* ----- ZODIAC GRID ----- */
         .zodiac-grid {
             display: grid;
@@ -787,6 +761,62 @@
             margin: 1rem 0;
         }
 
+        /* ----- SEO INTERNAL LINKS ----- */
+        .seo-links {
+            margin-top: 1.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #e4e9f0;
+        }
+
+        .seo-links h3 {
+            margin-top: 0;
+        }
+
+        .seo-link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.6rem;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .seo-link-grid a {
+            display: block;
+            padding: 0.65rem 0.8rem;
+            background: #f8faff;
+            border: 1px solid #e4e9f0;
+            border-radius: 10px;
+            color: #123b6d;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .seo-link-grid a:hover {
+            border-color: #f4aa2a;
+            color: #c62828;
+            transform: translateY(-2px);
+        }
+
+        .seo-category-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.8rem;
+        }
+
+        .seo-category-links a {
+            color: #123b6d;
+            font-weight: 700;
+            text-decoration: underline;
+            text-decoration-color: #f4aa2a;
+            text-underline-offset: 3px;
+        }
+
+        .seo-category-links a:hover {
+            color: #c62828;
+        }
+
         @media (max-width: 600px) {
             .page-header h1 {
                 font-size: 1.6rem;
@@ -851,7 +881,7 @@
     <!-- ===== NAVBAR ===== -->
     <header class="navbar">
         <nav class="nav">
-            <a class="brand" id="brandLink" href="#">
+            <a class="brand" id="brandLink" href="https://nepalipatro.app/" aria-label="नेपाली पात्रो मुख्य पृष्ठ">
                 <span class="brand-icon">रा</span>
                 <span class="brand-text">
                     <span class="brand-nepali">नेपाली पात्रो</span>
@@ -975,11 +1005,6 @@
                     <option value="en">English</option>
                 </select>
             </div>
-
-            <!-- Jump back to today's Kathmandu/Nepal date -->
-            <div class="control-group">
-                <button type="button" class="today-btn" id="todayBtn" aria-label="आजको राशिफलमा जानुहोस्">आज</button>
-            </div>
         </div>
 
         <!-- Zodiac Grid -->
@@ -1064,6 +1089,45 @@
                 वृश्चिक राशिफल · धनु राशिफल · मकर राशिफल · कुम्भ राशिफल · मीन राशिफल
             </div>
 
+            <!-- ============================================================
+                 INTERNAL LINKS / SITE NAVIGATION
+            ============================================================ -->
+            <div class="seo-links">
+                <h3>राशिफलका उपयोगी लिङ्कहरू</h3>
+                <ul class="seo-link-grid">
+                    <li><a href="rashifal.html?sign=mesha&amp;period=daily">मेष राशिफल</a></li>
+                    <li><a href="rashifal.html?sign=vrisha&amp;period=daily">वृष राशिफल</a></li>
+                    <li><a href="rashifal.html?sign=mithun&amp;period=daily">मिथुन राशिफल</a></li>
+                    <li><a href="rashifal.html?sign=karkat&amp;period=daily">कर्कट राशिफल</a></li>
+                    <li><a href="rashifal.html?sign=simha&amp;period=daily">सिंह राशिफल</a></li>
+                    <li><a href="rashifal.html?sign=kanya&amp;period=daily">कन्या राशिफल</a></li>
+                    <li><a href="rashifal.html?sign=tula&amp;period=daily">तुला राशिफल</a></li>
+                    <li><a href="rashifal.html?sign=vrishchik&amp;period=daily">वृश्चिक राशिफल</a></li>
+                    <li><a href="rashifal.html?sign=dhanu&amp;period=daily">धनु राशिफल</a></li>
+                    <li><a href="rashifal.html?sign=makar&amp;period=daily">मकर राशिफल</a></li>
+                    <li><a href="rashifal.html?sign=kumbh&amp;period=daily">कुम्भ राशिफल</a></li>
+                    <li><a href="rashifal.html?sign=meen&amp;period=daily">मीन राशिफल</a></li>
+                </ul>
+
+                <div class="seo-category-links" aria-label="Rashifal period links">
+                    <a href="rashifal.html?period=daily">आजको दैनिक राशिफल</a>
+                    <a href="rashifal.html?period=weekly">साप्ताहिक राशिफल</a>
+                    <a href="rashifal.html?period=monthly">मासिक राशिफल</a>
+                    <a href="rashifal.html?period=yearly">वार्षिक राशिफल</a>
+                </div>
+
+                <div class="seo-category-links" aria-label="Nepali Patro related pages">
+                    <a href="index.html">नेपाली पात्रो</a>
+                    <a href="nepalsambat.html">नेपाल संवत</a>
+                    <a href="festivals.html">चाडपर्वहरु</a>
+                    <a href="holidays.html">बिदाहरु</a>
+                    <a href="weather.html">मौसम</a>
+                    <a href="goldsilver.html">सुनचाँदी</a>
+                    <a href="dateconverter.html">BS-AD Converter</a>
+                    <a href="unicode.html">Nepali Unicode</a>
+                </div>
+            </div>
+
             <h3>About Bikram Sambat Calendar</h3>
             <p>
                 The <strong>Bikram Sambat (BS)</strong> calendar is the traditional Hindu calendar used in Nepal.
@@ -1080,7 +1144,14 @@
     <footer>
         <div class="footer">
             <div><strong>नेपाली पात्रो</strong><br>Nepali Calendar &amp; Rashifal</div>
-            <div><a href="#">About</a> · <a href="#">API</a> · <a href="#">Contact</a></div>
+            <div>
+                <a href="https://nepalipatro.app/">मुख्य पृष्ठ</a> ·
+                <a href="index.html">नेपाली पात्रो</a> ·
+                <a href="festivals.html">चाडपर्वहरु</a> ·
+                <a href="holidays.html">बिदाहरु</a> ·
+                <a href="weather.html">मौसम</a> ·
+                <a href="rashifal.html">राशिफल</a>
+            </div>
         </div>
     </footer>
 
@@ -1546,84 +1617,9 @@
             // ============================================================
             //  INIT BS DATE DROPDOWNS
             // ============================================================
-            // Return today's Gregorian date in Nepal/Kathmandu, independent of
-            // the browser/server's local timezone.
-            function getKathmanduToday() {
-                const parts = new Intl.DateTimeFormat('en-CA', {
-                    timeZone: 'Asia/Kathmandu',
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit'
-                }).formatToParts(new Date());
-
-                const values = {};
-                parts.forEach(part => {
-                    if (part.type !== 'literal') values[part.type] = part.value;
-                });
-
-                return {
-                    year: Number(values.year),
-                    month: Number(values.month),
-                    day: Number(values.day)
-                };
-            }
-
-            // The BS conversion engine above uses a simplified month/year model.
-            // For the current BS year, use the known 2083-01-01 = 2026-04-14
-            // anchor so "today" is correct in Nepal (e.g. 2026-08-29 = 2083-05-13).
-            function getKathmanduTodayBS() {
-                const today = getKathmanduToday();
-
-                // Today's requested Nepal date: 2083 भदौ १३.
-                // 2026-08-29 in Kathmandu = 2083-05-13.
-                if (today.year === 2026 && today.month === 8 && today.day === 29) {
-                    return { year: 2083, month: 4, day: 13 };
-                }
-
-                const anchor = Date.UTC(2026, 3, 14); // 2083-01-01
-                const current = Date.UTC(today.year, today.month - 1, today.day);
-
-                if (current >= anchor && current < Date.UTC(2027, 3, 14)) {
-                    let remaining = Math.floor((current - anchor) / (24 * 60 * 60 * 1000));
-                    const mds = getMonthDays(2083);
-                    let month = 0;
-
-                    while (remaining >= mds[month]) {
-                        remaining -= mds[month];
-                        month++;
-                    }
-
-                    return { year: 2083, month, day: remaining + 1 };
-                }
-
-                return adToBs(new Date(Date.UTC(today.year, today.month - 1, today.day)));
-            }
-
-            function setTodayRashifal() {
-                const bsToday = getKathmanduTodayBS();
-
-                document.getElementById('bsDayYear').value = bsToday.year;
-                document.getElementById('bsDayMonth').value = bsToday.month;
-                populateDaySelect(bsToday.year, bsToday.month, bsToday.day);
-
-                document.getElementById('bsWeekYear').value = bsToday.year;
-                document.getElementById('bsWeekMonth').value = bsToday.month;
-                document.getElementById('bsMonthYear').value = bsToday.year;
-                document.getElementById('bsMonthMonth').value = bsToday.month;
-                document.getElementById('bsYearYear').value = bsToday.year;
-
-                currentTab = 'daily';
-                tabBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === 'daily'));
-                dailyControls.style.display = '';
-                weeklyControls.style.display = 'none';
-                monthlyControls.style.display = 'none';
-                yearlyControls.style.display = 'none';
-
-                renderRashifal();
-            }
-
             function initBSControls() {
-                const bsToday = getKathmanduTodayBS();
+                const today = new Date();
+                const bsToday = adToBs(today);
                 const year = bsToday.year;
                 const month = bsToday.month;
                 const day = bsToday.day;
@@ -1631,11 +1627,6 @@
                 populateYearSelects(year);
                 populateMonthSelects(month);
                 populateDaySelect(year, month, day);
-
-                // Keep the initial daily date on today's requested value.
-                document.getElementById('bsDayYear').value = year;
-                document.getElementById('bsDayMonth').value = month;
-                document.getElementById('bsDayDay').value = day;
 
                 document.getElementById('bsWeekYear').value = year;
                 document.getElementById('bsWeekMonth').value = month;
@@ -1852,8 +1843,6 @@
                 renderRashifal();
             });
 
-            document.getElementById('todayBtn').addEventListener('click', setTodayRashifal);
-
             // ============================================================
             //  HAMBURGER MENU
             // ============================================================
@@ -1867,15 +1856,36 @@
             //  INIT
             // ============================================================
             initBSControls();
-            renderZodiacGrid();
 
-            setTimeout(() => {
-                renderRashifal();
-            }, 500);
+            // Support crawlable, shareable internal URLs such as:
+            // rashifal.html?sign=mesha&period=daily
+            const urlParams = new URLSearchParams(window.location.search);
+            const requestedSign = urlParams.get('sign');
+            const requestedPeriod = urlParams.get('period');
+
+            if (zodiacSigns.some(sign => sign.id === requestedSign)) {
+                currentSign = requestedSign;
+            }
+
+            if (['daily', 'weekly', 'monthly', 'yearly'].includes(requestedPeriod)) {
+                currentTab = requestedPeriod;
+            }
+
+            renderZodiacGrid();
+            switchTab(currentTab);
 
             document.getElementById('brandLink').addEventListener('click', function(e) {
                 e.preventDefault();
-                setTodayRashifal();
+                const today = new Date();
+                const bsToday = adToBs(today);
+                document.getElementById('bsDayYear').value = bsToday.year;
+                document.getElementById('bsDayMonth').value = bsToday.month;
+                populateDaySelect(bsToday.year, bsToday.month, bsToday.day);
+                document.getElementById('bsWeekYear').value = bsToday.year;
+                document.getElementById('bsWeekMonth').value = bsToday.month;
+                document.getElementById('bsMonthYear').value = bsToday.year;
+                document.getElementById('bsMonthMonth').value = bsToday.month;
+                document.getElementById('bsYearYear').value = bsToday.year;
                 currentSign = 'mesha';
                 document.querySelectorAll('.zodiac-btn').forEach(b => {
                     b.classList.toggle('active', b.dataset.sign === 'mesha');
