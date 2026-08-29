@@ -607,6 +607,133 @@
             font-weight: 400 !important;
         }
 
+        /* ----- ANALYTICS (PRICE TREND + PROFIT/LOSS) ----- */
+        .analytics-section {
+            margin-top: 2rem;
+            background: #fff;
+            border: 1px solid #eef2f7;
+            border-radius: 20px;
+            padding: 1.4rem;
+            box-shadow: 0 4px 16px #00000006;
+        }
+        .analytics-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .analytics-header h2 {
+            color: #123b6d;
+            font-size: 1.35rem;
+        }
+        .analytics-header h2 small {
+            color: #627083;
+            font-size: .85rem;
+            font-weight: 500;
+        }
+        .analytics-header p {
+            color: #627083;
+            font-size: .9rem;
+        }
+        .chart-card {
+            border: 1px solid #eef2f7;
+            border-radius: 16px;
+            padding: 1.2rem 1.2rem 0.6rem;
+            margin-bottom: 1.5rem;
+        }
+        .chart-card:last-of-type { margin-bottom: 0; }
+        .chart-card-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: .6rem;
+        }
+        .chart-card-head h3 {
+            color: #172033;
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+        .chart-card-head h3 small {
+            display: block;
+            color: #627083;
+            font-size: .78rem;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+        .chart-toolbar select {
+            padding: .5rem .7rem;
+            border: 1px solid #d0d7e2;
+            border-radius: 8px;
+            background: #fff;
+            color: #123b6d;
+            font-weight: 600;
+            font-size: .85rem;
+        }
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: .82rem;
+            color: #627083;
+            padding: 0 .2rem .6rem;
+        }
+        .chart-legend span {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            font-weight: 600;
+        }
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .chart-card canvas {
+            width: 100%;
+            display: block;
+        }
+        .pl-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: #eef2f7;
+            border: 1px solid #eef2f7;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1.2rem;
+        }
+        .pl-summary-item {
+            background: #fff;
+            padding: 1rem;
+        }
+        .pl-summary-label {
+            color: #627083;
+            font-size: .75rem;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            margin-bottom: .3rem;
+        }
+        .pl-summary-value {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #172033;
+        }
+        .pl-summary-value.pos { color: #2e7d32; }
+        .pl-summary-value.neg { color: #c62828; }
+        .pl-note {
+            color: #627083;
+            font-size: .82rem;
+            margin: .6rem 0 1.2rem;
+        }
+        @media (max-width: 700px) {
+            .pl-summary-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
         /* ----- FOOTER ----- */
         footer {
             background: #092746;
@@ -768,6 +895,63 @@
             </div>
         </section>
 
+        <section class="analytics-section" aria-labelledby="analyticsTitle">
+            <div class="analytics-header">
+                <div>
+                    <h2 id="analyticsTitle">📈 मूल्य र नाफा-नोक्सान विश्लेषण <small>· Price &amp; Profit/Loss Analysis</small></h2>
+                    <p>मूल्य परिवर्तनको प्रवृत्ति र नेपाल आयल निगमको अनुमानित नाफा/नोक्सान</p>
+                </div>
+            </div>
+
+            <!-- Price trend chart -->
+            <div class="chart-card">
+                <div class="chart-card-head">
+                    <h3>इन्धन मूल्य प्रवृत्ति <small>Fuel Price Trend (NRs per litre / per cylinder)</small></h3>
+                    <div class="chart-toolbar">
+                        <select id="priceMetricSelect">
+                            <option value="fuel" selected>पेट्रोल · डिजेल · मट्टितेल</option>
+                            <option value="lpg">LPG (सिलिन्डर)</option>
+                            <option value="atf">हवाई इन्धन ATF</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="chart-legend" id="priceChartLegend"></div>
+                <canvas id="priceTrendChart" height="240"></canvas>
+            </div>
+
+            <!-- Profit/Loss chart -->
+            <div class="chart-card">
+                <div class="chart-card-head">
+                    <h3>अनुमानित नाफा/नोक्सान <small>Estimated Profit/Loss per revision (NRs Crores)</small></h3>
+                </div>
+                <div class="pl-summary-grid" id="plSummaryGrid"></div>
+                <div class="chart-legend">
+                    <span><i class="legend-dot" style="background:#2e7d32"></i>नाफा · Profit</span>
+                    <span><i class="legend-dot" style="background:#c62828"></i>नोक्सान · Loss</span>
+                </div>
+                <canvas id="plTrendChart" height="240"></canvas>
+                <p class="pl-note">* आँकडाहरूमा केही मितिहरूको बीचमा अन्तर हुन सक्छ किनभने डाटा उपलब्ध भएका दिनहरू मात्र समावेश गरिएको छ। यो अनुमानित तथ्याङ्क हो, आधिकारिक लेखा विवरण होइन।</p>
+
+                <div class="history-table-wrap">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>मिति</th>
+                                <th>पेट्रोल</th>
+                                <th>डिजेल</th>
+                                <th>मट्टितेल</th>
+                                <th>LPG</th>
+                                <th>ATF (DP)</th>
+                                <th>ATF (Bonded)</th>
+                                <th>जम्मा (करोड)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="plHistoryBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
         <div class="disclaimer">
             * दरहरू नेपाल आयल निगम (NOC) को आधिकारिक दैनिक मूल्य सूचीमा आधारित छन्।
             स्रोत: नेपाल सरकार, उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय · दरहरू दैनिक अपडेट हुन्छन्।
@@ -786,7 +970,16 @@
         (function () {
             'use strict';
 
-            const NOC_BASE = 'https://noc.org.np/retailprice';
+            /*
+             * Fuel price history is sourced from the official NOC price-revision
+             * export (Excel), embedded below, rather than a live API call — the
+             * NOC site does not allow cross-origin fetches from a static page,
+             * which left this section empty. Update this array whenever a new
+             * Excel export is provided.
+             */
+            const FUEL_PRICE_HISTORY = [{"date":"2026-08-02","petrol":200.0,"diesel":200.0,"kerosene":200.0,"lpg":2060.0},{"date":"2026-07-15","petrol":197.0,"diesel":195.0,"kerosene":195.0,"lpg":2060.0},{"date":"2026-06-30","petrol":197.0,"diesel":195.0,"kerosene":195.0,"lpg":2060.0},{"date":"2026-06-15","petrol":217.0,"diesel":225.0,"kerosene":225.0,"lpg":2160.0},{"date":"2026-05-31","petrol":217.0,"diesel":225.0,"kerosene":225.0,"lpg":2160.0},{"date":"2026-04-30","petrol":217.0,"diesel":225.0,"kerosene":225.0,"lpg":2160.0},{"date":"2026-04-15","petrol":219.0,"diesel":237.0,"kerosene":237.0,"lpg":2010.0},{"date":"2026-04-10","petrol":219.0,"diesel":207.0,"kerosene":207.0,"lpg":2010.0},{"date":"2026-04-02","petrol":202.0,"diesel":182.0,"kerosene":182.0,"lpg":1910.0},{"date":"2026-03-26","petrol":187.0,"diesel":167.0,"kerosene":167.0,"lpg":1910.0}]
+;
+
             const fuelGrid = document.getElementById('fuelGrid');
             const loader = document.getElementById('loader');
             const lastUpdatedDisplay = document.getElementById('lastUpdatedDisplay');
@@ -823,54 +1016,7 @@
                 return `${change > 0 ? '+' : ''}${Number(change).toFixed(2)}`;
             }
 
-            /*
-             * NOC currently publishes the retail-price history as an HTML table,
-             * not as a documented JSON API. We fetch that official endpoint and
-             * convert its table rows into JSON in the browser.
-             */
-            async function fetchNOCPage(offset = 0) {
-                const url = `${NOC_BASE}?max=10&offset=${offset}`;
-                const response = await fetch(url, {
-                    method: 'GET',
-                    headers: { 'Accept': 'text/html,application/xhtml+xml' },
-                    cache: 'no-store'
-                });
-                if (!response.ok) throw new Error(`NOC HTTP ${response.status}`);
-                return await response.text();
-            }
 
-            function parseNOCRows(text) {
-                const doc = new DOMParser().parseFromString(text, 'text/html');
-                const rows = [...doc.querySelectorAll('table tr')];
-                const result = [];
-
-                for (const row of rows) {
-                    const cells = [...row.querySelectorAll('th,td')].map(x => x.textContent.trim());
-                    if (cells.length < 5) continue;
-
-                    const dateMatch = cells[0].match(/(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})/);
-                    if (!dateMatch) continue;
-
-                    const [, y, m, d] = dateMatch;
-                    const date = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-
-                    const nums = cells.slice(2, 6).map(v => {
-                        const match = v.replace(/,/g, '').match(/-?\d+(?:\.\d+)?/);
-                        return match ? Number(match[0]) : null;
-                    });
-
-                    if (nums.some(v => v === null)) continue;
-
-                    result.push({
-                        date,
-                        petrol: nums[0],
-                        diesel: nums[1],
-                        kerosene: nums[2],
-                        lpg: nums[3]
-                    });
-                }
-                return result;
-            }
 
             function renderCurrent(row, previousRow) {
                 const fuels = [
@@ -933,76 +1079,293 @@
                 `).join('');
             }
 
-            async function fetchFuelRates(showStatus = true) {
+            function loadFuelRates(showStatus = true) {
                 if (showStatus) {
-                    statusMsg.innerHTML = '<span class="spinner"></span> NOC बाट वास्तविक दर लोड हुँदै...';
+                    statusMsg.innerHTML = '<span class="spinner"></span> Excel डेटाबाट लोड हुँदै...';
                     refreshBtn.disabled = true;
                 }
 
                 try {
-                    /*
-                     * Fetch several pages so the dropdown contains the current
-                     * month and previous months. The endpoint supports offset=0,10,...
-                     */
-                    const pages = await Promise.all([
-                        fetchNOCPage(0),
-                        fetchNOCPage(10),
-                        fetchNOCPage(20)
-                    ]);
-
-                    historyData = pages.flatMap(parseNOCRows)
-                        .filter((row, i, arr) => arr.findIndex(x => x.date === row.date) === i)
+                    historyData = FUEL_PRICE_HISTORY
+                        .slice()
                         .sort((a, b) => b.date.localeCompare(a.date));
 
-                    if (!historyData.length) throw new Error('NOC data not found');
+                    if (!historyData.length) throw new Error('Fuel price data not found');
 
                     renderCurrent(historyData[0], historyData[1]);
                     populateMonths();
                     renderHistory();
 
                     statusMsg.innerHTML =
-                        `<span class="pulse-dot"></span> ✅ NOC बाट वास्तविक दर सफलतापूर्वक लोड भयो`;
+                        `<span class="pulse-dot"></span> ✅ NOC मूल्य सूची (Excel) बाट लोड भयो`;
                 } catch (err) {
-                    console.error('NOC fuel API error:', err);
+                    console.error('Fuel price data error:', err);
                     statusMsg.innerHTML =
-                        '<span style="color:#856404;">⚠️ NOC डेटा लोड हुन सकेन। वेबसाइट/ब्राउजरमा CORS रोकिएको हुन सक्छ।</span>';
-
-                    /*
-                     * Keep the last known official NOC values instead of generating
-                     * random/demo prices. This avoids displaying fake "actual" rates.
-                     */
-                    const known = {
-                        date: '2026-08-02',
-                        petrol: 200,
-                        diesel: 200,
-                        kerosene: 200,
-                        lpg: 2060
-                    };
-                    renderCurrent(known, {
-                        petrol: 197, diesel: 195, kerosene: 195, lpg: 2060
-                    });
+                        '<span style="color:#856404;">⚠️ मूल्य डेटा लोड हुन सकेन।</span>';
                 } finally {
                     loader.style.display = 'none';
                     refreshBtn.disabled = false;
                 }
             }
 
-            refreshBtn.addEventListener('click', () => fetchFuelRates(true));
+            refreshBtn.addEventListener('click', () => loadFuelRates(true));
             monthSelect.addEventListener('change', renderHistory);
 
             const hamburger = document.getElementById('hamburgerBtn');
             const menuWrapper = document.getElementById('menuWrapper');
             hamburger.addEventListener('click', () => menuWrapper.classList.toggle('open'));
 
-            fetchFuelRates(true);
-
-            // Refresh every 6 hours and when the page becomes visible/online.
-            setInterval(() => fetchFuelRates(false), 21600000);
-            document.addEventListener('visibilitychange', () => {
-                if (!document.hidden) fetchFuelRates(false);
-            });
-            window.addEventListener('online', () => fetchFuelRates(false));
+            loadFuelRates(true);
         })();
+    </script>
+
+    <!-- ===== PRICE TREND & PROFIT/LOSS CHARTS ===== -->
+    <script>
+    (function () {
+        'use strict';
+
+        /* Fuel retail price history: [bsDate, enDate, petrol, diesel, kerosene, lpg, atf_dp, atf_df] */
+        const PRICE_HISTORY = [{"bs":"2082.12.11","en":"2026.03.26","petrol":187.0,"diesel":167.0,"kerosene":167.0,"lpg":1910.0,"atf_dp":127.0,"atf_df":966.0},{"bs":"2082.12.19","en":"2026.04.02","petrol":202.0,"diesel":182.0,"kerosene":182.0,"lpg":1910.0,"atf_dp":251.0,"atf_df":1785.0},{"bs":"2082.12.26","en":"2026.04.10","petrol":219.0,"diesel":207.0,"kerosene":207.0,"lpg":2010.0,"atf_dp":251.0,"atf_df":1785.0},{"bs":"2083-01-02","en":"2026.04.15","petrol":219.0,"diesel":237.0,"kerosene":237.0,"lpg":2010.0,"atf_dp":260.0,"atf_df":1785.0},{"bs":"2083-01-17","en":"2026.04.30","petrol":217.0,"diesel":225.0,"kerosene":225.0,"lpg":2160.0,"atf_dp":269.0,"atf_df":1831.0},{"bs":"2083-02-17","en":"2026.05.31","petrol":217.0,"diesel":225.0,"kerosene":225.0,"lpg":2160.0,"atf_dp":269.0,"atf_df":1831.0},{"bs":"2083-03-01","en":"2026.06.15","petrol":217.0,"diesel":225.0,"kerosene":225.0,"lpg":2160.0,"atf_dp":269.0,"atf_df":1831.0},{"bs":"2083.03.16","en":"2026.06.30","petrol":197.0,"diesel":195.0,"kerosene":195.0,"lpg":2060.0,"atf_dp":229.0,"atf_df":1566.0},{"bs":"2083.03.31","en":"2026.07.15","petrol":197.0,"diesel":195.0,"kerosene":195.0,"lpg":2060.0,"atf_dp":229.0,"atf_df":1566.0},{"bs":"2083.04.17","en":"2026.08.02","petrol":200.0,"diesel":200.0,"kerosene":200.0,"lpg":2060.0,"atf_dp":249.0,"atf_df":1697.0}];
+
+        /* NOC estimated profit/loss per price revision (NRs Crores):
+           [date, petrol, diesel, kerosene, lpg, atf_dp, atf_bonded, total] */
+        const PL_HISTORY = [{"date":"2022-07-17","petrol":-14.19,"diesel":-21.92,"kerosene":3.03,"lpg":-582.42,"atf_dp":30.56,"atf_bonded":73.96,"total":-216.12},{"date":"2022-10-17","petrol":14.56,"diesel":-6.34,"kerosene":38.58,"lpg":-325.44,"atf_dp":40.78,"atf_bonded":90.98,"total":39.93},{"date":"2022-11-03","petrol":13.95,"diesel":-12.14,"kerosene":34.54,"lpg":-228.84,"atf_dp":35.99,"atf_bonded":87.3,"total":18.71},{"date":"2022-12-02","petrol":13.16,"diesel":0.53,"kerosene":35.35,"lpg":-277.02,"atf_dp":42.16,"atf_bonded":89.93,"total":58.71},{"date":"2022-12-16","petrol":17.22,"diesel":10.15,"kerosene":32.09,"lpg":-277.02,"atf_dp":52.54,"atf_bonded":103.78,"total":132.89},{"date":"2023-01-09","petrol":12.11,"diesel":4.6,"kerosene":40.9,"lpg":-359.5,"atf_dp":31.43,"atf_bonded":70.29,"total":58.12},{"date":"2023-07-23","petrol":3.63,"diesel":2.79,"kerosene":19.97,"lpg":2.22,"atf_dp":25.19,"atf_bonded":42.44,"total":55.02},{"date":"2026-04-13","petrol":-2.32,"diesel":-87.99,"kerosene":-36.7,"lpg":-331.25,"atf_dp":-0.92,"atf_bonded":6.52,"total":-781.61},{"date":"2026-04-16","petrol":1.85,"diesel":-99.16,"kerosene":-11.12,"lpg":-331.25,"atf_dp":2.95,"atf_bonded":6.04,"total":-574.8},{"date":"2026-05-16","petrol":2.11,"diesel":0.0,"kerosene":-53.28,"lpg":-1078.03,"atf_dp":-0.25,"atf_bonded":2.73,"total":-126.88}];
+
+        function fmtNum(n, d) {
+            if (n === null || n === undefined || isNaN(n)) return '—';
+            return Number(n).toLocaleString('en-IN', { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 });
+        }
+        function fmtCrore(n) {
+            const sign = n > 0 ? '+' : '';
+            return sign + fmtNum(n, 2);
+        }
+
+        /* ---------------- Price trend chart ---------------- */
+        const priceCanvas = document.getElementById('priceTrendChart');
+        const priceLegendEl = document.getElementById('priceChartLegend');
+        const priceMetricSelect = document.getElementById('priceMetricSelect');
+
+        const PRICE_SERIES_CONFIG = {
+            fuel: [
+                { key: 'petrol', label: 'पेट्रोल · Petrol', color: '#c62828' },
+                { key: 'diesel', label: 'डिजेल · Diesel', color: '#123b6d' },
+                { key: 'kerosene', label: 'मट्टितेल · Kerosene', color: '#2e7d32' }
+            ],
+            lpg: [
+                { key: 'lpg', label: 'LPG (प्रति सिलिन्डर)', color: '#7b3fa0' }
+            ],
+            atf: [
+                { key: 'atf_dp', label: 'ATF Duty Paid', color: '#e07b00' },
+                { key: 'atf_df', label: 'ATF Bonded', color: '#627083' }
+            ]
+        };
+
+        function drawLineChart(canvas, series, records, xKey) {
+            const dpr = window.devicePixelRatio || 1;
+            const cssW = canvas.clientWidth || canvas.parentElement.clientWidth;
+            const cssH = 240;
+            canvas.width = cssW * dpr;
+            canvas.height = cssH * dpr;
+            canvas.style.height = cssH + 'px';
+            const ctx = canvas.getContext('2d');
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.scale(dpr, dpr);
+            ctx.clearRect(0, 0, cssW, cssH);
+
+            const padL = 46, padR = 12, padT = 14, padB = 34;
+            const w = cssW - padL - padR;
+            const h = cssH - padT - padB;
+
+            const allVals = [];
+            series.forEach(s => records.forEach(r => { if (r[s.key] !== null && r[s.key] !== undefined) allVals.push(+r[s.key]); }));
+            let minV = Math.min(...allVals), maxV = Math.max(...allVals);
+            if (minV === maxV) { minV -= 1; maxV += 1; }
+            const pad = (maxV - minV) * 0.12;
+            minV -= pad; maxV += pad;
+
+            function xAt(i) { return padL + (records.length <= 1 ? w / 2 : (i / (records.length - 1)) * w); }
+            function yAt(v) { return padT + h - ((v - minV) / (maxV - minV)) * h; }
+
+            // grid + y labels
+            ctx.strokeStyle = '#eef2f7';
+            ctx.fillStyle = '#627083';
+            ctx.font = '11px Segoe UI, Roboto, sans-serif';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            const steps = 4;
+            for (let i = 0; i <= steps; i++) {
+                const v = minV + ((maxV - minV) / steps) * i;
+                const y = yAt(v);
+                ctx.beginPath();
+                ctx.moveTo(padL, y);
+                ctx.lineTo(padL + w, y);
+                ctx.stroke();
+                ctx.fillText(fmtNum(v, v < 10 ? 1 : 0), padL - 8, y);
+            }
+
+            // x labels (sparse)
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            const labelEvery = Math.max(1, Math.ceil(records.length / 6));
+            records.forEach((r, i) => {
+                if (i % labelEvery === 0 || i === records.length - 1) {
+                    ctx.fillText(r[xKey], xAt(i), padT + h + 8);
+                }
+            });
+
+            // lines
+            series.forEach(s => {
+                ctx.beginPath();
+                records.forEach((r, i) => {
+                    const x = xAt(i), y = yAt(+r[s.key]);
+                    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                });
+                ctx.strokeStyle = s.color;
+                ctx.lineWidth = 2.2;
+                ctx.lineJoin = 'round';
+                ctx.stroke();
+
+                // dots
+                records.forEach((r, i) => {
+                    const x = xAt(i), y = yAt(+r[s.key]);
+                    ctx.beginPath();
+                    ctx.arc(x, y, 2.6, 0, Math.PI * 2);
+                    ctx.fillStyle = s.color;
+                    ctx.fill();
+                });
+            });
+        }
+
+        function renderPriceLegend(series) {
+            priceLegendEl.innerHTML = series.map(s =>
+                `<span><i class="legend-dot" style="background:${s.color}"></i>${s.label}</span>`
+            ).join('');
+        }
+
+        function renderPriceChart() {
+            const metric = priceMetricSelect.value;
+            const series = PRICE_SERIES_CONFIG[metric];
+            renderPriceLegend(series);
+            drawLineChart(priceCanvas, series, PRICE_HISTORY, 'bs');
+        }
+
+        priceMetricSelect.addEventListener('change', renderPriceChart);
+        window.addEventListener('resize', () => { renderPriceChart(); drawPLChart(); });
+
+        /* ---------------- Profit/Loss chart ---------------- */
+        const plCanvas = document.getElementById('plTrendChart');
+
+        function drawPLChart() {
+            const dpr = window.devicePixelRatio || 1;
+            const cssW = plCanvas.clientWidth || plCanvas.parentElement.clientWidth;
+            const cssH = 240;
+            plCanvas.width = cssW * dpr;
+            plCanvas.height = cssH * dpr;
+            plCanvas.style.height = cssH + 'px';
+            const ctx = plCanvas.getContext('2d');
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.scale(dpr, dpr);
+            ctx.clearRect(0, 0, cssW, cssH);
+
+            const padL = 54, padR = 12, padT = 14, padB = 34;
+            const w = cssW - padL - padR;
+            const h = cssH - padT - padB;
+
+            const totals = PL_HISTORY.map(r => +r.total);
+            let minV = Math.min(0, ...totals), maxV = Math.max(0, ...totals);
+            const pad = (maxV - minV) * 0.1 || 10;
+            minV -= pad; maxV += pad;
+
+            const n = PL_HISTORY.length;
+            const slot = w / n;
+            const barW = Math.min(38, slot * 0.55);
+
+            function yAt(v) { return padT + h - ((v - minV) / (maxV - minV)) * h; }
+            const zeroY = yAt(0);
+
+            // grid
+            ctx.strokeStyle = '#eef2f7';
+            ctx.fillStyle = '#627083';
+            ctx.font = '11px Segoe UI, Roboto, sans-serif';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            const steps = 4;
+            for (let i = 0; i <= steps; i++) {
+                const v = minV + ((maxV - minV) / steps) * i;
+                const y = yAt(v);
+                ctx.beginPath();
+                ctx.moveTo(padL, y);
+                ctx.lineTo(padL + w, y);
+                ctx.stroke();
+                ctx.fillText(fmtNum(v, 0), padL - 8, y);
+            }
+            // zero baseline emphasised
+            ctx.strokeStyle = '#c3cad6';
+            ctx.beginPath();
+            ctx.moveTo(padL, zeroY);
+            ctx.lineTo(padL + w, zeroY);
+            ctx.stroke();
+
+            // bars
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            PL_HISTORY.forEach((r, i) => {
+                const cx = padL + slot * i + slot / 2;
+                const v = +r.total;
+                const y = yAt(v);
+                const top = Math.min(y, zeroY);
+                const barH = Math.max(1, Math.abs(y - zeroY));
+                ctx.fillStyle = v >= 0 ? '#2e7d32' : '#c62828';
+                ctx.fillRect(cx - barW / 2, top, barW, barH);
+                ctx.fillStyle = '#627083';
+                ctx.fillText(r.date.slice(5), cx, padT + h + 8);
+            });
+        }
+
+        function renderPLSummary() {
+            const totals = PL_HISTORY.map(r => +r.total);
+            const latest = PL_HISTORY[PL_HISTORY.length - 1];
+            const netSum = totals.reduce((a, b) => a + b, 0);
+            const profitCount = totals.filter(v => v >= 0).length;
+            const lossCount = totals.filter(v => v < 0).length;
+            const worst = PL_HISTORY.reduce((a, b) => (+b.total < +a.total ? b : a));
+
+            const items = [
+                { label: 'पछिल्लो अनुमान · Latest', value: fmtCrore(+latest.total), cls: +latest.total >= 0 ? 'pos' : 'neg' },
+                { label: 'नाफा भएका पटक · Profit periods', value: profitCount, cls: '' },
+                { label: 'नोक्सान भएका पटक · Loss periods', value: lossCount, cls: '' },
+                { label: 'सबैभन्दा ठूलो नोक्सान · Largest loss', value: fmtCrore(+worst.total) + ' (' + worst.date + ')', cls: 'neg' }
+            ];
+            document.getElementById('plSummaryGrid').innerHTML = items.map(it =>
+                `<div class="pl-summary-item">
+                    <div class="pl-summary-label">${it.label}</div>
+                    <div class="pl-summary-value ${it.cls}">${it.value}</div>
+                </div>`
+            ).join('');
+        }
+
+        function renderPLTable() {
+            const tbody = document.getElementById('plHistoryBody');
+            tbody.innerHTML = PL_HISTORY.slice().reverse().map(r => {
+                const cell = (v) => `<span style="color:${v >= 0 ? '#2e7d32' : '#c62828'}">${fmtCrore(v)}</span>`;
+                return `<tr>
+                    <td>${r.date}</td>
+                    <td>${cell(r.petrol)}</td>
+                    <td>${cell(r.diesel)}</td>
+                    <td>${cell(r.kerosene)}</td>
+                    <td>${cell(r.lpg)}</td>
+                    <td>${cell(r.atf_dp)}</td>
+                    <td>${cell(r.atf_bonded)}</td>
+                    <td><strong>${cell(r.total)}</strong></td>
+                </tr>`;
+            }).join('');
+        }
+
+        renderPriceChart();
+        drawPLChart();
+        renderPLSummary();
+        renderPLTable();
+    })();
     </script>
 <!-- PWA Installation Script -->
 <script src="/pwa-install.js"></script>
