@@ -92,7 +92,7 @@ Whether you need to check today's Nepali date, convert between BS and AD, read y
 ├── dateconverter.html         # BS ↔ AD converter
 ├── date-difference.html       # Date difference calculator
 ├── age-calculator.html        # Age calculator (AD & BS)
-├── festivals.html             # Festival grid
+├──  nepali-festivals.html             # Festival grid
 ├── holidays.html              # Holiday grid
 ├── rashifal.html              # Horoscope (Rashifal)
 ├── weather.html               # Weather forecast
@@ -509,7 +509,7 @@ The sitemap covers these public application routes:
 | BS–AD Date Converter | `/dateconverter.html` |
 | Event Reminder | `/event-remainder.html` |
 | Exchange Rates | `/exchange-rate.html` |
-| Festivals | `/festivals.html` |
+| Festivals | `/ nepali-festivals.html` |
 | Gold & Silver Rates | `/goldsilver.html` |
 | Holidays | `/holidays.html` |
 | Kundali Generator | `/kundali-generator.html` |
