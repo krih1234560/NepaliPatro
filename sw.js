@@ -11,7 +11,7 @@ const ASSETS_TO_CACHE = [
   '/date-difference.html',
   '/age-calculator.html',
   '/ nepali-festivals.html',
-  '/holidays.html',
+  '/nepali-holidays.html',
   '/rashifal.html',
   '/weather.html',
   '/goldsilver.html',
