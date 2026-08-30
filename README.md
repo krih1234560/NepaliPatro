@@ -93,7 +93,7 @@ Whether you need to check today's Nepali date, convert between BS and AD, read y
 ├── date-difference.html       # Date difference calculator
 ├── age-calculator.html        # Age calculator (AD & BS)
 ├──  nepali-festivals.html             # Festival grid
-├── holidays.html              # Holiday grid
+├── nepali-holidays.html              # Holiday grid
 ├── rashifal.html              # Horoscope (Rashifal)
 ├── weather.html               # Weather forecast
 ├── goldsilver.html            # Gold & Silver rates
@@ -511,7 +511,7 @@ The sitemap covers these public application routes:
 | Exchange Rates | `/exchange-rate.html` |
 | Festivals | `/ nepali-festivals.html` |
 | Gold & Silver Rates | `/goldsilver.html` |
-| Holidays | `/holidays.html` |
+| Holidays | `/nepali-holidays.html` |
 | Kundali Generator | `/kundali-generator.html` |
 | Nepal Fuel Rates | `/nepali_fuel_rates.html` |
 | Nepal Sambat Calendar | `/nepalsambat.html` |
