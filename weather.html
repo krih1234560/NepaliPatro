@@ -25,11 +25,6 @@
     <meta name="description" content="नेपालको काठमाडौं, पोखरा, विराटनगर लगायतका शहरहरूको मौसम, सूर्योदय र सूर्यास्त। Nepal weather forecast, temperature, humidity, wind speed with real-time API. आजको मौसम पूर्वानुमान हेर्नुहोस्।" />
 
     <!-- ============================================================
-         KEYWORDS (Nepali + English)
-    ============================================================ -->
-    <meta name="keywords" content="मौसम, Nepal weather, weather forecast, सूर्योदय, सूर्यास्त, temperature, humidity, wind speed, Kathmandu weather, Pokhara weather, Nepal weather today, मौसम पूर्वानुमान, नेपालको मौसम, weather API, Open-Meteo" />
-
-    <!-- ============================================================
          ROBOTS (Allow indexing)
     ============================================================ -->
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
@@ -53,7 +48,7 @@
     <meta name="twitter:description" content="नेपालको शहरहरूको मौसम, सूर्योदय र सूर्यास्त। Real-time weather forecast." />
 
     <!-- ============================================================
-         SCHEMA.ORG STRUCTURED DATA (WebApplication)
+         SCHEMA.ORG STRUCTURED DATA
     ============================================================ -->
     <script type="application/ld+json">
         {
@@ -63,6 +58,7 @@
             "alternateName": "Nepali Weather Forecast",
             "applicationCategory": "WeatherApplication",
             "operatingSystem": "Web",
+            "url": "https://nepalipatro.app/weather.html",
             "description": "Get real-time weather, sunrise, sunset, temperature, humidity and wind speed for cities in Nepal using Open-Meteo API.",
             "offers": {
                 "@type": "Offer",
@@ -76,6 +72,27 @@
                 "description": "Weather information for Nepali cities including sunrise, sunset, temperature, humidity and wind speed."
             }
         }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "नेपाली पात्रो",
+                "item": "https://nepalipatro.app/index.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "मौसम",
+                "item": "https://nepalipatro.app/weather.html"
+            }
+        ]
+    }
     </script>
 
     <!-- ============================================================
@@ -790,6 +807,63 @@
             margin: 1rem 0;
         }
 
+        /* ----- SEO NAVIGATION / INTERNAL LINKS ----- */
+        .breadcrumbs {
+            margin: 0 0 1.25rem;
+            font-size: 0.9rem;
+            color: #627083;
+        }
+
+        .breadcrumbs a {
+            color: #123b6d;
+            font-weight: 600;
+        }
+
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+
+        .related-links {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #fff;
+            border: 1px solid #e4e9f0;
+            border-radius: 20px;
+            box-shadow: 0 4px 16px #00000006;
+        }
+
+        .related-links h2 {
+            color: #123b6d;
+            font-size: 1.35rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .related-links p {
+            color: #627083;
+            margin-bottom: 1rem;
+        }
+
+        .related-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 0.7rem;
+        }
+
+        .related-links-grid a {
+            display: block;
+            padding: 0.8rem 1rem;
+            background: #f8faff;
+            border: 1px solid #eef2f7;
+            border-radius: 10px;
+            color: #123b6d;
+            font-weight: 650;
+        }
+
+        .related-links-grid a:hover {
+            background: #eef4fb;
+            text-decoration: underline;
+        }
+
         @media (max-width: 600px) {
             .controls-row {
                 flex-direction: column;
@@ -847,7 +921,7 @@
     <!-- ===== NAVBAR ===== -->
     <header class="navbar">
         <nav class="nav">
-            <a class="brand" id="brandLink" href="#">
+            <a class="brand" id="brandLink" href="index.html" aria-label="नेपाली पात्रो मुख्य पृष्ठ">
                 <span class="brand-icon">म</span>
                 <span class="brand-text">
                     <span class="brand-nepali">नेपाली पात्रो</span>
@@ -872,17 +946,17 @@
                             <li><a href="age-calculator.html">Age Calculator</a></li>
                         </ul>
                     </li>
-                    <li><a href=" nepali-festivals.html">चाडपर्वहरु</a></li>
+                    <li><a href="festivals.html">चाडपर्वहरु</a></li>
                     <li><a href="holidays.html">बिदाहरु</a></li>
                     <li><a href="rashifal.html">राशिफल</a></li>
-                    <li><a href="weather.html" class="active">मौसम</a></li>
+                    <li><a href="weather.html" class="active" aria-current="page">मौसम</a></li>
                     <li><a href="goldsilver.html">सुनचादी</a></li>
                     <li class="dropdown">
                         <a href="#">Tools</a>
                         <ul class="dropdown-menu">
                             <li><a href="kundali-generator.html">जन्म कुण्डली</a></li>
                              <li><a href="event-remainder.html">Event Remainder</a></li>
-                            <li><a href="quiz-scheduler.html" class="active">Quiz Scheduler</a></li>
+                            <li><a href="quiz-scheduler.html">Quiz Scheduler</a></li>
                             <li><a href="exchange-rate.html">Currency Exchange Rate</a></li>
                             <li><a href="nepali_fuel_rates.html">इन्धन मूल्य</a></li>
                         </ul>
@@ -901,6 +975,12 @@
 
     <!-- ===== MAIN CONTENT ===== -->
     <div class="wrap">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="index.html">नेपाली पात्रो</a>
+            <span aria-hidden="true"> › </span>
+            <span>मौसम</span>
+        </nav>
+
         <div class="page-header">
             <h1>
                 🌤️ मौसम
@@ -953,7 +1033,7 @@
         <section class="seo-content" id="seoContent">
             <h2>नेपालको मौसम · Nepal Weather Forecast</h2>
             <p>
-                यस पृष्ठमा <strong>नेपालको मौसम (Nepal weather)</strong> को वास्तविक डाटा प्रस्तुत गरिएको छ।
+                यस पृष्ठमा <strong><a href="weather.html">नेपालको मौसम (Nepal weather)</a></strong> को वास्तविक डाटा प्रस्तुत गरिएको छ।
                 <strong>काठमाडौं, पोखरा, विराटनगर, ललितपुर, भक्तपुर, भरतपुर, वीरगञ्ज, धरान, बुटवल, नेपालगञ्ज</strong>
                 लगायतका प्रमुख शहरहरूको <strong>तापक्रम (temperature), आर्द्रता (humidity), हावाको गति (wind speed),
                 सूर्योदय (sunrise) र सूर्यास्त (sunset)</strong> समय हेर्न सक्नुहुन्छ।
@@ -966,7 +1046,7 @@
 
             <h3>नेपालको मौसम किन महत्वपूर्ण छ?</h3>
             <p>
-                <strong>मौसम (weather)</strong> को जानकारी नेपाली जीवनको अभिन्न अंग हो। कृषि, यात्रा, पर्यटन, निर्माण,
+                <strong>मौसम (weather)</strong> को जानकारी नेपाली जीवनको अभिन्न अंग हो। <a href="holidays.html">बिदा र छुट्टी</a>, यात्रा, पर्यटन, निर्माण,
                 दैनिक योजनाहरू सबै मौसममा निर्भर हुन्छन्। यस पृष्ठले <strong>वास्तविक मौसम API</strong> मार्फत
                 सही र अद्यावधिक डाटा प्रदान गर्दछ, जसले गर्दा तपाईंले आफ्नो योजना बनाउन सजिलो हुन्छ।
             </p>
@@ -1002,6 +1082,25 @@
             </p>
         </section>
 
+
+        <!-- ===== RELATED INTERNAL LINKS ===== -->
+        <section class="related-links" aria-labelledby="related-pages-title">
+            <h2 id="related-pages-title">नेपाली पात्रोका उपयोगी पृष्ठहरू</h2>
+            <p>मौसमसँगै पात्रो, पर्व, बिदा र अन्य दैनिक उपयोगी सेवाहरू हेर्नुहोस्।</p>
+            <div class="related-links-grid">
+                <a href="index.html">आजको नेपाली पात्रो</a>
+                <a href="festivals.html">चाडपर्व र पर्वहरू</a>
+                <a href="holidays.html">नेपालका बिदाहरू</a>
+                <a href="nepalsambat.html">नेपाल संवत</a>
+                <a href="dateconverter.html">BS–AD मिति रूपान्तरण</a>
+                <a href="date-difference.html">मिति अन्तर गणना</a>
+                <a href="rashifal.html">आजको राशिफल</a>
+                <a href="goldsilver.html">सुनचाँदीको मूल्य</a>
+                <a href="exchange-rate.html">मुद्रा विनिमय दर</a>
+                <a href="nepali_fuel_rates.html">इन्धनको मूल्य</a>
+            </div>
+        </section>
+
         <div class="disclaimer">
             * मौसम डाटा Open-Meteo API बाट प्रत्यक्ष API अनुरोधमार्फत लिइएको हो। API उपलब्ध नभएमा नमुना डाटा देखाइँदैन।
             Weather data is fetched directly from the Open-Meteo API. Demo/fake weather data is never shown.
@@ -1012,7 +1111,7 @@
     <footer>
         <div class="footer">
             <div><strong>नेपाली पात्रो</strong><br>Nepali Calendar &amp; Weather</div>
-            <div><a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">Open-Meteo API</a> · <a href="#">Contact</a></div>
+            <div><a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">Open-Meteo API</a> · <a href="index.html">नेपाली पात्रो</a></div>
         </div>
     </footer>
 
