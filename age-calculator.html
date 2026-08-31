@@ -14,19 +14,69 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Age Calculator – AD & BS (Nepali) Date Support</title>
+  <title>Age Calculator in Nepal – AD &amp; BS (Bikram Sambat)</title>
 
   <!-- SEO Meta Tags -->
-  <meta name="description" content="Free Age Calculator supporting both AD and BS (Nepali) dates. Calculate your age in years, months and days from your date of birth in either calendar system.">
-  <meta name="keywords" content="age calculator, calculate age, BS date, Nepali age calculator, date of birth calculator, age in years months days, AD to BS, age finder, how old am I">
-  <meta name="robots" content="index,follow">
+  <meta name="description" content="Free age calculator for Nepal. Calculate your exact age in years, months and days using a Gregorian AD date or Nepali BS (Bikram Sambat) date.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://nepalipatro.app/age-calculator.html">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Age Calculator – AD & BS Date Support">
-  <meta property="og:description" content="Calculate your age in years, months and days using AD or BS (Nepali) dates. Free and easy to use.">
+  <meta property="og:title" content="Age Calculator in Nepal – AD &amp; BS (Bikram Sambat)">
+  <meta property="og:description" content="Calculate your exact age in years, months and days from AD or Nepali BS (Bikram Sambat) dates.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://nepalipatro.app/age-calculator.html">
+  <meta property="og:site_name" content="Nepali Patro">
+
+  <!-- X / Twitter -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Age Calculator in Nepal – AD &amp; BS">
+  <meta name="twitter:description" content="Free AD and BS age calculator for calculating years, months and days.">
+
+  <!-- Structured data: helps search engines understand this page as a web application and its place in the site -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://nepalipatro.app/age-calculator.html#app",
+        "name": "Nepali Patro Age Calculator",
+        "url": "https://nepalipatro.app/age-calculator.html",
+        "description": "Free age calculator for calculating age in years, months and days from AD or Nepali BS dates.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires a modern web browser with JavaScript enabled",
+        "isAccessibleForFree": true,
+        "inLanguage": "en"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://nepalipatro.app/age-calculator.html#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://nepalipatro.app/index.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Converters & Tools",
+            "item": "https://nepalipatro.app/index.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Age Calculator",
+            "item": "https://nepalipatro.app/age-calculator.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 
   <style>
     /* ---------- reused from main calendar ---------- */
@@ -288,57 +338,110 @@
     .footer{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     .footer a{color:#fff}
 
+
+    .breadcrumbs{background:#fff;border-bottom:1px solid var(--border)}
+    .breadcrumbs-inner{max-width:1180px;margin:auto;padding:12px 20px;display:flex;gap:9px;align-items:center;font-size:14px;color:var(--muted)}
+    .breadcrumbs a{color:var(--blue);font-weight:700}
+    .content-link{color:var(--blue);text-decoration:underline;text-underline-offset:2px;font-weight:600}
+    .related-tools{margin-top:34px}
+    .related-tools h2{color:var(--text);margin-bottom:16px}
+    .related-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .related-card{display:flex;flex-direction:column;gap:5px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:17px;color:var(--text);transition:transform .15s,box-shadow .15s,border-color .15s}
+    .related-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px #123b6d12;border-color:#c9d7e8}
+    .related-card strong{color:var(--blue)}
+    .related-card span{color:var(--muted);font-size:14px}
+    .info ol{padding-left:22px}
+    .faq{display:grid;gap:10px}
+    .faq details{background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px 15px}
+    .faq summary{cursor:pointer;font-weight:700;color:var(--text)}
+    .faq p{margin:10px 0 0;color:var(--muted)}
+
     @media(max-width:800px){
       .date-group{grid-template-columns:1fr}
       .ad-inputs .date-picker{grid-template-columns:1fr}
       .bs-inputs .bs-group .bs-date-row{flex-direction:column}
       .format-toggle{flex-wrap:wrap}
+      .related-grid{grid-template-columns:1fr}
     }
   </style>
     <link rel="stylesheet" href="dark-mode.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can I calculate age using a Nepali BS date?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Select BS (Nepali), enter the birth date and the as-of date in BS year, month and day, then calculate."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the calculator show years, months and days?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The result is displayed as a combination of completed years, months and days between the selected dates."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I calculate age as of a past or future date?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, as long as the dates are valid and the birth date is not later than the calculation date."
+        }
+      }
+    ]
+  }
+  </script>
+
 </head>
 <body>
 
 <!-- ========== NAVBAR ========== -->
 <header class="navbar">
   <nav class="nav">
-    <a class="brand" href="index.html">
+    <a class="brand" href="/index.html" aria-label="Nepali Patro home">
       <span class="brand-icon">वि</span>
       <span class="brand-text">
         <span class="brand-nepali">नेपाली पात्रो</span>
         <span class="brand-english">Nepali Patro · <span>Calendar 2083</span></span>
       </span>
     </a>
-    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+    <button class="hamburger" id="hamburgerBtn" type="button" aria-label="Toggle navigation menu" aria-controls="menuWrapper" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
     <div class="menu-wrapper" id="menuWrapper">
       <ul class="menu">
-        <li><a href="index.html" class="calendar-link" id="calendarLink">Calendar</a></li>
-        <li><a href="nepalsambat.html">नेपाल संवत</a></li>
+        <li><a href="/index.html" class="calendar-link" id="calendarLink">Calendar</a></li>
+        <li><a href="/nepalsambat.html">नेपाल संवत</a></li>
         <li class="dropdown">
           <a href="#">Converter</a>
           <ul class="dropdown-menu">
-            <li><a href="unicode.html">Nepali Unicode</a></li>
-            <li><a href="dateconverter.html">BS-AD Converter</a></li>
-            <li><a href="date-difference.html">Date Difference</a></li>
-            <li><a href="age-calculator.html">Age Calculator</a></li>
+            <li><a href="/unicode.html">Nepali Unicode</a></li>
+            <li><a href="/dateconverter.html">BS-AD Converter</a></li>
+            <li><a href="/date-difference.html">Date Difference</a></li>
+            <li><a href="/age-calculator.html" class="active" aria-current="page">Age Calculator</a></li>
           </ul>
         </li>
-        <li><a href=" nepali-festivals.html">चाडपर्वहरु</a></li>
-        <li><a href="nepali-holidays.html">बिदाहरु</a></li>
-        <li><a href="rashifal.html">राशिफल</a></li>
-        <li><a href="weather.html">मौसम</a></li>
-        <li><a href="goldsilver.html">सुनचादी</a></li>
+        <li><a href="/nepali-festivals.html">चाडपर्वहरु</a></li>
+        <li><a href="/nepali-holidays.html">बिदाहरु</a></li>
+        <li><a href="/rashifal.html">राशिफल</a></li>
+        <li><a href="/weather.html">मौसम</a></li>
+        <li><a href="/goldsilver.html">सुनचादी</a></li>
 
         <li class="dropdown">
           <a href="#">Tools</a>
           <ul class="dropdown-menu">
-            <li><a href="kundali-generator.html">जन्म कुण्डली</a></li>
-             <li><a href="event-remainder.html">Event Remainder</a></li>
-            <li><a href="quiz-scheduler.html" class="active">Quiz Scheduler</a></li>
-            <li><a href="exchange-rate.html">Currency Exchange Rate</a></li>
-            <li><a href="nepali_fuel_rates.html">इन्धन मूल्य</a></li>
+            <li><a href="/kundali-generator.html">जन्म कुण्डली</a></li>
+             <li><a href="/event-remainder.html">Event Remainder</a></li>
+            <li><a href="/quiz-scheduler.html">Quiz Scheduler</a></li>
+            <li><a href="/exchange-rate.html">Currency Exchange Rate</a></li>
+            <li><a href="/nepali_fuel_rates.html">इन्धन मूल्य</a></li>
           </ul>
         </li>
       </ul>
@@ -348,10 +451,18 @@
 
 <!-- ========== PAGE CONTENT ========== -->
 <main>
+
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <div class="breadcrumbs-inner">
+      <a href="/index.html">Home</a>
+      <span aria-hidden="true">›</span>
+      <span aria-current="page">Age Calculator</span>
+    </div>
+  </nav>
   <section class="hero">
     <div class="hero-inner">
-      <h1>Age Calculator</h1>
-      <p>Calculate your age in years, months and days using <strong>AD</strong> or <strong>BS (Nepali)</strong> dates.</p>
+      <h1>Age Calculator – AD &amp; BS (Nepali Date)</h1>
+      <p>Calculate your exact age in years, months and days using a Gregorian <strong>AD</strong> date or a Nepali <strong>BS (Bikram Sambat)</strong> date.</p>
     </div>
   </section>
 
@@ -424,14 +535,84 @@
       <div id="result" class="result" aria-live="polite"></div>
     </div>
 
+
+    <section class="related-tools" aria-labelledby="related-tools-heading">
+      <h2 id="related-tools-heading">More Nepali Calendar &amp; Date Tools</h2>
+      <div class="related-grid">
+        <a class="related-card" href="/dateconverter.html">
+          <strong>BS ↔ AD Date Converter</strong>
+          <span>Convert Nepali BS dates to Gregorian AD and back.</span>
+        </a>
+        <a class="related-card" href="/date-difference.html">
+          <strong>Date Difference Calculator</strong>
+          <span>Find the exact difference between two dates.</span>
+        </a>
+        <a class="related-card" href="/index.html">
+          <strong>Nepali Calendar</strong>
+          <span>Browse Nepali dates, months, festivals and calendar information.</span>
+        </a>
+        <a class="related-card" href="/nepalsambat.html">
+          <strong>Nepal Sambat</strong>
+          <span>Learn about Nepal Sambat and related calendar information.</span>
+        </a>
+      </div>
+    </section>
     <div class="info">
-      <h2>About the Age Calculator</h2>
+      <h2>About This Age Calculator</h2>
       <p>
-        Enter your date of birth and the "as of" date in either AD (Gregorian) or BS (Nepali Bikram Sambat).
-        The calculator will convert BS to AD internally and compute the exact difference in years, months, and days.
+        Use this free online age calculator to find your age in <strong>years, months and days</strong>.
+        You can enter dates in the Gregorian <strong>AD</strong> calendar or in Nepal's commonly used
+        <strong>BS (Bikram Sambat)</strong> calendar. For BS input, the calculator converts the date to AD
+        internally before calculating the difference between the birth date and the selected “as of” date.
       </p>
+
+      <h2>How to Calculate Your Age</h2>
+      <ol>
+        <li>Select <strong>AD (English)</strong> or <strong>BS (Nepali)</strong>.</li>
+        <li>Enter your date of birth.</li>
+        <li>Choose the date you want to calculate your age as of.</li>
+        <li>Click <strong>Calculate Age</strong> to see the result in years, months and days.</li>
+      </ol>
+
+      <h2>AD vs BS Age Calculation</h2>
       <p>
-        This tool is useful for official age verification, astrological calculations, or simply knowing your age in both calendar systems.
+        AD refers to the Gregorian calendar, while BS refers to Bikram Sambat, the calendar system widely used
+        for dates in Nepal. If you have a Nepali birth date but need your age based on a Gregorian date, use the
+        BS option here rather than manually estimating the year difference.
+      </p>
+
+      <h2>Related Nepali Date Tools</h2>
+      <p>
+        Need to convert a date instead? Use our
+        <a class="content-link" href="/dateconverter.html"><strong>BS to AD date converter</strong></a>.
+        You can also compare two dates with the
+        <a class="content-link" href="/date-difference.html"><strong>date difference calculator</strong></a>,
+        explore the <a class="content-link" href="/index.html"><strong>Nepali calendar</strong></a>,
+        or check <a class="content-link" href="/nepali-holidays.html"><strong>Nepali holidays</strong></a>.
+      </p>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Can I calculate age using a Nepali BS date?</summary>
+          <p>Yes. Select BS (Nepali), enter the birth date and the “as of” date in BS year, month and day, then calculate.</p>
+        </details>
+        <details>
+          <summary>Does the calculator show years, months and days?</summary>
+          <p>Yes. The result is displayed as a combination of completed years, months and days between the selected dates.</p>
+        </details>
+        <details>
+          <summary>Can I calculate age as of a past or future date?</summary>
+          <p>Yes, as long as the dates are valid and the birth date is not later than the calculation date.</p>
+        </details>
+      </div>
+
+      <h2>Calendar References</h2>
+      <p>
+        For an independent public reference for BS/AD calendar dates, see the
+        <a class="content-link" href="https://kathmandu.gov.np/en/calendar" target="_blank" rel="noopener noreferrer">Kathmandu Metropolitan City BS/AD calendar</a>.
+        You can also compare public holiday dates published by the
+        <a class="content-link" href="https://bh.nepalembassy.gov.np/content/29/public-holidays-of-vikram-samvat-2083/" target="_blank" rel="noopener noreferrer">Embassy of Nepal</a>.
       </p>
     </div>
   </section>
@@ -442,10 +623,10 @@
   <div class="footer">
     <div><strong>नेपाली पात्रो</strong><br>Nepali Calendar &amp; Date Tools</div>
     <div>
-      <a href="calendar-2083.html">Calendar</a> ·
-      <a href="converter.html">Converter</a> ·
-      <a href=" nepali-festivals.html">Festivals</a> ·
-      <a href="nepali-holidays.html">Holidays</a>
+      <a href="/calendar-2083.html">Calendar</a> ·
+      <a href="/converter.html">Converter</a> ·
+      <a href="/nepali-festivals.html">Festivals</a> ·
+      <a href="/nepali-holidays.html">Holidays</a>
     </div>
   </div>
 </footer>
@@ -715,6 +896,7 @@
     const menuWrapper = document.getElementById('menuWrapper');
     hamburger.addEventListener('click', function() {
       menuWrapper.classList.toggle('open');
+       hamburger.setAttribute('aria-expanded', menuWrapper.classList.contains('open') ? 'true' : 'false');
     });
     document.querySelectorAll('.menu a, .dropdown-menu a').forEach(link => {
       link.addEventListener('click', () => menuWrapper.classList.remove('open'));

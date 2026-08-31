@@ -13,13 +13,74 @@
 <!-- PWA Meta Tags -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>मिति अन्तर · Date Difference Tool</title>
+  <title>Date Difference Calculator | BS & AD Date Difference | Nepali Patro</title>
 
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="नेपाली (BS) र अंग्रेजी (AD) मितिहरू बीचको अन्तर गणना गर्नुहोस्। Calculate date difference between Nepali (BS) and English (AD) dates.">
-  <meta name="keywords" content="date difference, मिति अन्तर, BS date difference, AD date difference, Nepali calendar, date calculator">
+  <!-- Primary SEO -->
+  <meta name="description" content="Free date difference calculator for Nepali BS and Gregorian AD dates. Calculate the difference between two dates in days, weeks, months and years using BS or AD.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Nepali Patro">
+  <meta name="application-name" content="Nepali Patro">
+  <meta name="theme-color" content="#123b6d">
+  <link rel="canonical" href="https://nepalipatro.app/date-difference.html">
+  <link rel="alternate" hreflang="ne" href="https://nepalipatro.app/date-difference.html">
+  <link rel="alternate" hreflang="en" href="https://nepalipatro.app/date-difference.html">
+  <link rel="alternate" hreflang="x-default" href="https://nepalipatro.app/date-difference.html">
 
-<link rel="canonical" href="https://nepalipatro.app/date-difference.html">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Nepali Patro">
+  <meta property="og:title" content="Date Difference Calculator | BS & AD">
+  <meta property="og:description" content="Calculate the difference between two Nepali BS dates or Gregorian AD dates in days, weeks, months and years.">
+  <meta property="og:url" content="https://nepalipatro.app/date-difference.html">
+  <meta property="og:locale" content="ne_NP">
+  <meta property="og:locale:alternate" content="en_US">
+
+  <!-- Social sharing -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Date Difference Calculator | BS & AD">
+  <meta name="twitter:description" content="Free BS and AD date difference calculator from Nepali Patro.">
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "BS & AD Date Difference Calculator",
+    "alternateName": "मिति अन्तर Calculator",
+    "url": "https://nepalipatro.app/date-difference.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web Browser",
+    "description": "Free online calculator for finding the difference between two Bikram Sambat (BS) dates or two Gregorian (AD) dates.",
+    "inLanguage": ["ne", "en"],
+    "isAccessibleForFree": true,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nepali Patro",
+      "url": "https://nepalipatro.app/"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Nepali Patro",
+        "item": "https://nepalipatro.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Date Difference Calculator",
+        "item": "https://nepalipatro.app/date-difference.html"
+      }
+    ]
+  }
+  </script>
   
   <style>
     /* ----- RESET & BASE ----- */
@@ -536,15 +597,90 @@
         gap: 0.3rem;
       }
     }
+
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+    .date-section-title {
+      font-weight: 600;
+      color: #123b6d;
+      margin-bottom: .5rem;
+      font-size: .95rem;
+    }
+    .date-section-title.end-date {
+      margin-top: 1rem;
+    }
+    .seo-content {
+      margin-top: 3rem;
+      background: #fff;
+      border: 1px solid #e4e9f0;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 7px 25px #0000000a;
+    }
+    .seo-content h2 {
+      color: #123b6d;
+      font-size: 1.5rem;
+      line-height: 1.3;
+      margin: 1.8rem 0 .7rem;
+    }
+    .seo-content h2:first-child { margin-top: 0; }
+    .seo-content h3 {
+      color: #123b6d;
+      font-size: 1.1rem;
+      margin: 1.2rem 0 .45rem;
+    }
+    .seo-content p,
+    .seo-content li {
+      color: #3d4858;
+    }
+    .seo-content p { margin: .65rem 0; }
+    .seo-content ul,
+    .seo-content ol { padding-left: 1.4rem; }
+    .seo-content li { margin: .45rem 0; }
+    .related-tools {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .8rem;
+      margin-top: 1rem;
+    }
+    .related-tools a {
+      display: block;
+      padding: .8rem 1rem;
+      border: 1px solid #dce6f2;
+      border-radius: 12px;
+      background: #f7f9fc;
+      color: #123b6d;
+      font-weight: 700;
+    }
+    .related-tools a:hover { background: #eef4fb; }
+    .faq-item {
+      border-top: 1px solid #e4e9f0;
+      padding: 1rem 0;
+    }
+    .faq-item:first-of-type { border-top: 0; }
+    @media (max-width: 700px) {
+      .seo-content { padding: 1.35rem 1.1rem; }
+      .related-tools { grid-template-columns: 1fr; }
+    }
+
   </style>
     <link rel="stylesheet" href="dark-mode.css">
 </head>
-<body>
+<body itemscope itemtype="https://schema.org/WebPage">
 
 <!-- ===== NAVBAR ===== -->
 <header class="navbar">
   <nav class="nav">
-    <a class="brand" id="brandLink" href="#">
+    <a class="brand" id="brandLink" href="index.html" aria-label="Nepali Patro home">
       <span class="brand-icon">वि</span>
       <span class="brand-text">
         <span class="brand-nepali">नेपाली पात्रो</span>
@@ -561,7 +697,7 @@
         <li><a href="index.html" class="calendar-link" id="calendarLink">Calendar</a></li>
         <li><a href="nepalsambat.html">नेपाल संवत</a></li>
         <li class="dropdown">
-          <a href="#">Converter</a>
+          <a href="dateconverter.html">Converter</a>
           <ul class="dropdown-menu">
             <li><a href="unicode.html">Nepali Unicode</a></li>
             <li><a href="dateconverter.html">BS-AD Converter</a></li>
@@ -569,13 +705,13 @@
             <li><a href="age-calculator.html">Age Calculator</a></li>
           </ul>
         </li>
-        <li><a href=" nepali-festivals.html">चाडपर्वहरु</a></li>
+        <li><a href="nepali-festivals.html">चाडपर्वहरु</a></li>
         <li><a href="nepali-holidays.html">बिदाहरु</a></li>
         <li><a href="rashifal.html">राशिफल</a></li>
         <li><a href="weather.html">मौसम</a></li>
         <li><a href="goldsilver.html">सुनचादी</a></li>
         <li class="dropdown">
-          <a href="#">Tools</a>
+          <a href="index.html">Tools</a>
           <ul class="dropdown-menu">
             <li><a href="kundali-generator.html">जन्म कुण्डली</a></li>
              <li><a href="event-remainder.html">Event Remainder</a></li>
@@ -600,214 +736,277 @@
 </header>
 
 <!-- ===== MAIN CONTENT ===== -->
-<div class="wrap">
-  <div class="page-header">
-    <h1>
-      ⏳ मिति अन्तर
-      <small>· Date Difference</small>
-    </h1>
-    <p>नेपाली (BS) र अंग्रेजी (AD) मितिहरू बीचको अन्तर गणना गर्नुहोस्</p>
-  </div>
+<main class="wrap">
+  <header class="page-header">
+    <h1>⏳ Date Difference Calculator <small>· BS &amp; AD मिति अन्तर</small></h1>
+    <p>दुई नेपाली (BS) वा अंग्रेजी (AD) मितिहरू बीचको अन्तर दिन, हप्ता, महिना र वर्षमा गणना गर्नुहोस्।</p>
+  </header>
 
-  <div class="tools-grid">
-    <!-- BS Date Difference Card -->
-    <div class="tool-card">
-      <div class="card-header">
-        <span class="icon">🇳🇵</span>
-        <h2>
-          BS मिति अन्तर
-          <small>Nepali Date Difference</small>
-        </h2>
-      </div>
+  <section aria-labelledby="calculator-heading">
+    <h2 id="calculator-heading" class="visually-hidden">BS and AD Date Difference Calculator</h2>
 
-      <div style="font-weight:600; color:#123b6d; margin-bottom:0.5rem; font-size:0.95rem;">सुरु मिति (BS)</div>
-      <div class="input-row">
-        <div class="input-group">
-          <label>वर्ष</label>
-          <input type="number" id="bsStartYear" value="2080" min="1975" max="2100" />
+    <div class="tools-grid">
+      <!-- BS Date Difference Card -->
+      <article class="tool-card">
+        <div class="card-header">
+          <span class="icon" aria-hidden="true">🇳🇵</span>
+          <h2>BS मिति अन्तर <small>Nepali Date Difference</small></h2>
         </div>
-        <div class="input-group">
-          <label>महिना</label>
-          <select id="bsStartMonth">
-            <option value="0">बैशाख</option>
-            <option value="1">जेठ</option>
-            <option value="2">असार</option>
-            <option value="3">साउन</option>
-            <option value="4">भदौ</option>
-            <option value="5">असोज</option>
-            <option value="6">कार्तिक</option>
-            <option value="7">मंसिर</option>
-            <option value="8">पौष</option>
-            <option value="9">माघ</option>
-            <option value="10">फागुन</option>
-            <option value="11">चैत्र</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label>दिन</label>
-          <input type="number" id="bsStartDay" value="1" min="1" max="32" />
-        </div>
-      </div>
 
-      <div style="font-weight:600; color:#123b6d; margin:1rem 0 0.5rem; font-size:0.95rem;">अन्त्य मिति (BS)</div>
-      <div class="input-row">
-        <div class="input-group">
-          <label>वर्ष</label>
-          <input type="number" id="bsEndYear" value="2083" min="1975" max="2100" />
+        <div class="date-section-title">सुरु मिति (BS)</div>
+        <div class="input-row">
+          <div class="input-group">
+            <label for="bsStartYear">वर्ष</label>
+            <input type="number" id="bsStartYear" value="2080" min="1975" max="2100" inputmode="numeric">
+          </div>
+          <div class="input-group">
+            <label for="bsStartMonth">महिना</label>
+            <select id="bsStartMonth">
+              <option value="0">बैशाख</option><option value="1">जेठ</option><option value="2">असार</option>
+              <option value="3">साउन</option><option value="4">भदौ</option><option value="5">असोज</option>
+              <option value="6">कार्तिक</option><option value="7">मंसिर</option><option value="8">पौष</option>
+              <option value="9">माघ</option><option value="10">फागुन</option><option value="11">चैत्र</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="bsStartDay">दिन</label>
+            <input type="number" id="bsStartDay" value="1" min="1" max="32" inputmode="numeric">
+          </div>
         </div>
-        <div class="input-group">
-          <label>महिना</label>
-          <select id="bsEndMonth">
-            <option value="0" selected>बैशाख</option>
-            <option value="1">जेठ</option>
-            <option value="2">असार</option>
-            <option value="3">साउन</option>
-            <option value="4">भदौ</option>
-            <option value="5">असोज</option>
-            <option value="6">कार्तिक</option>
-            <option value="7">मंसिर</option>
-            <option value="8">पौष</option>
-            <option value="9">माघ</option>
-            <option value="10">फागुन</option>
-            <option value="11">चैत्र</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label>दिन</label>
-          <input type="number" id="bsEndDay" value="15" min="1" max="32" />
-        </div>
-      </div>
 
-      <button class="calc-btn" id="bsDiffBtn">📊 BS मिति अन्तर गणना</button>
+        <div class="date-section-title end-date">अन्त्य मिति (BS)</div>
+        <div class="input-row">
+          <div class="input-group">
+            <label for="bsEndYear">वर्ष</label>
+            <input type="number" id="bsEndYear" value="2083" min="1975" max="2100" inputmode="numeric">
+          </div>
+          <div class="input-group">
+            <label for="bsEndMonth">महिना</label>
+            <select id="bsEndMonth">
+              <option value="0" selected>बैशाख</option><option value="1">जेठ</option><option value="2">असार</option>
+              <option value="3">साउन</option><option value="4">भदौ</option><option value="5">असोज</option>
+              <option value="6">कार्तिक</option><option value="7">मंसिर</option><option value="8">पौष</option>
+              <option value="9">माघ</option><option value="10">फागुन</option><option value="11">चैत्र</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="bsEndDay">दिन</label>
+            <input type="number" id="bsEndDay" value="15" min="1" max="32" inputmode="numeric">
+          </div>
+        </div>
 
-      <div class="result-box" id="bsDiffResult">
-        <div class="result-line">
-          <span class="rlabel">📅 कुल दिन</span>
-          <span class="rvalue" id="bsDiffDays">-</span>
+        <button type="button" class="calc-btn" id="bsDiffBtn">📊 BS मिति अन्तर गणना</button>
+
+        <div class="result-box" id="bsDiffResult" aria-live="polite">
+          <div class="result-line"><span class="rlabel">📅 कुल दिन</span><span class="rvalue" id="bsDiffDays">-</span></div>
+          <div class="result-line"><span class="rlabel">📆 कुल हप्ता</span><span class="rvalue" id="bsDiffWeeks">-</span></div>
+          <div class="result-line"><span class="rlabel">📅 कुल महिना (लगभग)</span><span class="rvalue" id="bsDiffMonths">-</span></div>
+          <div class="result-line"><span class="rlabel">📅 कुल वर्ष (लगभग)</span><span class="rvalue" id="bsDiffYears">-</span></div>
+          <div class="result-total" id="bsDiffHuman">मितिहरू चयन गर्नुहोस्</div>
         </div>
-        <div class="result-line">
-          <span class="rlabel">📆 कुल हप्ता</span>
-          <span class="rvalue" id="bsDiffWeeks">-</span>
+      </article>
+
+      <!-- AD Date Difference Card -->
+      <article class="tool-card">
+        <div class="card-header">
+          <span class="icon" aria-hidden="true">🌍</span>
+          <h2>AD मिति अन्तर <small>Gregorian Date Difference</small></h2>
         </div>
-        <div class="result-line">
-          <span class="rlabel">📅 कुल महिना (लगभग)</span>
-          <span class="rvalue" id="bsDiffMonths">-</span>
+
+        <div class="date-section-title">सुरु मिति (AD)</div>
+        <div class="input-row">
+          <div class="input-group">
+            <label for="adStartYear">वर्ष</label>
+            <input type="number" id="adStartYear" value="2020" min="1900" max="2100" inputmode="numeric">
+          </div>
+          <div class="input-group">
+            <label for="adStartMonth">महिना</label>
+            <select id="adStartMonth">
+              <option value="0">Jan</option><option value="1">Feb</option><option value="2">Mar</option>
+              <option value="3">Apr</option><option value="4">May</option><option value="5">Jun</option>
+              <option value="6">Jul</option><option value="7">Aug</option><option value="8">Sep</option>
+              <option value="9">Oct</option><option value="10">Nov</option><option value="11">Dec</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="adStartDay">दिन</label>
+            <input type="number" id="adStartDay" value="1" min="1" max="31" inputmode="numeric">
+          </div>
         </div>
-        <div class="result-line">
-          <span class="rlabel">📅 कुल वर्ष (लगभग)</span>
-          <span class="rvalue" id="bsDiffYears">-</span>
+
+        <div class="date-section-title end-date">अन्त्य मिति (AD)</div>
+        <div class="input-row">
+          <div class="input-group">
+            <label for="adEndYear">वर्ष</label>
+            <input type="number" id="adEndYear" value="2026" min="1900" max="2100" inputmode="numeric">
+          </div>
+          <div class="input-group">
+            <label for="adEndMonth">महिना</label>
+            <select id="adEndMonth">
+              <option value="0">Jan</option><option value="1">Feb</option><option value="2">Mar</option>
+              <option value="3">Apr</option><option value="4">May</option><option value="5">Jun</option>
+              <option value="6">Jul</option><option value="7">Aug</option><option value="8">Sep</option>
+              <option value="9">Oct</option><option value="10">Nov</option><option value="11">Dec</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="adEndDay">दिन</label>
+            <input type="number" id="adEndDay" value="1" min="1" max="31" inputmode="numeric">
+          </div>
         </div>
-        <div class="result-total" id="bsDiffHuman">मितिहरू चयन गर्नुहोस्</div>
-      </div>
+
+        <button type="button" class="calc-btn" id="adDiffBtn">📊 AD मिति अन्तर गणना</button>
+
+        <div class="result-box" id="adDiffResult" aria-live="polite">
+          <div class="result-line"><span class="rlabel">📅 कुल दिन</span><span class="rvalue" id="adDiffDays">-</span></div>
+          <div class="result-line"><span class="rlabel">📆 कुल हप्ता</span><span class="rvalue" id="adDiffWeeks">-</span></div>
+          <div class="result-line"><span class="rlabel">📅 कुल महिना (लगभग)</span><span class="rvalue" id="adDiffMonths">-</span></div>
+          <div class="result-line"><span class="rlabel">📅 कुल वर्ष (लगभग)</span><span class="rvalue" id="adDiffYears">-</span></div>
+          <div class="result-total" id="adDiffHuman">मितिहरू चयन गर्नुहोस्</div>
+        </div>
+      </article>
     </div>
 
-    <!-- AD Date Difference Card -->
-    <div class="tool-card">
-      <div class="card-header">
-        <span class="icon">🌍</span>
-        <h2>
-          AD मिति अन्तर
-          <small>English Date Difference</small>
-        </h2>
-      </div>
+    <nav class="quick-links" aria-label="Date calculator shortcuts">
+      <a href="#calculator-heading" onclick="setBSToday(); return false;">📅 आजको BS मिति</a>
+      <a href="#calculator-heading" onclick="setADToday(); return false;">📅 आजको AD मिति</a>
+      <a href="#calculator-heading" onclick="resetAll(); return false;">🔄 रिसेट गर्नुहोस्</a>
+    </nav>
 
-      <div style="font-weight:600; color:#123b6d; margin-bottom:0.5rem; font-size:0.95rem;">सुरु मिति (AD)</div>
-      <div class="input-row">
-        <div class="input-group">
-          <label>वर्ष</label>
-          <input type="number" id="adStartYear" value="2020" min="1900" max="2100" />
-        </div>
-        <div class="input-group">
-          <label>महिना</label>
-          <select id="adStartMonth">
-            <option value="0">Jan</option>
-            <option value="1">Feb</option>
-            <option value="2">Mar</option>
-            <option value="3">Apr</option>
-            <option value="4">May</option>
-            <option value="5">Jun</option>
-            <option value="6">Jul</option>
-            <option value="7">Aug</option>
-            <option value="8">Sep</option>
-            <option value="9">Oct</option>
-            <option value="10">Nov</option>
-            <option value="11">Dec</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label>दिन</label>
-          <input type="number" id="adStartDay" value="1" min="1" max="31" />
-        </div>
-      </div>
+    <p class="disclaimer">* BS मिति गणना १९७५–२१०० BS (१९१८–२०४३ AD) को उपलब्ध conversion data मा आधारित छ।</p>
+  </section>
 
-      <div style="font-weight:600; color:#123b6d; margin:1rem 0 0.5rem; font-size:0.95rem;">अन्त्य मिति (AD)</div>
-      <div class="input-row">
-        <div class="input-group">
-          <label>वर्ष</label>
-          <input type="number" id="adEndYear" value="2026" min="1900" max="2100" />
-        </div>
-        <div class="input-group">
-          <label>महिना</label>
-          <select id="adEndMonth">
-            <option value="0">Jan</option>
-            <option value="1">Feb</option>
-            <option value="2">Mar</option>
-            <option value="3">Apr</option>
-            <option value="4">May</option>
-            <option value="5">Jun</option>
-            <option value="6">Jul</option>
-            <option value="7">Aug</option>
-            <option value="8">Sep</option>
-            <option value="9">Oct</option>
-            <option value="10">Nov</option>
-            <option value="11">Dec</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label>दिन</label>
-          <input type="number" id="adEndDay" value="1" min="1" max="31" />
-        </div>
-      </div>
+  <section class="seo-content" aria-labelledby="about-date-difference">
+    <h2 id="about-date-difference">Date Difference Calculator</h2>
+    <p>
+      <strong>Date Difference Calculator</strong> ले दुई मितिहरूबीचको समय अन्तर
+      गणना गर्छ। यस पृष्ठमा तपाईंले <strong>BS date difference</strong> वा
+      <strong>AD date difference</strong> निकालेर कुल दिन, हप्ता, लगभग महिना र
+      लगभग वर्ष हेर्न सक्नुहुन्छ।
+    </p>
+    <p>
+      नेपाली मिति प्रयोग गर्नेहरूका लागि यो <strong>BS date difference calculator</strong>
+      विशेष उपयोगी छ। सुरु मिति र अन्त्य मिति छान्नुहोस्, त्यसपछि गणना गर्नुहोस्।
+    </p>
 
-      <button class="calc-btn" id="adDiffBtn">📊 AD मिति अन्तर गणना</button>
+    <h2>How to Calculate Date Difference</h2>
+    <ol>
+      <li>BS वा AD calculator मध्ये उपयुक्त विकल्प छान्नुहोस्।</li>
+      <li>सुरु मिति प्रविष्ट गर्नुहोस्।</li>
+      <li>अन्त्य मिति प्रविष्ट गर्नुहोस्।</li>
+      <li>Calculate button थिच्नुहोस्।</li>
+      <li>नतिजामा कुल दिन, हप्ता, लगभग महिना र वर्ष हेर्नुहोस्।</li>
+    </ol>
 
-      <div class="result-box" id="adDiffResult">
-        <div class="result-line">
-          <span class="rlabel">📅 कुल दिन</span>
-          <span class="rvalue" id="adDiffDays">-</span>
-        </div>
-        <div class="result-line">
-          <span class="rlabel">📆 कुल हप्ता</span>
-          <span class="rvalue" id="adDiffWeeks">-</span>
-        </div>
-        <div class="result-line">
-          <span class="rlabel">📅 कुल महिना (लगभग)</span>
-          <span class="rvalue" id="adDiffMonths">-</span>
-        </div>
-        <div class="result-line">
-          <span class="rlabel">📅 कुल वर्ष (लगभग)</span>
-          <span class="rvalue" id="adDiffYears">-</span>
-        </div>
-        <div class="result-total" id="adDiffHuman">मितिहरू चयन गर्नुहोस्</div>
-      </div>
+    <h2>BS Date Difference Calculator</h2>
+    <p>
+      <strong>Bikram Sambat (BS)</strong> मा दुई नेपाली मितिबीच कति दिनको अन्तर छ
+      भनेर निकाल्न BS calculator प्रयोग गर्नुहोस्। BS calendar मा महिनाको दिन
+      संख्या Gregorian calendar जस्तो समान हुँदैन, त्यसैले year-specific calendar
+      data प्रयोग गर्नु महत्वपूर्ण हुन्छ।
+    </p>
+
+    <h2>AD Date Difference Calculator</h2>
+    <p>
+      Gregorian (AD) मितिहरूका लागि AD calculator प्रयोग गर्नुहोस्। यसले दुई
+      Gregorian dates बीचको calendar-day difference निकालेर हप्ता, लगभग महिना
+      र लगभग वर्षमा पनि परिणाम देखाउँछ।
+    </p>
+
+    <h2>What Can You Use a Date Difference Calculator For?</h2>
+    <ul>
+      <li>दुई जन्ममिति वा महत्वपूर्ण मितिहरूबीचको अन्तर बुझ्न</li>
+      <li>कार्यक्रम वा परियोजनाको अवधि गणना गर्न</li>
+      <li>नेपाली BS मितिहरूबीचको दिन अन्तर पत्ता लगाउन</li>
+      <li>पुराना documents वा historical dates तुलना गर्न</li>
+      <li>AD र BS calendar dates सम्बन्धी planning गर्न</li>
+    </ul>
+
+    <h2>Related Nepali Calendar Tools</h2>
+    <div class="related-tools">
+      <a href="index.html">नेपाली पात्रो / Nepali Calendar</a>
+      <a href="dateconverter.html">BS to AD Converter</a>
+      <a href="age-calculator.html">Age Calculator</a>
+      <a href="nepalsambat.html">नेपाल संवत्</a>
+      <a href="nepali-festivals.html">नेपाली चाडपर्वहरू</a>
+      <a href="nepali-holidays.html">नेपाली बिदाहरू</a>
     </div>
-  </div>
 
-  <!-- Quick links -->
-  <div class="quick-links">
-    <a onclick="setBSToday();">📅 आजको BS मिति</a>
-    <a onclick="setADToday();">📅 आजको AD मिति</a>
-    <a onclick="resetAll();">🔄 रिसेट गर्नुहोस्</a>
-  </div>
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>What is a date difference calculator?</h3>
+      <p>A date difference calculator finds the elapsed number of days between two dates and can express the result in weeks, months or years.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Can I calculate the difference between two BS dates?</h3>
+      <p>Yes. Use the BS Date Difference Calculator, select the starting and ending Bikram Sambat dates, and calculate the difference.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Can I calculate the difference between two AD dates?</h3>
+      <p>Yes. Use the AD Date Difference Calculator for two Gregorian calendar dates.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does the calculator show the total number of days?</h3>
+      <p>Yes. The result includes total days and also provides weeks, approximate months and approximate years.</p>
+    </div>
+  </section>
+</main>
 
-  <div class="disclaimer">* मिति अन्तर १९७५–२१०० BS (१९१८–२०४३ AD) सम्म मान्य छ।</div>
-</div>
+<!-- FAQ structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a date difference calculator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A date difference calculator finds the elapsed number of days between two dates and can express the result in weeks, months or years."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I calculate the difference between two BS dates?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Use the BS Date Difference Calculator, select the starting and ending Bikram Sambat dates, and calculate the difference."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I calculate the difference between two AD dates?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Use the AD Date Difference Calculator for two Gregorian calendar dates."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the calculator show the total number of days?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The result includes total days and also provides weeks, approximate months and approximate years."
+      }
+    }
+  ]
+</script>
 
 <!-- ===== FOOTER ===== -->
 <footer>
   <div class="footer">
-    <div><strong>नेपाली पात्रो</strong><br>Nepali Calendar &amp; Date Tools</div>
-    <div><a href="#">About</a> · <a href="#">API</a> · <a href="#">Contact</a></div>
+    <div>
+      <strong>नेपाली पात्रो</strong><br>
+      Nepali Calendar &amp; Date Tools
+    </div>
+    <nav aria-label="Footer links">
+      <a href="index.html">Calendar</a> ·
+      <a href="dateconverter.html">BS-AD Converter</a> ·
+      <a href="date-difference.html">Date Difference</a> ·
+      <a href="age-calculator.html">Age Calculator</a> ·
+      <a href="nepali-holidays.html">Holidays</a>
+    </nav>
   </div>
 </footer>
 

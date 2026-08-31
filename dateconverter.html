@@ -14,13 +14,74 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BS-AD रुपान्तरण · Nepali Date Converter</title>
+  <title>BS to AD Converter & AD to BS Converter | Nepali Date Converter</title>
 
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="BS-AD रुपान्तरण: नेपाली मितिलाई अंग्रेजी मितिमा र अंग्रेजी मितिलाई नेपाली मितिमा सजिलै रुपान्तरण गर्नुहोस्। BS-AD date converter for Nepali calendar.">
-  <meta name="keywords" content="BS-AD converter, Nepali date converter, Nepali calendar, BS to AD, AD to BS, Nepali patro, मिति रुपान्तरण">
+  <!-- Primary SEO -->
+  <meta name="description" content="Free BS to AD and AD to BS date converter for Nepali dates. Convert Bikram Sambat (BS) dates to Gregorian (AD) and Gregorian dates to Nepali dates quickly and easily.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Nepali Patro">
+  <meta name="application-name" content="Nepali Patro">
+  <meta name="theme-color" content="#123b6d">
+  <link rel="canonical" href="https://nepalipatro.app/dateconverter.html">
+  <link rel="alternate" hreflang="ne" href="https://nepalipatro.app/dateconverter.html">
+  <link rel="alternate" hreflang="en" href="https://nepalipatro.app/dateconverter.html">
+  <link rel="alternate" hreflang="x-default" href="https://nepalipatro.app/dateconverter.html">
 
-<link rel="canonical" href="https://nepalipatro.app/dateconverter.html">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Nepali Patro">
+  <meta property="og:title" content="BS to AD Converter & AD to BS Converter">
+  <meta property="og:description" content="Convert Bikram Sambat (BS) dates to Gregorian (AD) and Gregorian dates to Nepali dates with this free online Nepali date converter.">
+  <meta property="og:url" content="https://nepalipatro.app/dateconverter.html">
+  <meta property="og:locale" content="ne_NP">
+  <meta property="og:locale:alternate" content="en_US">
+
+  <!-- Twitter / social sharing -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BS to AD Converter & AD to BS Converter">
+  <meta name="twitter:description" content="Free online Nepali date converter for BS ↔ AD date conversion.">
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "BS to AD Converter & AD to BS Converter",
+    "alternateName": "Nepali Date Converter",
+    "url": "https://nepalipatro.app/dateconverter.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web Browser",
+    "description": "Free online converter for converting Bikram Sambat (BS) dates to Gregorian (AD) dates and Gregorian (AD) dates to Bikram Sambat (BS).",
+    "inLanguage": ["ne", "en"],
+    "isAccessibleForFree": true,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nepali Patro",
+      "url": "https://nepalipatro.app/"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Nepali Patro",
+        "item": "https://nepalipatro.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "BS-AD Date Converter",
+        "item": "https://nepalipatro.app/dateconverter.html"
+      }
+    ]
+  }
+  </script>
   
   <style>
     /* ----- RESET & BASE ----- */
@@ -524,15 +585,85 @@
         padding: 0.8rem;
       }
     }
+
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    /* ----- SEO CONTENT ----- */
+    .seo-content {
+      margin-top: 3rem;
+      background: #fff;
+      border: 1px solid #e4e9f0;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 7px 25px #0000000a;
+    }
+    .seo-content h2 {
+      color: #123b6d;
+      font-size: 1.55rem;
+      margin: 1.8rem 0 .7rem;
+      line-height: 1.3;
+    }
+    .seo-content h2:first-child { margin-top: 0; }
+    .seo-content h3 {
+      color: #123b6d;
+      font-size: 1.15rem;
+      margin: 1.2rem 0 .45rem;
+    }
+    .seo-content p {
+      color: #3d4858;
+      margin: .65rem 0;
+    }
+    .seo-content ul {
+      padding-left: 1.35rem;
+      color: #3d4858;
+    }
+    .seo-content li { margin: .45rem 0; }
+    .related-tools {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .8rem;
+      margin-top: 1rem;
+    }
+    .related-tools a {
+      display: block;
+      border: 1px solid #dce6f2;
+      background: #f7f9fc;
+      border-radius: 12px;
+      padding: .8rem 1rem;
+      color: #123b6d;
+      font-weight: 700;
+    }
+    .related-tools a:hover { background: #eef4fb; }
+    .faq-item {
+      border-top: 1px solid #e4e9f0;
+      padding: 1rem 0;
+    }
+    .faq-item:first-of-type { border-top: 0; }
+    .faq-item h3 { margin-top: 0; }
+    @media (max-width: 700px) {
+      .seo-content { padding: 1.35rem 1.1rem; }
+      .related-tools { grid-template-columns: 1fr; }
+    }
+
   </style>
     <link rel="stylesheet" href="dark-mode.css">
 </head>
-<body>
+<body itemscope itemtype="https://schema.org/WebPage">
 
 <!-- ===== NAVBAR ===== -->
 <header class="navbar">
   <nav class="nav">
-    <a class="brand" id="brandLink" href="#">
+    <a class="brand" id="brandLink" href="index.html" aria-label="Nepali Patro home">
       <span class="brand-icon">वि</span>
       <span class="brand-text">
         <span class="brand-nepali">नेपाली पात्रो</span>
@@ -549,7 +680,7 @@
         <li><a href="index.html" class="calendar-link" id="calendarLink">Calendar</a></li>
         <li><a href="nepalsambat.html">नेपाल संवत</a></li>
         <li class="dropdown">
-          <a href="#">Converter</a>
+          <a href="dateconverter.html">Converter</a>
           <ul class="dropdown-menu">
             <li><a href="unicode.html">Nepali Unicode</a></li>
             <li><a href="dateconverter.html">BS-AD Converter</a></li>
@@ -557,14 +688,14 @@
             <li><a href="age-calculator.html">Age Calculator</a></li>
           </ul>
         </li>
-        <li><a href=" nepali-festivals.html">चाडपर्वहरु</a></li>
+        <li><a href="nepali-festivals.html">चाडपर्वहरु</a></li>
         <li><a href="nepali-holidays.html">बिदाहरु</a></li>
         <li><a href="rashifal.html">राशिफल</a></li>
         <li><a href="weather.html">मौसम</a></li>
         <li><a href="goldsilver.html">सुनचादी</a></li>
 
         <li class="dropdown">
-          <a href="#">Tools</a>
+          <a href="index.html">Tools</a>
           <ul class="dropdown-menu">
             <li><a href="kundali-generator.html">जन्म कुण्डली</a></li>
              <li><a href="event-remainder.html">Event Remainder</a></li>
@@ -588,124 +719,269 @@
 </header>
 
 <!-- ===== MAIN CONTENT ===== -->
-<div class="wrap">
-  <div class="page-header">
-    <h1>
-      🔄 BS-AD रुपान्तरण
-      <small>· Date Converter</small>
-    </h1>
-    <p>नेपाली मिति (BS) र अंग्रेजी मिति (AD) बीच सजिलै रुपान्तरण गर्नुहोस्</p>
-  </div>
+<main class="wrap">
+  <header class="page-header">
+    <h1>BS to AD Converter <small>· AD to BS Nepali Date Converter</small></h1>
+    <p>नेपाली मिति (BS) र अंग्रेजी मिति (AD) बीच सजिलै र छिटो रुपान्तरण गर्नुहोस्।</p>
+  </header>
 
-  <div class="converter-grid">
-    <!-- BS to AD Card -->
-    <div class="converter-card">
-      <div class="card-header">
-        <span class="icon">🇳🇵</span>
-        <h2>
-          BS → AD
-          <small>नेपाली → अंग्रेजी</small>
-        </h2>
-      </div>
+  <section aria-labelledby="converter-title">
+    <h2 id="converter-title" class="visually-hidden">Nepali Date Converter</h2>
 
-      <div class="input-row">
-        <div class="input-group">
-          <label>वर्ष (BS)</label>
-          <input type="number" id="bsYear" value="2083" min="1975" max="2100" />
+    <div class="converter-grid">
+      <!-- BS to AD Card -->
+      <article class="converter-card">
+        <div class="card-header">
+          <span class="icon" aria-hidden="true">🇳🇵</span>
+          <h2>
+            BS → AD
+            <small>नेपाली → अंग्रेजी</small>
+          </h2>
         </div>
-        <div class="input-group">
-          <label>महिना</label>
-          <select id="bsMonth">
-            <option value="0">बैशाख</option>
-            <option value="1">जेठ</option>
-            <option value="2">असार</option>
-            <option value="3">साउन</option>
-            <option value="4">भदौ</option>
-            <option value="5">असोज</option>
-            <option value="6">कार्तिक</option>
-            <option value="7">मंसिर</option>
-            <option value="8">पौष</option>
-            <option value="9">माघ</option>
-            <option value="10">फागुन</option>
-            <option value="11">चैत्र</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label>दिन</label>
-          <input type="number" id="bsDay" value="1" min="1" max="32" />
-        </div>
-      </div>
 
-      <button class="convert-btn" id="bsToAdBtn">BS → AD रुपान्तरण गर्नुहोस्</button>
+        <div class="input-row">
+          <div class="input-group">
+            <label for="bsYear">वर्ष (BS)</label>
+            <input type="number" id="bsYear" value="2083" min="1975" max="2100" inputmode="numeric">
+          </div>
+          <div class="input-group">
+            <label for="bsMonth">महिना</label>
+            <select id="bsMonth">
+              <option value="0">बैशाख</option>
+              <option value="1">जेठ</option>
+              <option value="2">असार</option>
+              <option value="3">साउन</option>
+              <option value="4">भदौ</option>
+              <option value="5">असोज</option>
+              <option value="6">कार्तिक</option>
+              <option value="7">मंसिर</option>
+              <option value="8">पौष</option>
+              <option value="9">माघ</option>
+              <option value="10">फागुन</option>
+              <option value="11">चैत्र</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="bsDay">दिन</label>
+            <input type="number" id="bsDay" value="1" min="1" max="32" inputmode="numeric">
+          </div>
+        </div>
 
-      <div class="result-box" id="bsToAdResult">
-        <span class="label">AD मिति:</span>
-        <span class="result-value" id="bsToAdOutput">-</span>
-      </div>
+        <button type="button" class="convert-btn" id="bsToAdBtn">BS → AD रुपान्तरण गर्नुहोस्</button>
+
+        <div class="result-box" id="bsToAdResult" aria-live="polite">
+          <span class="label">AD मिति:</span>
+          <span class="result-value" id="bsToAdOutput">-</span>
+        </div>
+      </article>
+
+      <!-- AD to BS Card -->
+      <article class="converter-card">
+        <div class="card-header">
+          <span class="icon" aria-hidden="true">🌍</span>
+          <h2>
+            AD → BS
+            <small>अंग्रेजी → नेपाली</small>
+          </h2>
+        </div>
+
+        <div class="input-row">
+          <div class="input-group">
+            <label for="adYear">वर्ष (AD)</label>
+            <input type="number" id="adYear" value="2026" min="1913" max="2043" inputmode="numeric">
+          </div>
+          <div class="input-group">
+            <label for="adMonth">महिना</label>
+            <select id="adMonth">
+              <option value="0">Jan</option>
+              <option value="1">Feb</option>
+              <option value="2">Mar</option>
+              <option value="3">Apr</option>
+              <option value="4">May</option>
+              <option value="5">Jun</option>
+              <option value="6">Jul</option>
+              <option value="7">Aug</option>
+              <option value="8">Sep</option>
+              <option value="9">Oct</option>
+              <option value="10">Nov</option>
+              <option value="11">Dec</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="adDay">दिन</label>
+            <input type="number" id="adDay" value="1" min="1" max="31" inputmode="numeric">
+          </div>
+        </div>
+
+        <button type="button" class="convert-btn" id="adToBsBtn">AD → BS रुपान्तरण गर्नुहोस्</button>
+
+        <div class="result-box" id="adToBsResult" aria-live="polite">
+          <span class="label">BS मिति:</span>
+          <span class="result-value" id="adToBsOutput">-</span>
+        </div>
+      </article>
     </div>
 
-    <!-- AD to BS Card -->
-    <div class="converter-card">
-      <div class="card-header">
-        <span class="icon">🌍</span>
-        <h2>
-          AD → BS
-          <small>अंग्रेजी → नेपाली</small>
-        </h2>
-      </div>
-
-      <div class="input-row">
-        <div class="input-group">
-          <label>वर्ष (AD)</label>
-          <input type="number" id="adYear" value="2026" min="1900" max="2100" />
-        </div>
-        <div class="input-group">
-          <label>महिना</label>
-          <select id="adMonth">
-            <option value="0">Jan</option>
-            <option value="1">Feb</option>
-            <option value="2">Mar</option>
-            <option value="3">Apr</option>
-            <option value="4">May</option>
-            <option value="5">Jun</option>
-            <option value="6">Jul</option>
-            <option value="7">Aug</option>
-            <option value="8">Sep</option>
-            <option value="9">Oct</option>
-            <option value="10">Nov</option>
-            <option value="11">Dec</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label>दिन</label>
-          <input type="number" id="adDay" value="1" min="1" max="31" />
-        </div>
-      </div>
-
-      <button class="convert-btn" id="adToBsBtn">AD → BS रुपान्तरण गर्नुहोस्</button>
-
-      <div class="result-box" id="adToBsResult">
-        <span class="label">BS मिति:</span>
-        <span class="result-value" id="adToBsOutput">-</span>
-      </div>
+    <div class="quick-links" aria-label="Date converter quick actions">
+      <a href="#converter-title" onclick="setTodayAD(); return false;">📅 आजको मिति (AD)</a>
+      <a href="#converter-title" onclick="setTodayBS(); return false;">📅 आजको मिति (BS)</a>
+      <a href="#converter-title" onclick="resetConverters(); return false;">🔄 रिसेट गर्नुहोस्</a>
     </div>
-  </div>
 
-  <!-- Quick links -->
-  <div class="quick-links">
-    <a href="#" onclick="setTodayAD(); return false;">📅 आजको मिति (AD)</a>
-    <a href="#" onclick="setTodayBS(); return false;">📅 आजको मिति (BS)</a>
-    <a href="#" onclick="resetConverters(); return false;">🔄 रिसेट गर्नुहोस्</a>
-  </div>
+    <p class="disclaimer">* BS-AD रुपान्तरण १९७५–२१०० BS (१९१८–२०४३ AD) सम्म मान्य छ।</p>
+  </section>
 
-  <div class="disclaimer">* BS-AD रुपान्तरण १९७५–२१०० BS (१९१८–२०४३ AD) सम्म मान्य छ।</div>
-</div>
+  <!-- Crawlable, useful explanatory content -->
+  <section class="seo-content" aria-labelledby="about-converter">
+    <h2 id="about-converter">BS to AD and AD to BS Date Converter</h2>
+    <p>
+      यो <strong>Nepali Date Converter</strong> ले Bikram Sambat (BS) र Gregorian (AD)
+      बीच मिति रुपान्तरण गर्न मद्दत गर्छ। तपाईंले नेपाली मिति (BS) लाई अंग्रेजी मिति (AD)
+      मा वा अंग्रेजी मिति (AD) लाई नेपाली मिति (BS) मा परिवर्तन गर्न सक्नुहुन्छ।
+    </p>
+    <p>
+      यो पृष्ठमा दुईवटा conversion विकल्प छन्: <strong>BS to AD</strong> र
+      <strong>AD to BS</strong>। वर्ष, महिना र दिन छानेर conversion button थिच्नुहोस्।
+    </p>
+
+    <h2>How to Convert BS to AD</h2>
+    <ol>
+      <li>BS to AD converter मा नेपाली वर्ष छान्नुहोस्।</li>
+      <li>बैशाखदेखि चैत्रसम्म सम्बन्धित महिना छान्नुहोस्।</li>
+      <li>दिन प्रविष्ट गर्नुहोस्।</li>
+      <li><strong>BS → AD रुपान्तरण गर्नुहोस्</strong> थिच्नुहोस्।</li>
+    </ol>
+
+    <h2>How to Convert AD to BS</h2>
+    <ol>
+      <li>AD to BS converter मा Gregorian वर्ष छान्नुहोस्।</li>
+      <li>January देखि December सम्म सम्बन्धित महिना छान्नुहोस्।</li>
+      <li>दिन प्रविष्ट गर्नुहोस्।</li>
+      <li><strong>AD → BS रुपान्तरण गर्नुहोस्</strong> थिच्नुहोस्।</li>
+    </ol>
+
+    <h2>About the Nepali Date Converter</h2>
+    <p>
+      Bikram Sambat मिति प्रणाली प्रयोग गर्ने नेपाली मितिहरू र Gregorian calendar का
+      मितिहरूबीच conversion गर्दा वर्ष मात्र होइन, महिना र दिनको वास्तविक calendar
+      data पनि महत्वपूर्ण हुन्छ। यस converter को conversion engine ले page मा राखिएको
+      per-year BS month data प्रयोग गर्छ।
+    </p>
+    <p>
+      Converter को उपलब्ध range अहिले <strong>1975–2100 BS</strong> का लागि देखाइएको छ।
+      AD पक्षको validation conversion engine को configured range अनुसार काम गर्छ।
+    </p>
+
+    <h2>Nepali Calendar Months</h2>
+    <p>
+      BS calendar मा १२ महिना हुन्छन्: बैशाख, जेठ, असार, साउन, भदौ, असोज,
+      कार्तिक, मंसिर, पौष, माघ, फागुन र चैत्र। महिनाको दिन संख्या Gregorian
+      calendar जस्तो स्थिर हुँदैन, त्यसैले सही conversion का लागि year-specific
+      month data उपयोगी हुन्छ।
+    </p>
+
+    <h2>Related Nepali Calendar Tools</h2>
+    <div class="related-tools">
+      <a href="index.html">नेपाली पात्रो / Nepali Calendar</a>
+      <a href="nepalsambat.html">नेपाल संवत्</a>
+      <a href="date-difference.html">Date Difference Calculator</a>
+      <a href="age-calculator.html">Age Calculator</a>
+      <a href="nepali-festivals.html">नेपाली चाडपर्वहरू</a>
+      <a href="nepali-holidays.html">नेपाली बिदाहरू</a>
+      <a href="unicode.html">Nepali Unicode Tool</a>
+    </div>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <h3>What is a BS to AD converter?</h3>
+      <p>
+        A BS to AD converter changes a date from the Bikram Sambat (BS) calendar
+        into its corresponding Gregorian (AD) date.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What is an AD to BS converter?</h3>
+      <p>
+        An AD to BS converter changes a Gregorian calendar date into a
+        corresponding Bikram Sambat date.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Which Nepali calendar months are supported?</h3>
+      <p>
+        The converter provides all 12 BS months: बैशाख, जेठ, असार, साउन, भदौ,
+        असोज, कार्तिक, मंसिर, पौष, माघ, फागुन and चैत्र.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Can I convert today's date?</h3>
+      <p>
+        Yes. Use the “आजको मिति (AD)” or “आजको मिति (BS)” quick action to populate
+        today's date and run the corresponding conversion.
+      </p>
+    </div>
+  </section>
+</main>
+
+<!-- FAQ structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a BS to AD converter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A BS to AD converter changes a date from the Bikram Sambat (BS) calendar into its corresponding Gregorian (AD) date."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is an AD to BS converter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An AD to BS converter changes a Gregorian calendar date into a corresponding Bikram Sambat date."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which Nepali calendar months are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The converter provides all 12 BS months: Baishakh, Jestha, Ashadh, Shrawan, Bhadra, Ashwin, Kartik, Mangsir, Poush, Magh, Falgun and Chaitra."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I convert today's date?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Use the today's AD or today's BS quick action to populate today's date and run the corresponding conversion."
+      }
+    }
+  ]
+</script>
 
 <!-- ===== FOOTER ===== -->
 <footer>
   <div class="footer">
-    <div><strong>नेपाली पात्रो</strong><br>Nepali Calendar &amp; Date Tools</div>
-    <div><a href="#">About</a> · <a href="#">API</a> · <a href="#">Contact</a></div>
+    <div>
+      <strong>नेपाली पात्रो</strong><br>
+      Nepali Calendar &amp; Date Tools
+    </div>
+    <div>
+      <a href="index.html">Calendar</a> ·
+      <a href="dateconverter.html">Date Converter</a> ·
+      <a href="date-difference.html">Date Difference</a> ·
+      <a href="age-calculator.html">Age Calculator</a> ·
+      <a href="nepali-holidays.html">Holidays</a>
+    </div>
   </div>
 </footer>
 
@@ -1708,21 +1984,6 @@ var BikramSambat = /** @class */ (function () {
     // ============================================================
     //  DOWNLOAD JSON (sample)
     // ============================================================
-    document.getElementById('downloadBtn').addEventListener('click', function() {
-      const data = {
-        tool: "BS-AD Converter",
-        description: "Nepali date conversion engine",
-        version: "1.0"
-      };
-      const json = JSON.stringify(data, null, 2);
-      const blob = new Blob([json], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `bs_ad_converter.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-    });
 
     // ============================================================
     //  INIT: set default AD to today
