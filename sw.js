@@ -22,7 +22,7 @@ const ASSETS_TO_CACHE = [
   '/offline.html',
   '/event-remainder.html',
   '/quiz-scheduler.html',
-  '/kundali-milan.html'
+  '/kundli-milan.html'
 ];
 
 // Install event - cache core assets
