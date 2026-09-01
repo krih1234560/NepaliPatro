@@ -21,7 +21,8 @@ const ASSETS_TO_CACHE = [
   '/manifest.json',
   '/offline.html',
   '/event-remainder.html',
-  '/quiz-scheduler.html'
+  '/quiz-scheduler.html',
+  '/kundali-milan.html'
 ];
 
 // Install event - cache core assets
