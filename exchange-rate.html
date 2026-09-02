@@ -29,10 +29,12 @@
     <title>विनिमय दर · Nepal Exchange Rates</title>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="नेपाल राष्ट्र बैंकको विनिमय दर · Daily currency exchange rates for Nepal (NPR) against major world currencies." />
-    <meta name="keywords" content="exchange rate, विनिमय दर, Nepal Rastra Bank, NRB, currency, NPR, USD, forex" />
+    <meta name="description" content="आजको Nepal exchange rate हेर्नुहोस्। USD, EUR, GBP, INR, JPY लगायत प्रमुख मुद्राको नेपाली रुपैयाँ (NPR) मा खरिद तथा बिक्री दर र पछिल्लो अपडेट।" />
+    <meta name="focus-keyword" content="Nepal exchange rate today" />
+    <meta name="keywords" content="Nepal exchange rate today, Nepal exchange rate, exchange rate Nepal, foreign exchange rate Nepal, NPR exchange rate, USD NPR, EUR NPR, GBP NPR, INR NPR, Nepal Rastra Bank exchange rate" />
 
 <link rel="canonical" href="https://nepalipatro.app/exchange-rate.html">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     
     <style>
         /* ----- RESET & BASE ----- */
@@ -50,6 +52,43 @@
         a {
             text-decoration: none;
             color: inherit;
+        }
+
+        /* ----- SEO CONTENT ----- */
+        .seo-intro {
+            margin: 0 auto 1.5rem;
+            padding: 1rem 1.2rem;
+            background: #fff;
+            border: 1px solid #e4e9f0;
+            border-radius: 14px;
+            color: #46546a;
+        }
+        .seo-intro p {
+            margin: 0;
+        }
+        .seo-intro a,
+        .seo-links a {
+            color: #123b6d;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            font-weight: 600;
+        }
+        .seo-links {
+            margin-top: 1.5rem;
+            padding: 1.2rem;
+            background: #fff;
+            border: 1px solid #e4e9f0;
+            border-radius: 14px;
+        }
+        .seo-links h2 {
+            margin: 0 0 0.55rem;
+            font-size: 1.15rem;
+            color: #123b6d;
+        }
+        .seo-links p {
+            margin: 0;
+            color: #627083;
+            line-height: 1.8;
         }
 
         /* ----- NAVBAR ----- */
@@ -351,6 +390,14 @@
             font-size: 0.95rem;
             margin-top: 0.3rem;
         }
+        .latest-update-note {
+            display: inline-block;
+            margin-top: 0.25rem;
+            color: #627083;
+            font-size: 0.82rem;
+            font-weight: 500;
+        }
+
         .page-header .last-updated strong {
             color: #172033;
         }
@@ -601,13 +648,33 @@
         }
     </style>
     <link rel="stylesheet" href="dark-mode.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Nepali Patro",
+          "item": "https://nepalipatro.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Foreign Exchange Rates",
+          "item": "https://nepalipatro.app/exchange-rate.html"
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
 
     <!-- ===== NAVBAR ===== -->
     <header class="navbar">
         <nav class="nav">
-            <a class="brand" id="brandLink" href="#">
+            <a class="brand" id="brandLink" href="index.html" aria-label="Nepali Patro Home">
                 <span class="brand-icon">वि</span>
                 <span class="brand-text">
                     <span class="brand-nepali">नेपाली पात्रो</span>
@@ -632,7 +699,7 @@
             <li><a href="age-calculator.html">Age Calculator</a></li>
           </ul>
         </li>
-        <li><a href=" nepali-festivals.html">चाडपर्वहरु</a></li>
+        <li><a href="nepali-festivals.html">चाडपर्वहरु</a></li>
         <li><a href="nepali-holidays.html">बिदाहरु</a></li>
         <li><a href="rashifal.html">राशिफल</a></li>
         <li><a href="weather.html">मौसम</a></li>
@@ -673,8 +740,21 @@
                 <strong>नेपाल राष्ट्र बैंक</strong> · Nepal Rastra Bank
                 <br />
                 <span id="lastUpdatedDisplay">पछिल्लो अपडेट: प्राप्त गर्दै...</span>
+                <br />
+                <small class="latest-update-note">Latest update: दरहरू उपलब्ध API बाट प्राप्त भएपछि यो समय स्वतः अपडेट हुन्छ।</small>
             </p>
         </div>
+
+        <section class="seo-intro" aria-label="Nepal exchange rate information">
+            <p><strong>Nepal exchange rate today</strong> का लागि यहाँ प्रमुख विदेशी मुद्राको नेपाली रुपैयाँ (NPR) मा खरिद र बिक्री दर हेर्न सकिन्छ। यो पृष्ठमा USD, EUR, GBP, INR, JPY, AUD, CAD, SGD लगायतका मुद्राका दरहरू नियमित रूपमा अपडेट हुन्छन्। थप वित्तीय जानकारीका लागि
+                <a href="goldsilver.html">सुनचाँदीको दर</a>,
+                <a href="nepali_fuel_rates.html">नेपालको इन्धन मूल्य</a> र
+                <a href="index.html">नेपाली पात्रो</a>
+                हेर्नुहोस्। आधिकारिक स्रोतका लागि
+                <a href="https://www.nrb.org.np/" target="_blank" rel="noopener noreferrer">नेपाल राष्ट्र बैंक (NRB)</a>
+                को वेबसाइट हेर्नुहोस्।
+            </p>
+        </section>
 
         <div class="refresh-area">
             <button class="refresh-btn" id="refreshBtn">🔄 ताजा गर्नुहोस्</button>
@@ -689,6 +769,19 @@
             </div>
         </div>
 
+        <section class="seo-links" aria-labelledby="related-links-title">
+            <h2 id="related-links-title">सम्बन्धित वित्तीय तथा उपयोगी जानकारी</h2>
+            <p>
+                <a href="goldsilver.html">आजको सुनचाँदीको दर</a> ·
+                <a href="nepali_fuel_rates.html">आजको इन्धन मूल्य</a> ·
+                <a href="weather.html">नेपालको मौसम</a> ·
+                <a href="nepali-holidays.html">नेपाली बिदा</a> ·
+                <a href="nepali-festivals.html">नेपाली चाडपर्व</a> ·
+                <a href="index.html">नेपाली पात्रो होम</a> ·
+                <a href="https://www.nrb.org.np/" target="_blank" rel="noopener noreferrer">नेपाल राष्ट्र बैंक</a>
+            </p>
+        </section>
+
         <div class="disclaimer">
             * यी दरहरू लाइभ अन्तर्राष्ट्रिय बजार दर (open.er-api.com) बाट NPR मा रूपान्तरण गरी अनुमानित किन्ने/बेच्ने दर हो, नेपाल राष्ट्र बैंकको आधिकारिक दर होइन।
             · Rates are approximate, derived from a live foreign-exchange API (open.er-api.com) and converted to NPR — not an official Nepal Rastra Bank quote.
@@ -699,7 +792,7 @@
     <footer>
         <div class="footer">
             <div><strong>नेपाली पात्रो</strong><br>Nepali Calendar &amp; Exchange Rates</div>
-            <div><a href="#">About</a> · <a href="#">API</a> · <a href="#">Contact</a></div>
+            <div><a href="index.html">Home</a> · <a href="goldsilver.html">Gold &amp; Silver</a> · <a href="nepali_fuel_rates.html">Fuel Rates</a> · <a href="https://www.nrb.org.np/" target="_blank" rel="noopener noreferrer">Nepal Rastra Bank</a></div>
         </div>
     </footer>
 

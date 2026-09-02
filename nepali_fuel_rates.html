@@ -28,8 +28,10 @@
 
     <!-- Primary SEO -->
     <title>Nepal Fuel Price Today 2083 | Petrol, Diesel & LPG Rates</title>
-    <meta name="description" content="नेपालमा आजको इन्धन मूल्य हेर्नुहोस्। Petrol, Diesel, Kerosene र LPG को नयाँ दर, मूल्य इतिहास र NOC आधारित fuel price updates एकै ठाउँमा।">
+    <meta name="description" content="आजको नेपाल इन्धन मूल्य हेर्नुहोस्। पेट्रोल, डिजेल, मट्टितेल र LPG ग्यासको नयाँ दर, मूल्य इतिहास र नेपाल आयल निगम (NOC) आधारित fuel price updates एकै ठाउँमा।">
+    <meta name="focus-keyword" content="Nepal fuel price today">
     <meta name="keywords" content="Nepal fuel price, Nepal fuel rates, petrol price Nepal, diesel price Nepal, LPG price Nepal, fuel price today Nepal, petrol price today Nepal, diesel price today Nepal, NOC fuel price, Nepal Oil Corporation fuel price, इन्धन मूल्य, पेट्रोल मूल्य, डिजेल मूल्य, ग्यासको मूल्य">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="author" content="Nepali Patro">
     <link rel="canonical" href="https://nepalipatro.app/nepali_fuel_rates.html">
@@ -771,6 +773,32 @@
             .pl-summary-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
+        /* ----- SEO LINKS / CONTEXTUAL CONTENT ----- */
+        .seo-links {
+            margin-top: 2rem;
+            padding: 1.4rem;
+            background: #fff;
+            border: 1px solid #eef2f7;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px #00000006;
+        }
+        .seo-links h2 {
+            color: #123b6d;
+            font-size: 1.2rem;
+            margin-bottom: .5rem;
+        }
+        .seo-links p {
+            color: #4f5d70;
+            font-size: .95rem;
+        }
+        .seo-links a,
+        .seo-intro a {
+            color: #123b6d;
+            font-weight: 700;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
         /* ----- FOOTER ----- */
         footer {
             background: #092746;
@@ -830,7 +858,28 @@
       }
     }
     </script>
-</head>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Nepali Patro",
+          "item": "https://nepalipatro.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Nepal Fuel Price Today",
+          "item": "https://nepalipatro.app/nepali_fuel_rates.html"
+        }
+      ]
+    }
+    </script>
+    </head>
 <body>
 
     <!-- ===== NAVBAR ===== -->
@@ -902,7 +951,9 @@
                 <span id="lastUpdatedDisplay">पछिल्लो अपडेट: प्राप्त गर्दै...</span>
             </p>
             <p class="seo-intro">
-                आजको नेपाल इन्धन मूल्य: पेट्रोल, डिजेल, मट्टितेल र LPG ग्यासको दर तथा नेपाल आयल निगम (NOC) को मूल्य इतिहास यहाँ हेर्नुहोस्।
+                आजको <strong>Nepal fuel price</strong> हेर्नुहोस्: पेट्रोल, डिजेल, मट्टितेल र LPG ग्यासको दर तथा नेपाल आयल निगम (NOC) को मूल्य इतिहास यहाँ हेर्नुहोस्।
+                अन्य दैनिक जानकारीका लागि <a href="goldsilver.html">सुनचाँदीको मूल्य</a>, <a href="exchange-rate.html">विदेशी मुद्रा विनिमय दर</a> र <a href="weather.html">नेपालको मौसम</a> पनि हेर्नुहोस्।
+                आधिकारिक स्रोतका लागि <a href="https://noc.org.np/" target="_blank" rel="noopener noreferrer">नेपाल आयल निगम (NOC)</a> हेर्नुहोस्।
             </p>
         </div>
 
@@ -1009,6 +1060,19 @@
             </div>
         </section>
 
+        <section class="seo-links" aria-labelledby="seoLinksTitle">
+            <h2 id="seoLinksTitle">नेपाल इन्धन मूल्य सम्बन्धी उपयोगी जानकारी</h2>
+            <p>
+                यो पृष्ठमा <strong>नेपालको आजको इन्धन मूल्य</strong>, पेट्रोल, डिजेल, मट्टितेल र LPG को दर तथा मूल्य इतिहास समावेश गरिएको छ।
+                थप दैनिक जानकारीका लागि <a href="index.html">नेपाली पात्रो</a>,
+                <a href="goldsilver.html">सुनचाँदीको मूल्य</a>,
+                <a href="exchange-rate.html">Currency Exchange Rate</a> र
+                <a href="weather.html">मौसम</a> हेर्न सकिन्छ।
+                मूल्यको आधिकारिक स्रोतको रूपमा
+                <a href="https://noc.org.np/" target="_blank" rel="noopener noreferrer">नेपाल आयल निगम</a> को वेबसाइट हेर्नुहोस्।
+            </p>
+        </section>
+
         <div class="disclaimer">
             * दरहरू नेपाल आयल निगम (NOC) को आधिकारिक दैनिक मूल्य सूचीमा आधारित छन्।
             स्रोत: नेपाल सरकार, उद्योग, वाणिज्य तथा आपूर्ति मन्त्रालय · दरहरू दैनिक अपडेट हुन्छन्।
@@ -1019,7 +1083,17 @@
     <footer>
         <div class="footer">
             <div><strong>नेपाली पात्रो</strong><br>Nepali Calendar &amp; Fuel Rates</div>
-            <div><a href="#">About</a> · <a href="#">API</a> · <a href="#">Contact</a></div>
+            <div>
+                <a href="index.html">नेपाली पात्रो</a> ·
+                <a href="nepali-holidays.html">नेपाली बिदा</a> ·
+                <a href="nepali-festivals.html">चाडपर्व</a> ·
+                <a href="goldsilver.html">सुनचाँदी</a> ·
+                <a href="exchange-rate.html">विनिमय दर</a> ·
+                <a href="weather.html">मौसम</a>
+            </div>
+            <div>
+                <a href="https://noc.org.np/" target="_blank" rel="noopener noreferrer">NOC Official</a>
+            </div>
         </div>
     </footer>
 
